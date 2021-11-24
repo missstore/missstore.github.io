@@ -395,12 +395,13 @@ button.fazer-pedido-btn {
     cursor: pointer;
 	}
 	.dropdown .dropdown-menu {
-    margin-right: 15px;
-    margin-top: -1px;
-    border-radius: 7px;
+	margin-right: 15px;
     box-shadow: 0 0 7px 4px var(--bs-pink);
-    width: 260px;
+    width: 240px;
     height: auto;
+    padding-left: 2px;
+    padding-top: 2px;
+    padding-bottom: 9px;
 	}
   #content > nav > div > div {
     position: absolute;
@@ -532,7 +533,6 @@ button.fazer-pedido-btn {
 }
 .valortotal {
   font-size: 12px;
-  margin-left: 5px;
 }
 .baseInformacoes {
     display: flex;
