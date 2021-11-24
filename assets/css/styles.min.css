@@ -532,7 +532,8 @@ button.fazer-pedido-btn {
   background-color: var(--bs-pink);
 }
 .valortotal {
-  font-size: 12px;
+	font-size: 12px;
+	margin-left: -3px;
 }
 .baseInformacoes {
     display: flex;
