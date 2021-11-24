@@ -134,7 +134,7 @@ label.valor-antigo{
   background: var(--bs-pink);
   opacity: 0.69;
   margin-left: 1px;
-  margin-right: 1px;
+  margin-right: 3px;
 }
 .btn-fazer-pedido {
   background: var(--bs-pink);
@@ -156,6 +156,7 @@ label.valor-antigo{
   border-bottom-color: var(--bs-pink);
   border-left-color: var(--bs-pink);
   opacity: .8;
+  margin-right: 2px;
 }
 @media (max-width: 768px) /* ### MAX ### */ {
   .badge-counter {
