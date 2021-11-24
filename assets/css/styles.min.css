@@ -73,7 +73,7 @@ display: none;
     display: flex;
     align-items: center;
     position: absolute;
-	top: -3;
+	top: -3px;
     justify-content: center;
     overflow: hidden;
     flex-direction: column;
