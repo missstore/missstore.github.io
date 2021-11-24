@@ -475,6 +475,17 @@ button.fazer-pedido-btn {
     color: var(--bs-pink);
     font-size: 14px;
 }
+.dropdown-menu::-webkit-scrollbar {
+    width:5px;
+    background-color: #fff;
+}
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background-color:var(--bs-pink);
+    border-radius: 5px;
+}
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background:hotpink;
+}
 .socials {
   letter-spacing: 5px;
   margin-left: 5px;
