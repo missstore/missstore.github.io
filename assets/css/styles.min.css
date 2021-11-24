@@ -73,7 +73,7 @@ display: none;
     display: flex;
     align-items: center;
     position: relative;
-    bottom: calc(100% - 25px);
+    /*bottom: calc(100% - 25px);*/
     justify-content: center;
     overflow: hidden;
     flex-direction: column;
