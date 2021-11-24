@@ -135,6 +135,7 @@ label.valor-antigo{
   opacity: 0.69;
   margin-left: 1px;
   margin-right: 3px;
+  margin-top: 8px;
 }
 .btn-fazer-pedido {
   background: var(--bs-pink);
