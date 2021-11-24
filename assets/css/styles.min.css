@@ -66,7 +66,7 @@ display: none;
 }
 
 .loadercontainer.carregando {
-    width: 100%;
+    width: 70.7%;
     height: 101%;
     z-index: 10000000;
     backdrop-filter: blur(8px);
