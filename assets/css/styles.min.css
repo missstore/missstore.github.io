@@ -404,7 +404,7 @@ button.fazer-pedido-btn {
 	}
   #content > nav > div > div {
     position: absolute;
-    right: 10px;
+    right: 0;
 	user-select:none;
   }
   .input-group {
