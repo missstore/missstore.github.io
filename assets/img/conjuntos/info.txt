@@ -1,0 +1,60 @@
+{
+"info": [
+    {
+	"src": "1.jpeg",
+	"valor": "119,00",
+	"tags": "rosê,rosa,macacao,macacão,laura",
+	"nome": "Macacão laura rosê",
+	"cores": "pink",
+	"tamanhos": "p"
+    },
+    {
+	"src": "2.jpeg",
+	"valor": "99,90",
+	"tags": "macacao,black,macacão,cinto",
+	"nome": "Macacão black com cinto",
+	"cores": "black",
+	"tamanhos": "m"
+    },
+    {
+	"src": "3.jpeg",
+	"valor": "99,90",
+	"tags": "macacao,macacão,black,infinito",
+	"nome": "Macacão infinto black",
+	"cores": "black",
+	"tamanhos": "p,m"
+    },
+    {
+	"src": "4.jpeg",
+	"valor": "79,90",
+	"tags": "macaquinho,rosa,roxo",
+	"nome": "Macaquinho cigana",
+	"cores": "pink,purple",
+	"tamanhos": "p,m"
+    },
+    {
+	"src": "5.jpeg",
+	"valor": "79,00",
+	"tags": "macacao",
+	"nome": "Macacão fenda tamanho único",
+	"cores": "green",
+	"tamanhos": "m"
+    },
+    {
+	"src": "6.jpeg",
+	"valor": "119,90",
+	"tags": "macacao",
+	"nome": "Macacão laura blue",
+	"cores": "skyblue",
+	"tamanhos": "m,g"
+    },
+    {
+	"src": "7.jpeg",
+	"valor": "79,90",
+	"tags": "macacao",
+	"nome": "Macacão longo floral",
+	"cores": "hotpink",
+	"tamanhos": "m,g"
+    }
+  ]
+}
