@@ -3117,7 +3117,8 @@ textarea.form-control.is-invalid {
   display: flex;
   flex-wrap: inherit;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  height: 100%;
 }
 .navbar-brand {
   padding-top: 0.3125rem;
