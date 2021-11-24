@@ -72,12 +72,14 @@ display: none;
     backdrop-filter: blur(7px);
     display: flex;
     align-items: center;
-    position: relative;
+    position: absolute;
     /*bottom: calc(100% - 25px);*/
+	top: 0;
     justify-content: center;
     overflow: hidden;
     flex-direction: column;
 }
+carousel-item
 .contentadicionado {
   text-shadow: 0 0 5px var(--bs-pink);
   height: 105.938px;
