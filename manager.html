@@ -188,9 +188,12 @@
 							temp.forEach(function(e) {
 								let divArquivo = document.createElement("div");
 								divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;';
-								let Imagem = document.createElement("img");
-								Imagem.src = e.download_url;
-								Imagem.width = 252;
+								let Imagem = document.createElement("div");
+								Imagem.backgroundImage = "url("+e.download_url+")";
+								Imagem.width = "250px";
+								Imagem.height = "250px";
+								Imagem.backgroundSize="contain";
+								Imagem.backgroundRepeat="no-repeat";
 								divArquivo.append(Imagem);
 								let SHA = document.createElement("label");
 								SHA.textContent = e.sha;
