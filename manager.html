@@ -187,6 +187,7 @@ function obterContents() {
 				butaoRefresh.style = "margin-bottom: 20px;";
 				butaoRefresh.textContent = "Atualizar imagens";
 				butaoRefresh.addEventListener("click",function(){
+					document.querySelector(".info_").textContent = '';
 					obterContents();
 				});
 				mainDiv.append(divEnviar);
