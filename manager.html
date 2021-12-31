@@ -159,6 +159,17 @@
 						document.body.outerHTML = '';
 						let mainDiv = document.createElement("div");
 						mainDiv.style = 'margin: 30px;width: fit-content;height: fit-content;display: flex;flex-direction: row;flex-wrap: wrap;align-items: center;justify-content: space-evenly;';
+						let divEnviar = document.createElement("div");
+						let selecionar_arquivo = document.createElement("input");
+						selecionar_arquivo.multiple=true;
+						divEnviar.append(selecionar_arquivo);
+						let botaoEnviar = document.createElement("button");
+						botaoEnviar.textContent="Enviar fotos";
+						botaoEnviar.addEventListener("click",function(){
+							fazerUpload(0);
+						});
+						divEnviar.append(botaoEnviar);
+						mainDiv.append(divEnviar);
 						document.body.appendChild(mainDiv);
 						if (temp.length == 0) {
 							alert("Não foram encontrado resultados");
