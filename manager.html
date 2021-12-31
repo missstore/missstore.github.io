@@ -132,7 +132,7 @@
           console.log(percentComplete + "%");
         };
         LerArquivo.onerror = function(e) {
-          document.querySelector(".info_").textContent = (e);
+          document.querySelector(".info_").textContent = e;
         };
         LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
       }
