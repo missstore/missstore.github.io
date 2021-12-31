@@ -42,7 +42,9 @@
 				getUserInfo();
 			});
 		});
-function getUserInfo() {
+function getUserInfo(novoacesso) {
+	novoacesso=novoacesso||"nao";
+	novoacesso!="nao"?localStorage.setItem("_token", null):null;
 	var req = new XMLHttpRequest(),code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
 	function verificarUsuario() {
 		req = new XMLHttpRequest();
