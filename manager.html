@@ -155,7 +155,26 @@
 						temp.push(e);
 					}
 					if (i==JSON.parse(req.response).length-1){
-						console.log(temp);
+						document.body.outerHTML='';
+						let mainDiv = document.createElement("div");
+						mainDiv.style='margin: 30px;width: auto;height: auto;';
+						document.body.appendChild(mainDiv);
+						temp.forEach(function(e){
+							let divArquivo = document.createElement("div");
+							let Imagem = document.createElement("img");
+							Imagem.src=e.download_url;
+							Imagem.width=252;
+							divArquivo.append(Imagem);
+							let SHA = document.createElement("label");
+							SHA.textContent=e.sha;
+							SHA.style='display:none;';
+							divArquivo.append(SHA);
+							let NOME = document.createElement("label");
+							NOME.textContent=e.name;
+							NOME.style='display:none;';
+							divArquivo.append(NOME);
+							document.querySelector("body > div").append(divArquivo);
+						});
 					}
 				});
 			};
