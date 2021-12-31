@@ -163,6 +163,9 @@
       function obterContents() {
         var osLink = "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/vestidos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/calcas|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/conjuntos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/croppeds|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/saias";
         document.body.outerHTML = '';
+		document.querySelectorAll("head").forEach(function(e){
+			e.innerText.length==0?e.remove():null;
+		});
         let mainDiv = document.createElement("div");
         mainDiv.style = 'margin: 30px;width: auto;height: fit-content;display: flex;flex-flow: row wrap;align-items: center;justify-content: center;';
         let divEnviar = document.createElement("div");
