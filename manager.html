@@ -63,7 +63,7 @@ function getUserInfo() {
 		req.send();
 		req.onload = function() {
 			if (req.response.includes("too many requests")) {
-			alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
 			} else if (JSON.parse(req.response).message) {
 				obtertoken();
 			} else {
@@ -87,17 +87,17 @@ function getUserInfo() {
 				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
 			} else {
 				try {
-				var _token = JSON.parse(req.response) ? _token = JSON.parse(req.response).access_token : null;
-				if (_token) {
-					localStorage.setItem("_token", _token);
-					verificarUsuario();
-				} else {
-					let con = confirm("Autorize o app para obter um codigo e continuar")
-					con == true ? window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true") : null;
-				}
+					var _token = JSON.parse(req.response) ? _token = JSON.parse(req.response).access_token : null;
+					if (_token) {
+						localStorage.setItem("_token", _token);
+						verificarUsuario();
+					} else {
+						let con = confirm("Autorize o app para obter um codigo e continuar")
+						con == true ? window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true") : null;
+					}
 				} catch (e) {
-				let con = confirm("Ira abrir uma janela\nnela clique em 'Request temporary access to the demo server'\nAguarde a mensagem 'You currently have temporary access to the demo server.'\nLogo após feche a janela")
-				con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
+					let con = confirm("Ira abrir uma janela\nnela clique em 'Request temporary access to the demo server'\nAguarde a mensagem 'You currently have temporary access to the demo server.'\nLogo após feche a janela")
+					con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
 				}
 			}
 		};
@@ -124,9 +124,9 @@ function fazerUpload(indexUploaded) {
 	LerArquivo.onprogress = function(e) {
 		let percentComplete = e.loaded / e.total;
 		percentComplete = parseInt(percentComplete * 100);
-		alert(percentComplete + "%");
+		console.log(percentComplete + "%");
 	};
-	LerArquivo.onerror = function(e) { alert(e); };
+	LerArquivo.onerror = function(e) {alert(e);};
 	LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
 }
 function deletarArquivo(nome, sha) {
