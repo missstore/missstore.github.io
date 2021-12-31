@@ -48,10 +48,13 @@
           getUserInfo("novoacesso");
         });
       });
+
       function getUserInfo(novoacesso) {
         novoacesso = novoacesso || "nao";
         novoacesso != "nao" ? localStorage.setItem("_token", null) : null;
-        var req = new XMLHttpRequest(),code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
+        var req = new XMLHttpRequest(),
+          code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
+
         function verificarUsuario() {
           req = new XMLHttpRequest();
           req.open('GET', 'https://cors-anywhere.herokuapp.com/https://api.github.com/user', true);
@@ -73,7 +76,8 @@
             }
           };
         }
-		verificarUsuario();
+        verificarUsuario();
+
         function obtertoken() {
           req = new XMLHttpRequest();
           req.open('POST', 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', true);
@@ -101,8 +105,10 @@
           };
         }
       }
+
       function fazerUpload(indexUploaded) {
-        let LerArquivo = new FileReader(),arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
+        let LerArquivo = new FileReader(),
+          arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
         LerArquivo.onload = function() {
           var req = new XMLHttpRequest();
           req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + arquivo.name, true);
@@ -131,6 +137,7 @@
         };
         LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
       }
+
       function deletarArquivo(nome, sha) {
         var req = new XMLHttpRequest();
         req.open('DELETE', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
@@ -148,103 +155,104 @@
               document.querySelector(".info_").textContent = ("Erro ao tentar apagar o arquivo " + nome, "\n", JSON.parse(req.response).message);
             }
           } else if (JSON.parse(req.response).commit) {
-            Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ? 
-			Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() : null;
+            Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ? Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() : null;
             document.querySelector(".info_").textContent = ("Arquivo deletado " + nome);
           }
         };
       }
+
       function obterContents() {
-	  var osLink = "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/calcas|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/conjuntos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/croppeds";
-	  document.body.outerHTML='';
-	  let mainDiv = document.createElement("div");
-              mainDiv.style = 'margin: 30px;width: auto;height: fit-content;display: flex;flex-flow: row wrap;align-items: center;justify-content: center;';
-              let divEnviar = document.createElement("div");
-              divEnviar.style = 'width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;margin-bottom: 20px;';
-              let selecionar_arquivo = document.createElement("input");
-              selecionar_arquivo.multiple = true;
-              selecionar_arquivo.type = "file";
-              selecionar_arquivo.accept = "image/png, image/gif, image/jpeg, image/jpg, image/svg"
-              divEnviar.append(selecionar_arquivo);
-              let botaoEnviar = document.createElement("button");
-              botaoEnviar.textContent = "Enviar fotos";
-              botaoEnviar.addEventListener("click", function() {
-                if (document.querySelector("input[type=file]").files.length == 0) {
-                  document.querySelector(".info_").textContent = 'Selecione um arquivo primeiro';
+        var osLink = "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/calcas|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/conjuntos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/croppeds";
+        document.body.outerHTML = '';
+        let mainDiv = document.createElement("div");
+        mainDiv.style = 'margin: 30px;width: auto;height: fit-content;display: flex;flex-flow: row wrap;align-items: center;justify-content: center;';
+        let divEnviar = document.createElement("div");
+        divEnviar.style = 'width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;margin-bottom: 20px;';
+        let selecionar_arquivo = document.createElement("input");
+        selecionar_arquivo.multiple = true;
+        selecionar_arquivo.type = "file";
+        selecionar_arquivo.accept = "image/png, image/gif, image/jpeg, image/jpg, image/svg"
+        divEnviar.append(selecionar_arquivo);
+        let botaoEnviar = document.createElement("button");
+        botaoEnviar.textContent = "Enviar fotos";
+        botaoEnviar.addEventListener("click", function() {
+          if (document.querySelector("input[type=file]").files.length == 0) {
+            document.querySelector(".info_").textContent = 'Selecione um arquivo primeiro';
+          } else {
+            fazerUpload(0);
+          }
+        });
+        divEnviar.append(botaoEnviar);
+        let labelInfo = document.createElement("label");
+        labelInfo.style = "width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;font-size: 15px;font-family: sans-serif;font-weight: 500;margin-bottom: 10px;";
+        labelInfo.classList.add("info_");
+        let divDorefresh = document.createElement("div");
+        divDorefresh.style = 'width: 100%;height: 100%;display: flex;justify-content: center;';
+        let butaoRefresh = document.createElement("button");
+        butaoRefresh.style = "margin-bottom: 20px;";
+        butaoRefresh.textContent = "Atualizar imagens";
+        butaoRefresh.addEventListener("click", function() {
+          document.querySelector("body > div").outerHTML = '';
+          obterContents();
+        });
+        divDorefresh.append(butaoRefresh);
+        mainDiv.append(divEnviar);
+        mainDiv.append(labelInfo);
+        mainDiv.append(divDorefresh);
+        document.body.appendChild(mainDiv);
+        function obterTodos(caminho) {
+          var req = new XMLHttpRequest();
+          req.open('GET', 'https://cors-anywhere.herokuapp.com/'+caminho, true);
+          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          req.send();
+          req.onload = function() {
+            let temp = [];
+            JSON.parse(req.response).forEach(function(e, i) {
+              e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") ? temp.push(e) : null;
+              if (i == JSON.parse(req.response).length - 1) {
+                if (temp.length == 0) {
+                  document.querySelector(".info_").textContent = ("Não foram encontrado resultados");
                 } else {
-                  fazerUpload(0);
-                }
-              });
-              divEnviar.append(botaoEnviar);
-              let labelInfo = document.createElement("label");
-              labelInfo.style = "width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;font-size: 15px;font-family: sans-serif;font-weight: 500;margin-bottom: 10px;";
-              labelInfo.classList.add("info_");
-              let divDorefresh = document.createElement("div");
-              divDorefresh.style = 'width: 100%;height: 100%;display: flex;justify-content: center;';
-              let butaoRefresh = document.createElement("button");
-              butaoRefresh.style = "margin-bottom: 20px;";
-              butaoRefresh.textContent = "Atualizar imagens";
-              butaoRefresh.addEventListener("click", function() {
-                document.querySelector("body > div").outerHTML = '';
-                obterContents();
-              });
-              divDorefresh.append(butaoRefresh);
-              mainDiv.append(divEnviar);
-              mainDiv.append(labelInfo);
-              mainDiv.append(divDorefresh);
-              document.body.appendChild(mainDiv);
-	  function obterTodos(caminho){
-        var req = new XMLHttpRequest();
-        req.open('GET', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents', true);
-        req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-        req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        req.send();
-        req.onload = function() {
-          let temp = [];
-          JSON.parse(req.response).forEach(function(e, i) {
-            e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") ? temp.push(e) : null;
-            if (i == JSON.parse(req.response).length - 1) {
-              if (temp.length == 0) {
-                document.querySelector(".info_").textContent = ("Não foram encontrado resultados");
-              } else {
-                temp.forEach(function(e) {
-                  let divArquivo = document.createElement("div");
-                  divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
-                  let Imagem = document.createElement("div");
-                  Imagem.style.backgroundImage = "url(" + e.download_url + ")";
-                  Imagem.style.width = "250px";
-                  Imagem.style.height = "250px";
-                  Imagem.style.backgroundSize = "cover";
-                  Imagem.style.backgroundRepeat = "no-repeat";
-                  divArquivo.append(Imagem);
-                  let SHA = document.createElement("label");
-                  SHA.textContent = e.sha;
-                  SHA.style = 'display:none;';
-                  divArquivo.append(SHA);
-                  let NOME = document.createElement("label");
-                  NOME.textContent = e.name;
-                  NOME.style = 'display:none;';
-                  divArquivo.append(NOME);
-                  let botaoDeletar = document.createElement("button");
-                  botaoDeletar.textContent = 'Deletar';
-                  botaoDeletar.style = 'margin-top: 1px;';
-                  botaoDeletar.addEventListener("click", function() {
-                    let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
-                    let sha = this.parentElement.querySelectorAll("label")[0].textContent;
-                    deletarArquivo(nomedoarquivo, sha);
+                  temp.forEach(function(e) {
+                    let divArquivo = document.createElement("div");
+                    divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
+                    let Imagem = document.createElement("div");
+                    Imagem.style.backgroundImage = "url(" + e.download_url + ")";
+                    Imagem.style.width = "250px";
+                    Imagem.style.height = "250px";
+                    Imagem.style.backgroundSize = "cover";
+                    Imagem.style.backgroundRepeat = "no-repeat";
+                    divArquivo.append(Imagem);
+                    let SHA = document.createElement("label");
+                    SHA.textContent = e.sha;
+                    SHA.style = 'display:none;';
+                    divArquivo.append(SHA);
+                    let NOME = document.createElement("label");
+                    NOME.textContent = e.name;
+                    NOME.style = 'display:none;';
+                    divArquivo.append(NOME);
+                    let botaoDeletar = document.createElement("button");
+                    botaoDeletar.textContent = 'Deletar';
+                    botaoDeletar.style = 'margin-top: 1px;';
+                    botaoDeletar.addEventListener("click", function() {
+                      let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
+                      let sha = this.parentElement.querySelectorAll("label")[0].textContent;
+                      deletarArquivo(nomedoarquivo, sha);
+                    });
+                    divArquivo.append(botaoDeletar);
+                    document.querySelector("body > div").append(divArquivo);
                   });
-                  divArquivo.append(botaoDeletar);
-                  document.querySelector("body > div").append(divArquivo);
-                });
+                }
               }
-            }
-          });
-        };
-	  }
-	  		let no=osLink.split("|"),requests=new Array();
-			for(let i=0;i<no.length;i++){
-				requests.push(new obterTodos(no[i]));
-			}
+            });
+          };
+        }
+        let no = osLink.split("|"),
+          requests = new Array();
+        for (let i = 0; i < no.length; i++) {
+          requests.push(new obterTodos(no[i]));
+        }
       }
     </script>
   </head>
