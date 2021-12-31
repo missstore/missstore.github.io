@@ -153,41 +153,43 @@
 			req.send();
 			req.onload = function() {
 				let temp = [];
-				JSON.parse(req.response).forEach(function(e,i) {
-					if (e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg")) {
-						temp.push(e);
-					}
-					if (i==JSON.parse(req.response).length-1){
-						document.body.outerHTML='';
+				JSON.parse(req.response).forEach(function(e, i) {
+					e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") ? temp.push(e) : null;
+					if (i == JSON.parse(req.response).length - 1) {
+						document.body.outerHTML = '';
 						let mainDiv = document.createElement("div");
-						mainDiv.style='margin: 30px;width: fit-content;height: fit-content;display: flex;flex-direction: row;flex-wrap: wrap;align-items: center;justify-content: space-evenly;';
+						mainDiv.style = 'margin: 30px;width: fit-content;height: fit-content;display: flex;flex-direction: row;flex-wrap: wrap;align-items: center;justify-content: space-evenly;';
 						document.body.appendChild(mainDiv);
-						temp.forEach(function(e){
-							let divArquivo = document.createElement("div");
-							divArquivo.style='display: flex;flex-direction: column;';
-							let Imagem = document.createElement("img");
-							Imagem.src=e.download_url;
-							Imagem.width=252;
-							divArquivo.append(Imagem);
-							let SHA = document.createElement("label");
-							SHA.textContent=e.sha;
-							SHA.style='display:none;';
-							divArquivo.append(SHA);
-							let NOME = document.createElement("label");
-							NOME.textContent=e.name;
-							NOME.style='display:none;';
-							divArquivo.append(NOME);
-							let botaoDeletar = document.createElement("button");
-							botaoDeletar.textContent='Deletar';
-							botaoDeletar.style='margin-top: 1px;';
-							botaoDeletar.addEventListener("click",function(){
-								let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
-								let sha = this.parentElement.querySelectorAll("label")[0].textContent;
-								deletarArquivo(nomedoarquivo,sha);
+						if (temp.length == 0) {
+							alert("Não foram encontrado resultados");
+						} else {
+							temp.forEach(function(e) {
+								let divArquivo = document.createElement("div");
+								divArquivo.style = 'display: flex;flex-direction: column;';
+								let Imagem = document.createElement("img");
+								Imagem.src = e.download_url;
+								Imagem.width = 252;
+								divArquivo.append(Imagem);
+								let SHA = document.createElement("label");
+								SHA.textContent = e.sha;
+								SHA.style = 'display:none;';
+								divArquivo.append(SHA);
+								let NOME = document.createElement("label");
+								NOME.textContent = e.name;
+								NOME.style = 'display:none;';
+								divArquivo.append(NOME);
+								let botaoDeletar = document.createElement("button");
+								botaoDeletar.textContent = 'Deletar';
+								botaoDeletar.style = 'margin-top: 1px;';
+								botaoDeletar.addEventListener("click", function() {
+									let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
+									let sha = this.parentElement.querySelectorAll("label")[0].textContent;
+									deletarArquivo(nomedoarquivo, sha);
+								});
+								divArquivo.append(botaoDeletar);
+								document.querySelector("body > div").append(divArquivo);
 							});
-							divArquivo.append(botaoDeletar);
-							document.querySelector("body > div").append(divArquivo);
-						});
+						}
 					}
 				});
 			};
