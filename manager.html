@@ -183,6 +183,8 @@ function obterContents() {
 				let labelInfo = document.createElement("label");
 				labelInfo.style = "width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;font-size: 15px;font-family: sans-serif;font-weight: 500;margin-bottom: 10px;";
 				labelInfo.classList.add("info_");
+				let divDorefresh = document.createElement("div");
+				divDorefresh.style='width: 100%;height: 100%;display: flex;justify-content: center;';
 				let butaoRefresh = document.createElement("button");
 				butaoRefresh.style = "margin-bottom: 20px;";
 				butaoRefresh.textContent = "Atualizar imagens";
@@ -190,9 +192,10 @@ function obterContents() {
 					document.querySelector(".info_").textContent = '';
 					obterContents();
 				});
+				divDorefresh.append(butaoRefresh);
 				mainDiv.append(divEnviar);
 				mainDiv.append(labelInfo);
-				mainDiv.append(butaoRefresh);
+				mainDiv.append(divDorefresh);
 				document.body.appendChild(mainDiv);
 				if (temp.length == 0) {
 					document.querySelector(".info_").textContent = ("Não foram encontrado resultados");
