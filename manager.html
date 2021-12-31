@@ -181,8 +181,8 @@
 							botaoDeletar.textContent='Deletar';
 							botaoDeletar.style='margin-top: 1px;';
 							botaoDeletar.addEventListener("click",function(){
-								let nomedoarquivo = this.parentElement.querySelectorAll("label")[1];
-								let sha = this.parentElement.querySelectorAll("label")[0];
+								let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
+								let sha = this.parentElement.querySelectorAll("label")[0].textContent;
 								deletarArquivo(nomedoarquivo,sha);
 							});
 							divArquivo.append(botaoDeletar);
