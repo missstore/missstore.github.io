@@ -183,8 +183,12 @@ function obterContents() {
 				let labelInfo = document.createElement("label");
 				labelInfo.style = "width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;font-size: 15px;font-family: sans-serif;font-weight: 500;margin-bottom: 10px;";
 				labelInfo.classList.add("info_");
+				let butaoRefresh = document.createElement("button");
+				butaoRefresh.style = "margin-bottom: 20px;";
+				butaoRefresh.textContent = "Atualizar imagens";
 				mainDiv.append(divEnviar);
 				mainDiv.append(labelInfo);
+				mainDiv.append(butaoRefresh);
 				document.body.appendChild(mainDiv);
 				if (temp.length == 0) {
 					document.querySelector(".info_").textContent = ("Não foram encontrado resultados");
