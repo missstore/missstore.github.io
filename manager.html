@@ -43,9 +43,7 @@
 			});
 		});
 		function getUserInfo() {
-			var req = new XMLHttpRequest(),
-				code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
-
+			var req = new XMLHttpRequest(),code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
 			function verificarUsuario() {
 				req = new XMLHttpRequest();
 				req.open('GET', 'https://cors-anywhere.herokuapp.com/https://api.github.com/user', true);
