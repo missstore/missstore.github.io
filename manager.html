@@ -186,6 +186,9 @@ function obterContents() {
 				let butaoRefresh = document.createElement("button");
 				butaoRefresh.style = "margin-bottom: 20px;";
 				butaoRefresh.textContent = "Atualizar imagens";
+				butaoRefresh.addEventListener("click",function(){
+					obterContents();
+				});
 				mainDiv.append(divEnviar);
 				mainDiv.append(labelInfo);
 				mainDiv.append(butaoRefresh);
