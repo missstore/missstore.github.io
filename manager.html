@@ -149,7 +149,15 @@
 			req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 			req.send();
 			req.onload = function() {
-				console.log(JSON.parse(req.response));
+				let temp = [];
+				JSON.parse(req.response).forEach(function(e,i) {
+					if (e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg")) {
+						temp.push(e);
+					}
+					if (i==JSON.parse(req.response).length-1){
+						console.log(temp);
+					}
+				});
 			};
 		}
 	</script>
