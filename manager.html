@@ -155,12 +155,12 @@ function obterContents() {
 	req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
 	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	req.send();
+	document.body.outerHTML = '';
 	req.onload = function() {
 		let temp = [];
 		JSON.parse(req.response).forEach(function(e, i) {
 			e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") ? temp.push(e) : null;
 			if (i == JSON.parse(req.response).length - 1) {
-				document.body.outerHTML = '';
 				let mainDiv = document.createElement("div");
 				mainDiv.style = 'margin: 30px;width: fit-content;height: fit-content;display: flex;flex-direction: row;flex-wrap: wrap;align-items: center;justify-content: space-evenly;';
 				let divEnviar = document.createElement("div");
