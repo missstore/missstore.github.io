@@ -52,7 +52,7 @@
 	document.querySelector("body > div").addEventListener("click",function(){
 	getUserInfo();
 	});
-	function getUserInfo() {
+function getUserInfo() {
 	var req = new XMLHttpRequest(),code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
 	function verificarUsuario() {
 		req = new XMLHttpRequest();
@@ -63,14 +63,14 @@
 		req.send();
 		req.onload = function() {
 			if (req.response.includes("too many requests")) {
-			console.log("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+			alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
 			} else if (JSON.parse(req.response).message) {
 				obtertoken();
 			} else {
 				if (JSON.parse(req.response).login == "missstore") {
-					console.log("Usuario autorizado", "Miss store");
+					alert("Usuario autorizado", "Miss store");
 				} else {
-					console.log("Usuario não autorizado", JSON.parse(req.response).login);
+					alert("Usuario não autorizado", JSON.parse(req.response).login);
 				}
 			}
 		};
@@ -84,7 +84,7 @@
 		req.send('code=' + code + '&' + atob("Y2xpZW50X2lkPTFmZGY5ZmVlNjk5Njc4NmYyMDUzJmNsaWVudF9zZWNyZXQ9YjZlMjY4MTE3OTA2ZjI2MWQwODdmMDllNmMwNTRhZGU5NGZiNjEzYg==") + '&state=true');
 		req.onload = function() {
 			if (req.response.includes("too many requests")) {
-				console.log("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
 			} else {
 				try {
 				var _token = JSON.parse(req.response) ? _token = JSON.parse(req.response).access_token : null;
@@ -114,19 +114,19 @@ function fazerUpload(indexUploaded) {
 		req.send('{"message":"' + arquivo.name + ' uploaded","content":"' + LerArquivo.result.replace(/^data:image.+;base64,/, '') + '"}');
 		req.onload = function() {
 			if (JSON.parse(req.response).message) {
-				console.log("Falha ao enviar o arquivo " + arquivo.name, "\n", JSON.parse(req.response).message);
+				alert("Falha ao enviar o arquivo " + arquivo.name, "\n", JSON.parse(req.response).message);
 			} else {
-				console.log("Arquivo " + arquivo.name + " enviado com sucesso!");
+				alert("Arquivo " + arquivo.name + " enviado com sucesso!");
 			}
-			indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? console.log("Todos os arquivos foram processados.") : fazerUpload(indexUploaded + 1);
+			indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? alert("Todos os arquivos foram processados.") : fazerUpload(indexUploaded + 1);
 		};
 	};
 	LerArquivo.onprogress = function(e) {
 		let percentComplete = e.loaded / e.total;
 		percentComplete = parseInt(percentComplete * 100);
-		console.log(percentComplete + "%");
+		alert(percentComplete + "%");
 	};
-	LerArquivo.onerror = function(e) { console.log(e); };
+	LerArquivo.onerror = function(e) { alert(e); };
 	LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
 }
 function deletarArquivo(nome, sha) {
@@ -138,15 +138,15 @@ function deletarArquivo(nome, sha) {
 	req.send('{"message":"' + nome + ' deleted","sha":"' + sha + '"}');
 	req.onload = function() {
 		if (req.response.includes("too many requests")) {
-			console.log("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+			alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
 		} else if (!JSON.parse(req.response).message.includes('deleted')) {
 			if (JSON.parse(req.response).message == 'Bad credentials') {
 				getUserInfo();
 			} else {
-				console.log("Erro ao tentar apagar o arquivo " + nome, "\n", JSON.parse(req.response).message);
+				alert("Erro ao tentar apagar o arquivo " + nome, "\n", JSON.parse(req.response).message);
 			}
 		} else if (JSON.parse(req.response).commit) {
-			console.log("Arquivo deletado " + nome);
+			alert("Arquivo deletado " + nome);
 		}
 	};
 }
