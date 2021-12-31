@@ -131,7 +131,7 @@
 			req.onload = function() {
 				if (req.response.includes("too many requests")) {
 					alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				} else if (!JSON.parse(req.response).message.includes('deleted')) {
+				} else if (JSON.parse(req.response).message) {
 					if (JSON.parse(req.response).message == 'Bad credentials') {
 						getUserInfo();
 					} else {
