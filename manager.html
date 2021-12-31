@@ -51,11 +51,8 @@
 
       function getUserInfo(novoacesso) {
         novoacesso = novoacesso || "nao";
-        novoacesso != "nao" ? window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true") : null;
-        var req = new XMLHttpRequest(),
-          code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
-        verificarUsuario();
-
+        novoacesso != "nao" ? localStorage.setItem("_token", null) : null;
+        var req = new XMLHttpRequest(),code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
         function verificarUsuario() {
           req = new XMLHttpRequest();
           req.open('GET', 'https://cors-anywhere.herokuapp.com/https://api.github.com/user', true);
@@ -77,7 +74,7 @@
             }
           };
         }
-
+		verificarUsuario();
         function obtertoken() {
           req = new XMLHttpRequest();
           req.open('POST', 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', true);
