@@ -189,11 +189,11 @@
 								let divArquivo = document.createElement("div");
 								divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;';
 								let Imagem = document.createElement("div");
-								Imagem.backgroundImage = "url("+e.download_url+")";
-								Imagem.width = "250px";
-								Imagem.height = "250px";
-								Imagem.backgroundSize = "contain";
-								Imagem.backgroundRepeat = "no-repeat";
+								Imagem.style.backgroundImage = "url("+e.download_url+")";
+								Imagem.style.width = "250px";
+								Imagem.style.height = "250px";
+								Imagem.stylebackgroundSize = "contain";
+								Imagem.style.backgroundRepeat = "no-repeat";
 								divArquivo.append(Imagem);
 								let SHA = document.createElement("label");
 								SHA.textContent = e.sha;
