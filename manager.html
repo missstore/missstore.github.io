@@ -137,7 +137,7 @@
 					} else {
 						alert("Erro ao tentar apagar o arquivo " + nome, "\n", JSON.parse(req.response).message);
 					}
-				} else if (JSON.parse(req.response).commit) 
+				} else if (JSON.parse(req.response).commit) {
 					Array.from(document.querySelectorAll("label")).find(f=>f.textContent==nome)?
 					Array.from(document.querySelectorAll("label")).find(f=>f.textContent==nome).parentElement.remove()
 					:null;
