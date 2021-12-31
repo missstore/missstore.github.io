@@ -43,7 +43,9 @@
 			});
 		});
 		function getUserInfo() {
-			var req = new XMLHttpRequest(),code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
+			var req = new XMLHttpRequest(),
+				code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
+
 			function verificarUsuario() {
 				req = new XMLHttpRequest();
 				req.open('GET', 'https://cors-anywhere.herokuapp.com/https://api.github.com/user', true);
@@ -66,6 +68,7 @@
 				};
 			}
 			verificarUsuario();
+
 			function obtertoken() {
 				req = new XMLHttpRequest();
 				req.open('POST', 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', true);
@@ -93,8 +96,10 @@
 				};
 			}
 		}
+
 		function fazerUpload(indexUploaded) {
-			let LerArquivo = new FileReader(),arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
+			let LerArquivo = new FileReader(),
+				arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
 			LerArquivo.onload = function() {
 				var req = new XMLHttpRequest();
 				req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + arquivo.name, true);
@@ -104,11 +109,11 @@
 				req.send('{"message":"' + arquivo.name + ' uploaded","content":"' + LerArquivo.result.replace(/^data:image.+;base64,/, '') + '"}');
 				req.onload = function() {
 					if (JSON.parse(req.response).message) {
-						document.querySelector(".info_").textContent=("Falha ao enviar o arquivo " + arquivo.name, "\n", JSON.parse(req.response).message);
+						document.querySelector(".info_").textContent = ("Falha ao enviar o arquivo " + arquivo.name, "\n", JSON.parse(req.response).message);
 					} else {
-						document.querySelector(".info_").textContent=("Arquivo " + arquivo.name + " enviado com sucesso!");
+						document.querySelector(".info_").textContent = ("Arquivo " + arquivo.name + " enviado com sucesso!");
 					}
-					indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? document.querySelector(".info_").textContent=("Todos os arquivos foram processados.") : fazerUpload(indexUploaded + 1);
+					indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? document.querySelector(".info_").textContent = ("Todos os arquivos foram processados.") : fazerUpload(indexUploaded + 1);
 				};
 			};
 			LerArquivo.onprogress = function(e) {
@@ -117,10 +122,11 @@
 				console.log(percentComplete + "%");
 			};
 			LerArquivo.onerror = function(e) {
-				document.querySelector(".info_").textContent=(e);
+				document.querySelector(".info_").textContent = (e);
 			};
 			LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
 		}
+
 		function deletarArquivo(nome, sha) {
 			var req = new XMLHttpRequest();
 			req.open('DELETE', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
@@ -130,21 +136,22 @@
 			req.send('{"message":"' + nome + ' deleted","sha":"' + sha + '"}');
 			req.onload = function() {
 				if (req.response.includes("too many requests")) {
-					document.querySelector(".info_").textContent=("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+					document.querySelector(".info_").textContent = ("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
 				} else if (JSON.parse(req.response).message) {
 					if (JSON.parse(req.response).message == 'Bad credentials') {
 						getUserInfo();
 					} else {
-						document.querySelector(".info_").textContent=("Erro ao tentar apagar o arquivo " + nome, "\n", JSON.parse(req.response).message);
+						document.querySelector(".info_").textContent = ("Erro ao tentar apagar o arquivo " + nome, "\n", JSON.parse(req.response).message);
 					}
 				} else if (JSON.parse(req.response).commit) {
-					Array.from(document.querySelectorAll("label")).find(f=>f.textContent==nome)?
-					Array.from(document.querySelectorAll("label")).find(f=>f.textContent==nome).parentElement.remove()
-					:null;
-					document.querySelector(".info_").textContent=("Arquivo deletado " + nome);
+					Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ?
+						Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() :
+						null;
+					document.querySelector(".info_").textContent = ("Arquivo deletado " + nome);
 				}
 			};
 		}
+
 		function obterContents() {
 			var req = new XMLHttpRequest();
 			req.open('GET', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents', true);
@@ -160,36 +167,36 @@
 						let mainDiv = document.createElement("div");
 						mainDiv.style = 'margin: 30px;width: fit-content;height: fit-content;display: flex;flex-direction: row;flex-wrap: wrap;align-items: center;justify-content: space-evenly;';
 						let divEnviar = document.createElement("div");
-						divEnviar.style='width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;margin-bottom: 20px;';
+						divEnviar.style = 'width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;margin-bottom: 20px;';
 						let selecionar_arquivo = document.createElement("input");
-						selecionar_arquivo.multiple=true;
-						selecionar_arquivo.type="file";
-						selecionar_arquivo.accept="image/png, image/gif, image/jpeg, image/jpg, image/svg"
+						selecionar_arquivo.multiple = true;
+						selecionar_arquivo.type = "file";
+						selecionar_arquivo.accept = "image/png, image/gif, image/jpeg, image/jpg, image/svg"
 						divEnviar.append(selecionar_arquivo);
 						let botaoEnviar = document.createElement("button");
-						botaoEnviar.textContent="Enviar fotos";
-						botaoEnviar.addEventListener("click",function(){
-						if(document.querySelector("input[type=file]").files.length==0){
-						document.querySelector(".info_").textContent='Selecione um arquivo primeiro';
-						}else{
-						fazerUpload(0);
-						}
+						botaoEnviar.textContent = "Enviar fotos";
+						botaoEnviar.addEventListener("click", function() {
+							if (document.querySelector("input[type=file]").files.length == 0) {
+								document.querySelector(".info_").textContent = 'Selecione um arquivo primeiro';
+							} else {
+								fazerUpload(0);
+							}
 						});
 						divEnviar.append(botaoEnviar);
 						let labelInfo = document.createElement("label");
-						labelInfo.style="width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;font-size: 15px;font-family: sans-serif;font-weight: 500;margin-bottom: 10px;";
+						labelInfo.style = "width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;font-size: 15px;font-family: sans-serif;font-weight: 500;margin-bottom: 10px;";
 						labelInfo.classList.add("info_");
 						mainDiv.append(divEnviar);
 						mainDiv.append(labelInfo);
 						document.body.appendChild(mainDiv);
 						if (temp.length == 0) {
-							document.querySelector(".info_").textContent=("Não foram encontrado resultados");
+							document.querySelector(".info_").textContent = ("Não foram encontrado resultados");
 						} else {
 							temp.forEach(function(e) {
 								let divArquivo = document.createElement("div");
 								divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;';
 								let Imagem = document.createElement("div");
-								Imagem.style.backgroundImage = "url("+e.download_url+")";
+								Imagem.style.backgroundImage = "url(" + e.download_url + ")";
 								Imagem.style.width = "250px";
 								Imagem.style.height = "250px";
 								Imagem.style.backgroundSize = "cover";
