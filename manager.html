@@ -94,8 +94,7 @@
 			}
 		}
 		function fazerUpload(indexUploaded) {
-			let LerArquivo = new FileReader(),
-				arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
+			let LerArquivo = new FileReader(),arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
 			LerArquivo.onload = function() {
 				var req = new XMLHttpRequest();
 				req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + arquivo.name, true);
