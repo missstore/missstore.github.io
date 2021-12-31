@@ -21,108 +21,130 @@
     <!-- Css's | Icons | Fonts -->
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
-		<script>
-	document.querySelector("body > div").addEventListener("click",function(){
-	getUserInfo();
-	});
-function getUserInfo() {
-	var req = new XMLHttpRequest(),code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
-	function verificarUsuario() {
-		req = new XMLHttpRequest();
-		req.open('GET', 'https://cors-anywhere.herokuapp.com/https://api.github.com/user', true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-		req.send();
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-			} else if (JSON.parse(req.response).message) {
-				obtertoken();
-			} else {
-				if (JSON.parse(req.response).login == "missstore") {
-					alert("Usuario autorizado");
-				} else {
-					alert("Usuario não autorizado "+ JSON.parse(req.response).login);
-				}
-			}
-		};
-	}
-	verificarUsuario();
-	function obtertoken() {
-		req = new XMLHttpRequest();
-		req.open('POST', 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.send('code=' + code + '&' + atob("Y2xpZW50X2lkPTFmZGY5ZmVlNjk5Njc4NmYyMDUzJmNsaWVudF9zZWNyZXQ9YjZlMjY4MTE3OTA2ZjI2MWQwODdmMDllNmMwNTRhZGU5NGZiNjEzYg==") + '&state=true');
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-			} else {
-				try {
-					var _token = JSON.parse(req.response) ? _token = JSON.parse(req.response).access_token : null;
-					if (_token) {
-						localStorage.setItem("_token", _token);
-						verificarUsuario();
-					} else {
-						let con = confirm("Autorize o app para obter um codigo e continuar")
-						con == true ? window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true") : null;
+	<script>
+		function wwm(s, f) {
+			return new Promise(resolve => {
+				if (document.querySelector(s)) return resolve(f);
+				const observer = new MutationObserver(m => {
+					if (document.querySelector(s)) {
+						resolve(f);
+						observer.disconnect();
 					}
-				} catch (e) {
-					let con = confirm("Ira abrir uma janela\nnela clique em 'Request temporary access to the demo server'\nAguarde a mensagem 'You currently have temporary access to the demo server.'\nLogo após feche a janela")
-					con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-				}
-			}
-		};
-	}
-}
-function fazerUpload(indexUploaded) {
-	let LerArquivo = new FileReader(),arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
-	LerArquivo.onload = function() {
-		var req = new XMLHttpRequest();
-		req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + arquivo.name, true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-		req.send('{"message":"' + arquivo.name + ' uploaded","content":"' + LerArquivo.result.replace(/^data:image.+;base64,/, '') + '"}');
-		req.onload = function() {
-			if (JSON.parse(req.response).message) {
-				alert("Falha ao enviar o arquivo " + arquivo.name, "\n", JSON.parse(req.response).message);
-			} else {
-				alert("Arquivo " + arquivo.name + " enviado com sucesso!");
-			}
-			indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? alert("Todos os arquivos foram processados.") : fazerUpload(indexUploaded + 1);
-		};
-	};
-	LerArquivo.onprogress = function(e) {
-		let percentComplete = e.loaded / e.total;
-		percentComplete = parseInt(percentComplete * 100);
-		console.log(percentComplete + "%");
-	};
-	LerArquivo.onerror = function(e) {alert(e);};
-	LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
-}
-function deletarArquivo(nome, sha) {
-	var req = new XMLHttpRequest();
-	req.open('DELETE', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
-	req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-	req.send('{"message":"' + nome + ' deleted","sha":"' + sha + '"}');
-	req.onload = function() {
-		if (req.response.includes("too many requests")) {
-			alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-		} else if (!JSON.parse(req.response).message.includes('deleted')) {
-			if (JSON.parse(req.response).message == 'Bad credentials') {
-				getUserInfo();
-			} else {
-				alert("Erro ao tentar apagar o arquivo " + nome, "\n", JSON.parse(req.response).message);
-			}
-		} else if (JSON.parse(req.response).commit) {
-			alert("Arquivo deletado " + nome);
+				});
+				observer.observe(document, {
+					childList: true,
+					subtree: true
+				});
+			});
 		}
-	};
-}
+		wwm("body > div").then(function() {
+			document.querySelector("body > div").addEventListener("click", function() {
+				getUserInfo();
+			});
+		});
+		function getUserInfo() {
+			var req = new XMLHttpRequest(),
+				code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
+
+			function verificarUsuario() {
+				req = new XMLHttpRequest();
+				req.open('GET', 'https://cors-anywhere.herokuapp.com/https://api.github.com/user', true);
+				req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+				req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+				req.send();
+				req.onload = function() {
+					if (req.response.includes("too many requests")) {
+						alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+					} else if (JSON.parse(req.response).message) {
+						obtertoken();
+					} else {
+						if (JSON.parse(req.response).login == "missstore") {
+							alert("Usuario autorizado");
+						} else {
+							alert("Usuario não autorizado " + JSON.parse(req.response).login);
+						}
+					}
+				};
+			}
+			verificarUsuario();
+			function obtertoken() {
+				req = new XMLHttpRequest();
+				req.open('POST', 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', true);
+				req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+				req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				req.send('code=' + code + '&' + atob("Y2xpZW50X2lkPTFmZGY5ZmVlNjk5Njc4NmYyMDUzJmNsaWVudF9zZWNyZXQ9YjZlMjY4MTE3OTA2ZjI2MWQwODdmMDllNmMwNTRhZGU5NGZiNjEzYg==") + '&state=true');
+				req.onload = function() {
+					if (req.response.includes("too many requests")) {
+						alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+					} else {
+						try {
+							var _token = JSON.parse(req.response) ? _token = JSON.parse(req.response).access_token : null;
+							if (_token) {
+								localStorage.setItem("_token", _token);
+								verificarUsuario();
+							} else {
+								let con = confirm("Autorize o app para obter um codigo e continuar")
+								con == true ? window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true") : null;
+							}
+						} catch (e) {
+							let con = confirm("Ira abrir uma janela\nnela clique em 'Request temporary access to the demo server'\nAguarde a mensagem 'You currently have temporary access to the demo server.'\nLogo após feche a janela")
+							con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
+						}
+					}
+				};
+			}
+		}
+		function fazerUpload(indexUploaded) {
+			let LerArquivo = new FileReader(),
+				arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
+			LerArquivo.onload = function() {
+				var req = new XMLHttpRequest();
+				req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + arquivo.name, true);
+				req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+				req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+				req.send('{"message":"' + arquivo.name + ' uploaded","content":"' + LerArquivo.result.replace(/^data:image.+;base64,/, '') + '"}');
+				req.onload = function() {
+					if (JSON.parse(req.response).message) {
+						alert("Falha ao enviar o arquivo " + arquivo.name, "\n", JSON.parse(req.response).message);
+					} else {
+						alert("Arquivo " + arquivo.name + " enviado com sucesso!");
+					}
+					indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? alert("Todos os arquivos foram processados.") : fazerUpload(indexUploaded + 1);
+				};
+			};
+			LerArquivo.onprogress = function(e) {
+				let percentComplete = e.loaded / e.total;
+				percentComplete = parseInt(percentComplete * 100);
+				console.log(percentComplete + "%");
+			};
+			LerArquivo.onerror = function(e) {
+				alert(e);
+			};
+			LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
+		}
+		function deletarArquivo(nome, sha) {
+			var req = new XMLHttpRequest();
+			req.open('DELETE', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
+			req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+			req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+			req.send('{"message":"' + nome + ' deleted","sha":"' + sha + '"}');
+			req.onload = function() {
+				if (req.response.includes("too many requests")) {
+					alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+				} else if (!JSON.parse(req.response).message.includes('deleted')) {
+					if (JSON.parse(req.response).message == 'Bad credentials') {
+						getUserInfo();
+					} else {
+						alert("Erro ao tentar apagar o arquivo " + nome, "\n", JSON.parse(req.response).message);
+					}
+				} else if (JSON.parse(req.response).commit) {
+					alert("Arquivo deletado " + nome);
+				}
+			};
+		}
 	</script>
 	</head>
 <body style="
