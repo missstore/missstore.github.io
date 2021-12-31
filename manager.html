@@ -68,7 +68,7 @@ function getUserInfo() {
 				obtertoken();
 			} else {
 				if (JSON.parse(req.response).login == "missstore") {
-					alert("Usuario autorizado", "Miss store");
+					alert("Usuario autorizado");
 				} else {
 					alert("Usuario não autorizado", JSON.parse(req.response).login);
 				}
