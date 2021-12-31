@@ -174,7 +174,7 @@
             e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") ? temp.push(e) : null;
             if (i == JSON.parse(req.response).length - 1) {
               let mainDiv = document.createElement("div");
-              mainDiv.style = 'margin: 30px;width: fit-content;height: fit-content;display: flex;flex-direction: row;flex-wrap: wrap;align-items: center;justify-content: space-evenly;';
+              mainDiv.style = 'margin: 30px;width: auto;height: fit-content;display: flex;flex-flow: row wrap;align-items: center;justify-content: center;';
               let divEnviar = document.createElement("div");
               divEnviar.style = 'width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;margin-bottom: 20px;';
               let selecionar_arquivo = document.createElement("input");
@@ -214,7 +214,7 @@
               } else {
                 temp.forEach(function(e) {
                   let divArquivo = document.createElement("div");
-                  divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;';
+                  divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
                   let Imagem = document.createElement("div");
                   Imagem.style.backgroundImage = "url(" + e.download_url + ")";
                   Imagem.style.width = "250px";
