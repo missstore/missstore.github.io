@@ -139,7 +139,7 @@
 					}
 				} else if (JSON.parse(req.response).commit) 
 					Array.from(document.querySelectorAll("label")).find(f=>f.textContent==nome)?
-					Array.from(document.querySelectorAll("label")).find(f=>f.textContent==nome).parentElement.remove()?
+					Array.from(document.querySelectorAll("label")).find(f=>f.textContent==nome).parentElement.remove()
 					:null;
 					alert("Arquivo deletado " + nome);
 				}
