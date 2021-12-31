@@ -157,10 +157,11 @@
 					if (i==JSON.parse(req.response).length-1){
 						document.body.outerHTML='';
 						let mainDiv = document.createElement("div");
-						mainDiv.style='margin: 30px;width: auto;height: auto;';
+						mainDiv.style='margin: 30px;width: fit-content;height: fit-content;display: flex;flex-direction: row;flex-wrap: wrap;align-items: center;justify-content: space-evenly;';
 						document.body.appendChild(mainDiv);
 						temp.forEach(function(e){
 							let divArquivo = document.createElement("div");
+							divArquivo.style='display: flex;flex-direction: column;';
 							let Imagem = document.createElement("img");
 							Imagem.src=e.download_url;
 							Imagem.width=252;
@@ -173,6 +174,15 @@
 							NOME.textContent=e.name;
 							NOME.style='display:none;';
 							divArquivo.append(NOME);
+							let botaoDeletar = document.createElement("button");
+							botaoDeletar.textContent='Deletar';
+							botaoDeletar.style='margin-top: 1px;';
+							botaoDeletar.addEventListener("click",function(){
+								let nomedoarquivo = this.parentElement.querySelectorAll("label")[1];
+								let sha = this.parentElement.querySelectorAll("label")[0];
+								deletarArquivo(nomedoarquivo,sha);
+							});
+							divArquivo.append(botaoDeletar);
 							document.querySelector("body > div").append(divArquivo);
 						});
 					}
