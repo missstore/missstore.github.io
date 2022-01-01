@@ -294,8 +294,7 @@
                         divArquivo.append(botaoDeletar);
                         document.querySelector("body > div").append(divArquivo);
                       }else{
-					    let requests = new Array();
-                        requests.push(new obterDados(caminho, e.sha));
+					    new obterDados(caminho, e.sha);
 					  }
                     });
                   }
