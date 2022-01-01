@@ -293,18 +293,10 @@
                         });
                         divArquivo.append(botaoDeletar);
                         document.querySelector("body > div").append(divArquivo);
-                      }
-                      if (i == temp.length - 1) {
-                        temp.forEach(function(e) {
-                          if (e.name == "info.txt") {
-                            let no = osLink.split("|"),
-                              requests = new Array();
-                            for (let i = 0; i < no.length; i++) {
-                              requests.push(new obterDados(no[i], e.sha));
-                            }
-                          }
-                        });
-                      }
+                      }else{
+					    let requests = new Array();
+                        requests.push(new obterDados(caminho, e.sha));
+					  }
                     });
                   }
                 }
