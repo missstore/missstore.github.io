@@ -127,14 +127,14 @@
             indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? document.querySelector(".info_").textContent = "Todos os arquivos foram processados." : fazerUpload(indexUploaded + 1, document.querySelector("body > div > div:nth-child(1) > select").value);
           };
         };
-        LerArquivo.onprogress = function(e) {
+        /*LerArquivo.onprogress = function(e) {
           let percentComplete = e.loaded / e.total;
           percentComplete = parseInt(percentComplete * 100);
           percentComplete == 100 ? document.querySelector(".info_").textContent = "Arquivo enviado" : document.querySelector(".info_").textContent = "Enviando arquivo " + percentComplete + "%";
         };
         LerArquivo.onerror = function(e) {
           document.querySelector(".info_").textContent = e;
-        };
+        };*/
         LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
       }
 
