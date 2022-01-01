@@ -215,17 +215,26 @@
         mainDiv.append(divDorefresh);
         document.body.appendChild(mainDiv);
 
-        function obterDados(caminho) {
+        function obterDados(caminho, sha) {
           caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
-          var req = new XMLHttpRequest();
-          req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho + '/info.txt', true);
-          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-          req.send();
+          var req = new XMLHttpRequest(),
+            erroStatus = false;
+          if (erroStatus != true) {
+            req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho + '/info.txt', true);
+            req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.send();
+          }
           req.onload = function() {
-            let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
-            onde = onde.substring(onde.indexOf("main/") + 5, onde.length) + '/';
-            console.log(onde, req.response);
+            if (req.response.includes("too many requests")) {
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              erroStatus = true;
+            } else {
+              erroStatus = false;
+              let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
+              onde = onde.substring(onde.indexOf("main/") + 5, onde.length) + '/';
+              console.log(onde, req.response, sha);
+            }
           };
         }
 
@@ -287,11 +296,15 @@
                         document.querySelector("body > div").append(divArquivo);
                       }
                       if (i == temp.length - 1) {
-                        let no = osLink.split("|"),
-                          requests = new Array();
-                        for (let i = 0; i < no.length; i++) {
-                          requests.push(new obterDados(no[i]));
-                        }
+                        temp.forEach(function(e) {
+                          if (e.name == "info.txt") {
+                            let no = osLink.split("|"),
+                              requests = new Array();
+                            for (let i = 0; i < no.length; i++) {
+                              requests.push(new obterDados(no[i], e.sha));
+                            }
+                          }
+                        });
                       }
                     });
                   }
