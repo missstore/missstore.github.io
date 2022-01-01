@@ -232,7 +232,7 @@
             } else {
               erroStatus = false;
               let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
-              onde = onde.substring(onde.indexOf("main/") + 5, onde.length) + '/';
+              onde = onde.replace("main/","") + '/';
               console.log(onde, req.response, sha);
             }
           };
