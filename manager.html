@@ -48,11 +48,13 @@
           getUserInfo("novoacesso");
         });
       });
+
       function getUserInfo(novoacesso) {
         novoacesso = novoacesso || "nao";
         novoacesso != "nao" ? localStorage.setItem("_token", null) : null;
         var req = new XMLHttpRequest(),
           code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
+
         function verificarUsuario() {
           req = new XMLHttpRequest();
           req.open('GET', 'https://cors-anywhere.herokuapp.com/https://api.github.com/user', true);
@@ -75,6 +77,7 @@
           };
         }
         verificarUsuario();
+
         function obtertoken() {
           req = new XMLHttpRequest();
           req.open('POST', 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', true);
@@ -102,8 +105,10 @@
           };
         }
       }
+
       function fazerUpload(indexUploaded, tipo) {
-        let LerArquivo = new FileReader(),arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
+        let LerArquivo = new FileReader(),
+          arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
         LerArquivo.onload = function() {
           var req = new XMLHttpRequest();
           req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/" + arquivo.name, true);
@@ -119,23 +124,20 @@
             } else {
               document.querySelector(".info_").textContent = "Arquivo " + arquivo.name + " enviado com sucesso!";
             }
-            indexUploaded == document.querySelector("input[type=file]").files.length - 1 ?
-			document.querySelector(".info_").textContent = "Todos os arquivos foram processados." 
-			: fazerUpload(indexUploaded + 1, document.querySelector("body > div > div:nth-child(1) > select").value);
+            indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? document.querySelector(".info_").textContent = "Todos os arquivos foram processados." : fazerUpload(indexUploaded + 1, document.querySelector("body > div > div:nth-child(1) > select").value);
           };
         };
         LerArquivo.onprogress = function(e) {
           let percentComplete = e.loaded / e.total;
           percentComplete = parseInt(percentComplete * 100);
-		  percentComplete==100?
-		  document.querySelector(".info_").textContent = "Arquivo enviado"
-		  :document.querySelector(".info_").textContent = "Enviando arquivo " + percentComplete + "%";
+          percentComplete == 100 ? document.querySelector(".info_").textContent = "Arquivo enviado" : document.querySelector(".info_").textContent = "Enviando arquivo " + percentComplete + "%";
         };
         LerArquivo.onerror = function(e) {
           document.querySelector(".info_").textContent = e;
         };
         LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
       }
+
       function deletarArquivo(nome, sha) {
         var req = new XMLHttpRequest();
         req.open('DELETE', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
@@ -153,13 +155,12 @@
               document.querySelector(".info_").textContent = "Erro ao tentar apagar o arquivo " + nome + "\n" + JSON.parse(req.response).message;
             }
           } else if (JSON.parse(req.response).commit) {
-            Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ?
-			Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() 
-			: null;
+            Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ? Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() : null;
             document.querySelector(".info_").textContent = "Arquivo " + nome + " deletado";
           }
         };
       }
+
       function obterContents() {
         var osLink = "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/vestidos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/calcas|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/conjuntos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/croppeds|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/saias";
         document.body.outerHTML = '';
@@ -213,20 +214,24 @@
         mainDiv.append(labelInfo);
         mainDiv.append(divDorefresh);
         document.body.appendChild(mainDiv);
-		function obterDados(caminho){
-		caminho=caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/","https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
-		var req = new XMLHttpRequest();
-		req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho + '/info.txt', true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.send();
-		req.onload = function() {
-		let onde = caminho.substring(caminho.indexOf("missstore.github.io")+20,caminho.length+'/');
-			console.log(onde, req.response);
-		};
-		}
+
+        function obterDados(caminho) {
+          caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
+          var req = new XMLHttpRequest();
+          req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho + '/info.txt', true);
+          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          req.send();
+          req.onload = function() {
+            let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
+            onde = onde.substring(onde.indexOf("main/") + 5, onde.length) + '/';
+            console.log(onde, req.response);
+          };
+        }
+
         function obterTodos(caminho) {
-          var req = new XMLHttpRequest(),erroStatus = false;
+          var req = new XMLHttpRequest(),
+            erroStatus = false;
           if (erroStatus != true) {
             req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho, true);
             req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
@@ -238,54 +243,56 @@
               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
               erroStatus = true;
             } else {
-              let temp = [];erroStatus = false;
+              let temp = [];
+              erroStatus = false;
               JSON.parse(req.response).forEach(function(e, i) {
                 e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") || e.name.endsWith(".gif") || e.name.endsWith(".txt") ? temp.push(e) : null;
                 if (i == JSON.parse(req.response).length - 1) {
                   if (temp.length == 0) {
                     document.querySelector(".info_").textContent = "Não foram encontrado resultados";
                   } else {
-                    temp.forEach(function(e,i) {
-					if(!e.name.endsWith(".txt")){
-                      let divArquivo = document.createElement("div");
-                      divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
-                      let Imagem = document.createElement("div");
-                      Imagem.style.backgroundImage = "url(" + e.download_url + ")";
-                      Imagem.style.width = "250px";
-                      Imagem.style.height = "250px";
-                      Imagem.style.backgroundSize = "cover";
-                      Imagem.style.backgroundRepeat = "no-repeat";
-                      divArquivo.append(Imagem);
-                      let SHA = document.createElement("label");
-                      SHA.textContent = e.sha;
-                      SHA.style = 'display:none;';
-                      divArquivo.append(SHA);
-                      let NOME = document.createElement("label");
-                      NOME.textContent = e.name;
-                      NOME.style = 'display:none;';
-                      divArquivo.append(NOME);
-                      let Caminho = document.createElement("label");
-                      Caminho.textContent = e.path;
-                      Caminho.style = 'display:none;';
-                      divArquivo.append(Caminho);
-                      let botaoDeletar = document.createElement("button");
-                      botaoDeletar.textContent = 'Deletar';
-                      botaoDeletar.style = 'margin-top: 1px;';
-                      botaoDeletar.addEventListener("click", function() {
-                        let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
-                        let sha = this.parentElement.querySelectorAll("label")[0].textContent;
-                        let path = this.parentElement.querySelectorAll("label")[2].textContent;
-                        deletarArquivo(path, sha);
-                      });
-                      divArquivo.append(botaoDeletar);
-                      document.querySelector("body > div").append(divArquivo);
-					 }
-					 if(i==temp.length-1){
-        let no = osLink.split("|"),requests = new Array();
-        for (let i = 0; i < no.length; i++) {
-          requests.push(new obterDados(no[i]));
-        }
-					 }
+                    temp.forEach(function(e, i) {
+                      if (!e.name.endsWith(".txt")) {
+                        let divArquivo = document.createElement("div");
+                        divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
+                        let Imagem = document.createElement("div");
+                        Imagem.style.backgroundImage = "url(" + e.download_url + ")";
+                        Imagem.style.width = "250px";
+                        Imagem.style.height = "250px";
+                        Imagem.style.backgroundSize = "cover";
+                        Imagem.style.backgroundRepeat = "no-repeat";
+                        divArquivo.append(Imagem);
+                        let SHA = document.createElement("label");
+                        SHA.textContent = e.sha;
+                        SHA.style = 'display:none;';
+                        divArquivo.append(SHA);
+                        let NOME = document.createElement("label");
+                        NOME.textContent = e.name;
+                        NOME.style = 'display:none;';
+                        divArquivo.append(NOME);
+                        let Caminho = document.createElement("label");
+                        Caminho.textContent = e.path;
+                        Caminho.style = 'display:none;';
+                        divArquivo.append(Caminho);
+                        let botaoDeletar = document.createElement("button");
+                        botaoDeletar.textContent = 'Deletar';
+                        botaoDeletar.style = 'margin-top: 1px;';
+                        botaoDeletar.addEventListener("click", function() {
+                          let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
+                          let sha = this.parentElement.querySelectorAll("label")[0].textContent;
+                          let path = this.parentElement.querySelectorAll("label")[2].textContent;
+                          deletarArquivo(path, sha);
+                        });
+                        divArquivo.append(botaoDeletar);
+                        document.querySelector("body > div").append(divArquivo);
+                      }
+                      if (i == temp.length - 1) {
+                        let no = osLink.split("|"),
+                          requests = new Array();
+                        for (let i = 0; i < no.length; i++) {
+                          requests.push(new obterDados(no[i]));
+                        }
+                      }
                     });
                   }
                 }
@@ -293,7 +300,8 @@
             }
           };
         }
-        let no = osLink.split("|"),requests = new Array();
+        let no = osLink.split("|"),
+          requests = new Array();
         for (let i = 0; i < no.length; i++) {
           requests.push(new obterTodos(no[i]));
         }
