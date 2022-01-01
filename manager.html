@@ -213,9 +213,20 @@
         mainDiv.append(labelInfo);
         mainDiv.append(divDorefresh);
         document.body.appendChild(mainDiv);
+		function obterDados(caminho){
+		caminho=caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/","https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
+		var req = new XMLHttpRequest();
+		req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho + '/info.txt', true);
+		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		req.send();
+		req.onload = function() {
+		let onde = caminho.substring(caminho.indexOf("missstore.github.io")+20,caminho.length+'/');
+			console.log(onde, req.response);
+		};
+		}
         function obterTodos(caminho) {
-          var req = new XMLHttpRequest(),
-            erroStatus = false;
+          var req = new XMLHttpRequest(),erroStatus = false;
           if (erroStatus != true) {
             req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho, true);
             req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
@@ -229,12 +240,13 @@
             } else {
               let temp = [];erroStatus = false;
               JSON.parse(req.response).forEach(function(e, i) {
-                e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") ? temp.push(e) : null;
+                e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") || e.name.endsWith(".gif") || e.name.endsWith(".txt") ? temp.push(e) : null;
                 if (i == JSON.parse(req.response).length - 1) {
                   if (temp.length == 0) {
                     document.querySelector(".info_").textContent = "Não foram encontrado resultados";
                   } else {
-                    temp.forEach(function(e) {
+                    temp.forEach(function(e,i) {
+					if(!e.name.endsWith(".txt")){
                       let divArquivo = document.createElement("div");
                       divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
                       let Imagem = document.createElement("div");
@@ -267,6 +279,13 @@
                       });
                       divArquivo.append(botaoDeletar);
                       document.querySelector("body > div").append(divArquivo);
+					 }
+					 if(i==temp.length-1){
+        let no = osLink.split("|"),requests = new Array();
+        for (let i = 0; i < no.length; i++) {
+          requests.push(new obterDados(no[i]));
+        }
+					 }
                     });
                   }
                 }
@@ -274,8 +293,7 @@
             }
           };
         }
-        let no = osLink.split("|"),
-          requests = new Array();
+        let no = osLink.split("|"),requests = new Array();
         for (let i = 0; i < no.length; i++) {
           requests.push(new obterTodos(no[i]));
         }
