@@ -233,7 +233,10 @@
               erroStatus = false;
               let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
               onde = onde.replace("main/","") + '/';
-              console.log(onde, req.response, sha);
+			  console.log(Array.from(document.querySelectorAll("label")).find(f=>f.textContent==onde+JSON.parse(req.response).info.src))
+			  console.log(JSON.parse(req.response).info.src);
+			  console.log(JSON.parse(req.response).info);
+              //console.log(onde, req.response, sha);
             }
           };
         }
@@ -282,6 +285,18 @@
                         Caminho.textContent = e.path;
                         Caminho.style = 'display:none;';
                         divArquivo.append(Caminho);
+						let nomeDoproduto = document.createElement("input");
+						nomeDoproduto.type="text";
+						nomeDoproduto.style="margin-top: 1px;";
+						divArquivo.append(nomeDoproduto);
+						let valorDoproduto = document.createElement("input");
+						valorDoproduto.type="text";
+						valorDoproduto.style="margin-top: 1px;";
+						divArquivo.append(valorDoproduto);
+						let botaoModificar = document.createElement("button");
+						botaoModificar.textContent = 'Modificar';
+						botaoModificar.style = 'margin-top: 1px;';
+						divArquivo.append(botaoModificar);
                         let botaoDeletar = document.createElement("button");
                         botaoDeletar.textContent = 'Deletar';
                         botaoDeletar.style = 'margin-top: 1px;';

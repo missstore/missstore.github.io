@@ -3,26 +3,17 @@
     {
 	"src": "1.jpeg",
 	"valor": "119,00",
-	"tags": "rosê,rosa,macacao,macacão,laura",
-	"nome": "Macacão laura rosê",
-	"cores": "pink",
-	"tamanhos": "p"
+	"nome": "Macacao laura rose"
     },
     {
 	"src": "2.jpeg",
 	"valor": "99,90",
-	"tags": "macacao,black,macacão,cinto",
-	"nome": "Macacão black com cinto",
-	"cores": "black",
-	"tamanhos": "m"
+	"nome": "Macacao black com cinto"
     },
     {
 	"src": "3.jpeg",
 	"valor": "99,90",
-	"tags": "macacao,macacão,black,infinito",
-	"nome": "Macacão infinto black",
-	"cores": "black",
-	"tamanhos": "p,m"
+	"nome": "Macacao infinto black"
     },
     {
 	"src": "4.jpeg",
