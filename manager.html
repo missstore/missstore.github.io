@@ -239,8 +239,7 @@
         }
 
         function obterTodos(caminho) {
-          var req = new XMLHttpRequest(),
-            erroStatus = false;
+          var req = new XMLHttpRequest(),erroStatus = false;
           if (erroStatus != true) {
             req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho, true);
             req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
@@ -313,8 +312,7 @@
             }
           };
         }
-        let no = osLink.split("|"),
-          requests = new Array();
+        let no = osLink.split("|"),requests = new Array();
         for (let i = 0; i < no.length; i++) {
           requests.push(new obterTodos(no[i]));
         }
