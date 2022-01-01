@@ -106,8 +106,9 @@
         }
       }
 
-      function fazerUpload(indexUploaded,tipo) {
-        let LerArquivo = new FileReader(),arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
+      function fazerUpload(indexUploaded, tipo) {
+        let LerArquivo = new FileReader(),
+          arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
         LerArquivo.onload = function() {
           var req = new XMLHttpRequest();
           req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/" + arquivo.name, true);
@@ -123,7 +124,7 @@
             } else {
               document.querySelector(".info_").textContent = "Arquivo " + arquivo.name + " enviado com sucesso!";
             }
-            indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? document.querySelector(".info_").textContent = "Todos os arquivos foram processados." : fazerUpload(indexUploaded + 1,document.querySelector("body > div > div:nth-child(1) > select").value);
+            indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? document.querySelector(".info_").textContent = "Todos os arquivos foram processados." : fazerUpload(indexUploaded + 1, document.querySelector("body > div > div:nth-child(1) > select").value);
           };
         };
         LerArquivo.onprogress = function(e) {
@@ -163,9 +164,9 @@
       function obterContents() {
         var osLink = "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/vestidos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/calcas|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/conjuntos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/croppeds|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/saias";
         document.body.outerHTML = '';
-		document.querySelectorAll("head").forEach(function(e){
-			e.innerText.length==0?e.remove():null;
-		});
+        document.querySelectorAll("head").forEach(function(e) {
+          e.innerText.length == 0 ? e.remove() : null;
+        });
         let mainDiv = document.createElement("div");
         mainDiv.style = 'margin: 30px;width: auto;height: fit-content;display: flex;flex-flow: row wrap;align-items: center;justify-content: center;';
         let divEnviar = document.createElement("div");
@@ -175,24 +176,24 @@
         selecionar_arquivo.type = "file";
         selecionar_arquivo.accept = "image/png, image/gif, image/jpeg, image/jpg, image/svg"
         divEnviar.append(selecionar_arquivo);
-		let selecionarCategoria = document.createElement("select");
-		selecionarCategoria.style='margin-right: 3px;';
-		let myCat = ['saias','croppeds','vestidos','calcas','conjuntos'];
-		myCat.forEach(function(e){
-        let tempRes = document.createElement("option");
-        tempRes.value=e;
-        tempRes.textContent=e.toUpperCase();
-		selecionarCategoria.append(tempRes)
-		});
-		divEnviar.append(selecionarCategoria);
+        let selecionarCategoria = document.createElement("select");
+        selecionarCategoria.style = 'margin-right: 3px;';
+        let myCat = ['saias', 'croppeds', 'vestidos', 'calcas', 'conjuntos'];
+        myCat.forEach(function(e) {
+          let tempRes = document.createElement("option");
+          tempRes.value = e;
+          tempRes.textContent = e.toUpperCase();
+          selecionarCategoria.append(tempRes)
+        });
+        divEnviar.append(selecionarCategoria);
         let botaoEnviar = document.createElement("button");
         botaoEnviar.textContent = "Enviar fotos";
         botaoEnviar.addEventListener("click", function() {
           if (document.querySelector("input[type=file]").files.length == 0) {
             document.querySelector(".info_").textContent = 'Selecione um arquivo primeiro';
           } else {
-		  let con = confirm("Selecionou o tipo?");
-		  con==true?fazerUpload(0,document.querySelector("body > div > div:nth-child(1) > select").value):null;
+            let con = confirm("Selecionou o tipo?");
+            con == true ? fazerUpload(0, document.querySelector("body > div > div:nth-child(1) > select").value) : null;
           }
         });
         divEnviar.append(botaoEnviar);
@@ -213,57 +214,64 @@
         mainDiv.append(labelInfo);
         mainDiv.append(divDorefresh);
         document.body.appendChild(mainDiv);
+
         function obterTodos(caminho) {
           var req = new XMLHttpRequest();
-          req.open('GET', 'https://cors-anywhere.herokuapp.com/'+caminho, true);
+          req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho, true);
           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           req.send();
           req.onload = function() {
-            let temp = [];
-            JSON.parse(req.response).forEach(function(e, i) {
-              e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") ? temp.push(e) : null;
-              if (i == JSON.parse(req.response).length - 1) {
-                if (temp.length == 0) {
-                  document.querySelector(".info_").textContent = "Não foram encontrado resultados";
-                } else {
-                  temp.forEach(function(e) {
-                    let divArquivo = document.createElement("div");
-                    divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
-                    let Imagem = document.createElement("div");
-                    Imagem.style.backgroundImage = "url(" + e.download_url + ")";
-                    Imagem.style.width = "250px";
-                    Imagem.style.height = "250px";
-                    Imagem.style.backgroundSize = "cover";
-                    Imagem.style.backgroundRepeat = "no-repeat";
-                    divArquivo.append(Imagem);
-                    let SHA = document.createElement("label");
-                    SHA.textContent = e.sha;
-                    SHA.style = 'display:none;';
-                    divArquivo.append(SHA);
-                    let NOME = document.createElement("label");
-                    NOME.textContent = e.name;
-                    NOME.style = 'display:none;';
-                    divArquivo.append(NOME);
-					let Caminho = document.createElement("label");
-                    Caminho.textContent = e.path;
-                    Caminho.style = 'display:none;';
-                    divArquivo.append(Caminho);
-                    let botaoDeletar = document.createElement("button");
-                    botaoDeletar.textContent = 'Deletar';
-                    botaoDeletar.style = 'margin-top: 1px;';
-                    botaoDeletar.addEventListener("click", function() {
-                      let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
-                      let sha = this.parentElement.querySelectorAll("label")[0].textContent;
-                      deletarArquivo(nomedoarquivo, sha);
+            if (req.response.includes("too many requests")) {
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+            } else {
+              let temp = [];
+              JSON.parse(req.response).forEach(function(e, i) {
+                e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") ? temp.push(e) : null;
+                if (i == JSON.parse(req.response).length - 1) {
+                  if (temp.length == 0) {
+                    document.querySelector(".info_").textContent = "Não foram encontrado resultados";
+                  } else {
+                    temp.forEach(function(e) {
+                      let divArquivo = document.createElement("div");
+                      divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
+                      let Imagem = document.createElement("div");
+                      Imagem.style.backgroundImage = "url(" + e.download_url + ")";
+                      Imagem.style.width = "250px";
+                      Imagem.style.height = "250px";
+                      Imagem.style.backgroundSize = "cover";
+                      Imagem.style.backgroundRepeat = "no-repeat";
+                      divArquivo.append(Imagem);
+                      let SHA = document.createElement("label");
+                      SHA.textContent = e.sha;
+                      SHA.style = 'display:none;';
+                      divArquivo.append(SHA);
+                      let NOME = document.createElement("label");
+                      NOME.textContent = e.name;
+                      NOME.style = 'display:none;';
+                      divArquivo.append(NOME);
+                      let Caminho = document.createElement("label");
+                      Caminho.textContent = e.path;
+                      Caminho.style = 'display:none;';
+                      divArquivo.append(Caminho);
+                      let botaoDeletar = document.createElement("button");
+                      botaoDeletar.textContent = 'Deletar';
+                      botaoDeletar.style = 'margin-top: 1px;';
+                      botaoDeletar.addEventListener("click", function() {
+                        let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
+                        let sha = this.parentElement.querySelectorAll("label")[0].textContent;
+                        let path = this.parentElement.querySelectorAll("label")[2].textContent;
+                        //deletarArquivo(path, sha);
+                        console.log(path);
+                      });
+                      divArquivo.append(botaoDeletar);
+                      document.querySelector("body > div").append(divArquivo);
                     });
-                    divArquivo.append(botaoDeletar);
-                    document.querySelector("body > div").append(divArquivo);
-                  });
+                  }
                 }
-              }
-            });
-          };
+              });
+            };
+          }
         }
         let no = osLink.split("|"),
           requests = new Array();
