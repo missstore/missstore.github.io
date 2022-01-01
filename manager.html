@@ -330,7 +330,8 @@
                           let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
                           let sha = this.parentElement.querySelectorAll("label")[0].textContent;
                           let path = this.parentElement.querySelectorAll("label")[2].textContent;
-                          deletarArquivo(path, sha);
+						  let con = confirm("Tem certeza que deseja deletar essa imagem?");
+						  con==true?deletarArquivo(path, sha):null;
                         });
                         divArquivo.append(botaoDeletar);
                         document.querySelector("body > div").append(divArquivo);
