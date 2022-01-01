@@ -229,7 +229,7 @@
               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
               erroStatus = true;
             } else {
-              let temp = [];
+              let temp = [];erroStatus = false;
               JSON.parse(req.response).forEach(function(e, i) {
                 e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") ? temp.push(e) : null;
                 if (i == JSON.parse(req.response).length - 1) {
