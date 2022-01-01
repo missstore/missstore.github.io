@@ -176,9 +176,7 @@
       function obterContents() {
         var osLink = "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/vestidos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/calcas|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/conjuntos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/croppeds|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/saias";
         document.body.outerHTML = '';
-        document.querySelectorAll("head").forEach(function(e) {
-          e.innerText.length == 0 ? e.remove() : null;
-        });
+        document.querySelectorAll("head").forEach(function(e) {e.innerText.length == 0 ? e.remove() : null;});
         let mainDiv = document.createElement("div");
         mainDiv.style = 'margin: 30px;width: auto;height: fit-content;display: flex;flex-flow: row wrap;align-items: center;justify-content: center;';
         let divEnviar = document.createElement("div");
@@ -252,9 +250,10 @@
               console.log(JSON.parse(req.response).info.src);
               console.log(JSON.parse(req.response).info);*/
 			  JSON.parse(req.response).info.forEach(function(e){
-				//console.log(Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src))
+				//console.log(Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src
+				console.log(e);
 				if(Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)){
-					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".nomedoproduto").value=e.name;
+					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".nomedoproduto").value=e.nome;
 					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".valordoproduto").value=e.valor;
 				}
 			  });
@@ -313,12 +312,12 @@
                         let nomeDoproduto = document.createElement("input");
 						nomeDoproduto.classList.add("nomedoproduto");
                         nomeDoproduto.type = "text";
-                        nomeDoproduto.style = "margin-top: 1px;";
+                        nomeDoproduto.style = "margin-top: 1px;text-align: center;";
                         divArquivo.append(nomeDoproduto);
                         let valorDoproduto = document.createElement("input");
 						valorDoproduto.classList.add("valordoproduto");
                         valorDoproduto.type = "text";
-                        valorDoproduto.style = "margin-top: 1px;";
+                        valorDoproduto.style = "margin-top: 1px;text-align: center;";
                         divArquivo.append(valorDoproduto);
                         let botaoModificar = document.createElement("button");
                         botaoModificar.textContent = 'Modificar';
