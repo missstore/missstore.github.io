@@ -263,6 +263,8 @@
 						let emString = JSON.stringify(req.response);
 						emString=emString.replace(emString.substring(emString.indexOf("}]}")+1,emString.indexOf("}]}")+2),','+novo+"]");
 						console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo);
+						console.log(JSON.stringify(req.response));
+						console.log(emString);
 					});
 				}
 			  });
