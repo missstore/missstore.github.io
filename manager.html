@@ -158,10 +158,8 @@
         LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
       }
 
-		function ModificarArquivo(){
-	
-		}
-		
+      function ModificarArquivo() {}
+
       function deletarArquivo(nome, sha) {
         var req = new XMLHttpRequest();
         req.open('DELETE', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
@@ -268,26 +266,28 @@
                     let conteudo = JSON.parse(req.response);
                     let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
                     let indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado);
-                    if(conteudo.info[indexdoconteudo].nome!=this.parentElement.querySelector(".nomedoproduto").value){
-						console.log("Nada a alterar");
-					}else{
-						console.log("Novo nome: "+this.parentElement.querySelector(".nomedoproduto").value);
-					}
+                    if (conteudo.info[indexdoconteudo].nome != this.parentElement.querySelector(".nomedoproduto").value) {
+                      console.log("Nada a alterar");
+                    } else {
+                      console.log("Novo nome: " + this.parentElement.querySelector(".nomedoproduto").value);
+                    }
                     let novo = conteudo.info.concat({
-					"src":conteudosendomodificado,
-					"valor":this.parentElement.querySelector(".valordoproduto").value,
-					"nome":this.parentElement.querySelector(".nomedoproduto").value})
+                      "src": conteudosendomodificado,
+                      "valor": this.parentElement.querySelector(".valordoproduto").value,
+                      "nome": this.parentElement.querySelector(".nomedoproduto").value
+                    })
                     console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo, novo);
                   });
-                }else{
-					let conteudo = JSON.parse(req.response);
-					let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
-					let novo = conteudo.info.concat({
-					"src":conteudosendomodificado,
-					"valor":this.parentElement.querySelector(".valordoproduto").value,
-					"nome":this.parentElement.querySelector(".nomedoproduto").value})
-                    console.log(conteudo, conteudosendomodificado, novo);
-				}
+                } else {
+                  let conteudo = JSON.parse(req.response);
+                  let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
+                  let novo = conteudo.info.concat({
+                    "src": conteudosendomodificado,
+                    "valor": this.parentElement.querySelector(".valordoproduto").value,
+                    "nome": this.parentElement.querySelector(".nomedoproduto").value
+                  })
+                  console.log(conteudo, conteudosendomodificado, novo);
+                }
               });
             }
           };
