@@ -267,9 +267,8 @@
 						+this.parentElement.querySelector(".nomedoproduto").value+
 						'"}'
 						let emString = JSON.stringify(req.response);
-						emString=emString.replace(emString.substring(emString.indexOf("}]}")+1,emString.indexOf("}]}")+2),','+novo+"]");
-						emString=JSON.parse(emString);
-						console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo, emString);
+						let novoConteudoAdicionado = emString.replace(emString.substring(emString.indexOf("}]}")+1,emString.indexOf("}]}")+2),','+novo+"]");
+						console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo, JSON.parse(novoConteudoAdicionado));
 					});
 				}
 			  });
