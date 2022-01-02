@@ -368,7 +368,7 @@
                               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
                             } else {
                               let conteudo = JSON.parse(req.response);
-                              console.log(this,essa);
+                              console.log(this,essa,conteudo);
                               let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
                               let novo = conteudo.info.concat({
                                 "src": conteudosendomodificado,
