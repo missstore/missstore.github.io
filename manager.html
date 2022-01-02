@@ -124,7 +124,8 @@
       }
 
       function fazerUpload(indexUploaded, tipo) {
-        let LerArquivo = new FileReader(),arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
+        let LerArquivo = new FileReader(),
+          arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
         LerArquivo.onload = function() {
           var req = new XMLHttpRequest();
           req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/" + arquivo.name, true);
@@ -158,24 +159,24 @@
       }
 
       function ModificarArquivo(sha, nome, content) {
-      	var req = new XMLHttpRequest();
-      	req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + nome, true);
-      	req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-      	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      	req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-      	req.send('{"message":"info.txt alterado","sha":"' + sha + '","content":"' + content + '"}');
-      	req.onload = function() {
-      		if (req.response.includes("too many requests")) {
-      			alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-      		} else if (req.response.includes("/corsdemo")) {
-      			let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
-      			con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-      		} else if (JSON.parse(req.response).message) {
-      			document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
-      		} else {
-      			alert("Modificado com sucesso!");
-      		}
-      	};
+        var req = new XMLHttpRequest();
+        req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + nome, true);
+        req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+        req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+        req.send('{"message":"info.txt alterado","sha":"' + sha + '","content":"' + content + '"}');
+        req.onload = function() {
+          if (req.response.includes("too many requests")) {
+            alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+          } else if (req.response.includes("/corsdemo")) {
+            let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
+            con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
+          } else if (JSON.parse(req.response).message) {
+            document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
+          } else {
+            alert("Modificado com sucesso!");
+          }
+        };
       }
 
       function deletarArquivo(nome, sha) {
@@ -257,6 +258,7 @@
         mainDiv.append(labelInfo);
         mainDiv.append(divDorefresh);
         document.body.appendChild(mainDiv);
+
         function obterDados(caminho, sha) {
           caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
           var req = new XMLHttpRequest();
@@ -283,15 +285,13 @@
                     let conteudo = JSON.parse(req.response);
                     let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
                     let indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado);
-					let nomeaenviar = onde.replace("assets/img/","") + "/info.txt";
-                    if (conteudo.info[indexdoconteudo].nome == this.parentElement.querySelector(".nomedoproduto").value
-					&&
-					conteudo.info[indexdoconteudo].valor == this.parentElement.querySelector(".valordoproduto").value) {
+                    let nomeaenviar = onde.replace("assets/img/", "") + "/info.txt";
+                    if (conteudo.info[indexdoconteudo].nome == this.parentElement.querySelector(".nomedoproduto").value && conteudo.info[indexdoconteudo].valor == this.parentElement.querySelector(".valordoproduto").value) {
                       alert("Nada a alterar");
                     } else {
                       conteudo.info[indexdoconteudo].nome = this.parentElement.querySelector(".nomedoproduto").value;
-					  conteudo.info[indexdoconteudo].valor = this.parentElement.querySelector(".valordoproduto").value;
-					  ModificarArquivo(oSha,nomeaenviar,btoa(JSON.stringify(conteudo)));
+                      conteudo.info[indexdoconteudo].valor = this.parentElement.querySelector(".valordoproduto").value;
+                      ModificarArquivo(oSha, nomeaenviar, utoa(JSON.stringify(conteudo)));
                     }
                   };
                 }
@@ -299,6 +299,7 @@
             }
           };
         }
+
         function obterTodos(caminho) {
           var req = new XMLHttpRequest(),
             erroStatus = false;
@@ -370,7 +371,9 @@
                           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
                           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                           req.send();
-						  let essa = this, oSha = temp.find(f=>f.name=="info.txt").sha, nomeaenviar = onde + '/info.txt';
+                          let essa = this,
+                            oSha = temp.find(f => f.name == "info.txt").sha,
+                            nomeaenviar = onde + '/info.txt';
                           req.onload = function() {
                             if (req.response.includes("too many requests")) {
                               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
@@ -380,16 +383,16 @@
                             } else {
                               let conteudo = JSON.parse(req.response);
                               let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
-							  if(essa.parentElement.querySelector(".valordoproduto").value.length==0&&essa.parentElement.querySelector(".nomedoproduto").value.length==0){
-							    alert("Forneça um nome ou valor");
-							  }else{
-							                                conteudo.info.push({
-                                "src": conteudosendomodificado,
-                                "valor": essa.parentElement.querySelector(".valordoproduto").value,
-                                "nome": essa.parentElement.querySelector(".nomedoproduto").value
-                              })
-							  ModificarArquivo(oSha,nomeaenviar,btoa(JSON.stringify(conteudo)));
-							  }
+                              if (essa.parentElement.querySelector(".valordoproduto").value.length == 0 && essa.parentElement.querySelector(".nomedoproduto").value.length == 0) {
+                                alert("Forneça um nome ou valor");
+                              } else {
+                                conteudo.info.push({
+                                  "src": conteudosendomodificado,
+                                  "valor": essa.parentElement.querySelector(".valordoproduto").value,
+                                  "nome": essa.parentElement.querySelector(".nomedoproduto").value
+                                })
+                                ModificarArquivo(oSha, nomeaenviar, utoa(JSON.stringify(conteudo)));
+                              }
                             }
                           };
                         };
