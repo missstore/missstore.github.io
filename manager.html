@@ -215,6 +215,7 @@
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
             } else if (JSON.parse(req.response).message) {
               alert("Falha ao tentar modificar\n" + JSON.parse(req.response).message);
+			  console.log(req.response);
             } else {
 				console.log(req.response);
 				localStorage.setItem(tipo,
