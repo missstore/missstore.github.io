@@ -179,7 +179,7 @@
             document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
           } else {
             alert("Modificado com sucesso!");
-			console.log(req.response);
+			localStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/","").split("/")[0], content);
             document.body.outerHTML = '';
             obterContents();
           }
