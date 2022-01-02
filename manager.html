@@ -253,7 +253,14 @@
 					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector("button").addEventListener("click",function(){
 					 let oSha = sha;
 					 let conteudo = req.response;
-					 console.log(oSha, conteudo);
+					 let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1];
+					 let indexdoconteudo = conteudo.info.findIndex(f=>f.nome==conteudosendomodificado.textContent);
+					 if(eu.info[indexdoconteudo].nome!=this.parentElement.querySelector(".nomedoproduto").value){
+						console.log("nada a alterar");
+					 }else{
+						console.log("Novo nome: "+this.parentElement.querySelector(".nomedoproduto").value);
+					 }
+					 console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo);
 					});
 				}
 			  });
