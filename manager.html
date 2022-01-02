@@ -213,7 +213,7 @@
         butaoRefresh.style = "margin-bottom: 20px;";
         butaoRefresh.textContent = "Atualizar imagens";
         butaoRefresh.addEventListener("click", function() {
-          document.querySelector("body > div").outerHTML = '';
+          document.body.outerHTML = '';
           obterContents();
         });
         divDorefresh.append(butaoRefresh);
