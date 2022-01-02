@@ -279,7 +279,15 @@
 					"nome":this.parentElement.querySelector(".nomedoproduto").value})
                     console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo, novo);
                   });
-                }
+                }else{
+					let conteudo = JSON.parse(req.response);
+					let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
+					let novo = conteudo.info.concat({
+					"src":conteudosendomodificado,
+					"valor":this.parentElement.querySelector(".valordoproduto").value,
+					"nome":this.parentElement.querySelector(".nomedoproduto").value})
+                    console.log(conteudo, conteudosendomodificado, novo);
+				}
               });
             }
           };
