@@ -80,7 +80,7 @@
           req.send();
           req.onload = function() {
             if (req.response.includes("too many requests")) {
-              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
             } else if (req.response.includes("/corsdemo")) {
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -105,7 +105,7 @@
           req.send('code=' + code + '&' + atob("Y2xpZW50X2lkPTFmZGY5ZmVlNjk5Njc4NmYyMDUzJmNsaWVudF9zZWNyZXQ9YjZlMjY4MTE3OTA2ZjI2MWQwODdmMDllNmMwNTRhZGU5NGZiNjEzYg==") + '&state=true');
           req.onload = function() {
             if (req.response.includes("too many requests")) {
-              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
             } else if (req.response.includes("/corsdemo")) {
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -135,7 +135,7 @@
           req.send('{"message":"' + arquivo.name + ' uploaded","content":"' + LerArquivo.result.replace(/^data:image.+;base64,/, '') + '"}');
           req.onload = function() {
             if (req.response.includes("too many requests")) {
-              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
             } else if (req.response.includes("/corsdemo")) {
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -167,7 +167,7 @@
         req.send('{"message":"info.txt alterado","sha":"' + sha + '","content":"' + content + '"}');
         req.onload = function() {
           if (req.response.includes("too many requests")) {
-            alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+            alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
           } else if (req.response.includes("/corsdemo")) {
             let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
             con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -188,7 +188,7 @@
         req.send('{"message":"' + nome + ' deleted","sha":"' + sha + '"}');
         req.onload = function() {
           if (req.response.includes("too many requests")) {
-            alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+            alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
           } else if (req.response.includes("/corsdemo")) {
             let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
             con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -268,7 +268,7 @@
           req.send();
           req.onload = function() {
             if (req.response.includes("too many requests")) {
-              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
             } else if (req.response.includes("/corsdemo")) {
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -311,7 +311,7 @@
           }
           req.onload = function() {
             if (req.response.includes("too many requests")) {
-              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
               erroStatus = true;
             } else if (req.response.includes("/corsdemo")) {
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
@@ -376,7 +376,7 @@
                             nomeaenviar = onde + '/info.txt';
                           req.onload = function() {
                             if (req.response.includes("too many requests")) {
-                              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
                             } else if (req.response.includes("/corsdemo")) {
                               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
                               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
