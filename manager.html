@@ -236,8 +236,7 @@
           req.onload = function() {
             if (req.response.includes("too many requests")) {
               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-              erroStatus = true;
-			  return 0;
+			  return erroStatus = true;
             } else if (req.response.includes("/corsdemo")) {
 				erroStatus = true;
               let con = confirm("Ira abrir uma janela\nnela clique em 'Request temporary access to the demo server'\nAguarde a mensagem 'You currently have temporary access to the demo server.'\nLogo após feche a janela")
