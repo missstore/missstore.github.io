@@ -181,8 +181,8 @@
 			localStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/","").split("/")[0],
 			JSON.stringify({"sha":JSON.parse(req.response).content.sha,"content":content}));
             alert("Modificado com sucesso!");
-            document.body.outerHTML = '';
-            obterContents();
+            //document.body.outerHTML = '';
+            //obterContents();
           }
         };
       }
@@ -292,8 +292,8 @@
         butaoRefresh.style = "margin-bottom: 20px;";
         butaoRefresh.textContent = "Atualizar imagens";
         butaoRefresh.addEventListener("click", function() {
-          document.body.outerHTML = '';
-          obterContents();
+          //document.body.outerHTML = '';
+          //obterContents();
         });
         divDorefresh.append(butaoRefresh);
         mainDiv.append(divEnviar);
@@ -318,8 +318,7 @@
               let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
               onde = onde.replace("main/", "") + "/";
               JSON.parse(req.response).info.forEach(function(e) {
-			  console.log(req.response);
-			  	localStorage.setItem(onde,
+			  	localStorage.setItem(onde.split("/")[2],
 				JSON.stringify({"sha":sha,"content":btou(JSON.stringify(JSON.parse(req.response)))}));
                 if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
                   let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
