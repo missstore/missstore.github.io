@@ -94,18 +94,13 @@
               let con = confirm("Ira abrir uma janela\nnela clique em 'Request temporary access to the demo server'\nAguarde a mensagem 'You currently have temporary access to the demo server.'\nLogo após feche a janela")
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
             } else {
-              try {
-                var _token = JSON.parse(req.response) ? _token = JSON.parse(req.response).access_token : null;
-                if (_token) {
-                  localStorage.setItem("_token", _token);
-                  verificarUsuario();
-                } else {
-                  let con = confirm("Autorize o app para obter um codigo e continuar")
-                  con == true ? window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true") : null;
-                }
-              } catch (e) {
-                let con = confirm("Ira abrir uma janela\nnela clique em 'Request temporary access to the demo server'\nAguarde a mensagem 'You currently have temporary access to the demo server.'\nLogo após feche a janela")
-                con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
+              let _token = JSON.parse(req.response) ? JSON.parse(req.response).access_token : null;
+              if (_token) {
+                localStorage.setItem("_token", _token);
+                verificarUsuario();
+              } else {
+                let con = confirm("Autorize o app para obter um codigo e continuar")
+                con == true ? window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true") : null;
               }
             }
           };
@@ -245,7 +240,7 @@
               onde = onde.replace("main/", "/");
               JSON.parse(req.response).info.forEach(function(e) {
                 if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
-				  let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
+                  let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
                   arEn.parentElement.querySelector(".nomedoproduto").value = e.nome;
                   arEn.parentElement.querySelector(".valordoproduto").value = e.valor;
                   arEn.parentElement.querySelector("button").addEventListener("click", function() {
@@ -258,9 +253,7 @@
 					 }else{
 						console.log("Novo nome: "+this.parentElement.querySelector(".nomedoproduto").value);
 					 }*/
-                    let novo = '{"src":"' + conteudosendomodificado + '","valor":"' 
-					+ this.parentElement.querySelector(".valordoproduto").value + 
-					'","nome":"' + this.parentElement.querySelector(".nomedoproduto").value + '"}'
+                    let novo = '{"src":"' + conteudosendomodificado + '","valor":"' + this.parentElement.querySelector(".valordoproduto").value + '","nome":"' + this.parentElement.querySelector(".nomedoproduto").value + '"}'
                     let emString = JSON.stringify(req.response);
                     let novoConteudoAdicionado = emString.replace(emString.substring(emString.indexOf("}]}") + 1, emString.indexOf("}]}") + 2), ',' + novo + "]");
                     console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo, JSON.parse(novoConteudoAdicionado));
