@@ -178,8 +178,10 @@
           } else if (JSON.parse(req.response).message) {
             document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
           } else {
-			localStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/","").split("/")[0],
-			JSON.stringify({"sha":JSON.parse(req.response).content.sha,"content":content}));
+            localStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
+              "sha": JSON.parse(req.response).content.sha,
+              "content": content
+            }));
             alert("Modificado com sucesso!");
           }
         };
@@ -192,12 +194,13 @@
         req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
         req.send('{"message":"' + nome + ' deletado","sha":"' + sha + '"}');
-		let tipo = nome.replace("assets/img/","").split("/")[0];
+        let tipo = nome.replace("assets/img/", "").split("/")[0];
+
         function alterarInfo(shaInfo, contentInfo) {
           req = new XMLHttpRequest();
-		  let contentAalterar = JSON.parse(atou(contentInfo));
-		  contentAalterar.info.splice(contentAalterar.info.findIndex(f=>f.src==nome.replace("assets/img/","").split("/")[1]),1);
-		  let contentConverted = btou(JSON.stringify(contentAalterar));
+          let contentAalterar = JSON.parse(atou(contentInfo));
+          contentAalterar.info.splice(contentAalterar.info.findIndex(f => f.src == nome.replace("assets/img/", "").split("/")[1]), 1);
+          let contentConverted = btou(JSON.stringify(contentAalterar));
           req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.txt", true);
           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -213,9 +216,11 @@
             } else if (JSON.parse(req.response).message) {
               alert("Falha ao tentar modificar\n" + JSON.parse(req.response).message);
             } else {
-				console.log(req.response);
-				localStorage.setItem(tipo,
-				JSON.stringify({"sha":JSON.parse(req.response).content.sha,"content":content}));
+              console.log(req.response);
+              localStorage.setItem(tipo, JSON.stringify({
+                "sha": JSON.parse(req.response).content.sha,
+                "content": content
+              }));
             }
           };
         }
@@ -235,7 +240,7 @@
           } else if (JSON.parse(req.response).commit) {
             Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ? Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() : null;
             alterarInfo(JSON.parse(localStorage.getItem(tipo)).sha, JSON.parse(localStorage.getItem(tipo)).content);
-			let apenasNome = nome.replace("assets/img/","").split("/")[1];
+            let apenasNome = nome.replace("assets/img/", "").split("/")[1];
             alert("Arquivo " + apenasNome + " deletado");
           }
         };
@@ -296,6 +301,7 @@
         mainDiv.append(labelInfo);
         mainDiv.append(divDorefresh);
         document.body.appendChild(mainDiv);
+
         function obterDados(caminho, sha) {
           caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
           var req = new XMLHttpRequest();
@@ -314,8 +320,10 @@
               let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
               onde = onde.replace("main/", "") + "/";
               JSON.parse(req.response).info.forEach(function(e) {
-			  	localStorage.setItem(onde.split("/")[2],
-				JSON.stringify({"sha":sha,"content":btou(JSON.stringify(JSON.parse(req.response)))}));
+                localStorage.setItem(onde.split("/")[2], JSON.stringify({
+                  "sha": sha,
+                  "content": btou(JSON.stringify(JSON.parse(req.response)))
+                }));
                 if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
                   let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
                   arEn.parentElement.querySelector(".nomedoproduto").value = e.nome;
@@ -339,6 +347,7 @@
             }
           };
         }
+
         function obterTodos(caminho) {
           var req = new XMLHttpRequest(),
             erroStatus = false;
