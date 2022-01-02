@@ -158,9 +158,7 @@
         LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
       }
 
-      function ModificarArquivo() {
-	  
-	  }
+      function ModificarArquivo() {}
 
       function deletarArquivo(nome, sha) {
         var req = new XMLHttpRequest();
@@ -258,20 +256,20 @@
             } else {
               let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
               onde = onde.replace("main/", "") + "/";
-			  console.log(onde);
               JSON.parse(req.response).info.forEach(function(e) {
                 if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
                   let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
                   arEn.parentElement.querySelector(".nomedoproduto").value = e.nome;
                   arEn.parentElement.querySelector(".valordoproduto").value = e.valor;
-                  arEn.parentElement.querySelector("button").addEventListener("click", function() {
+                  arEn.parentElement.querySelector("button").onclick = function() {
                     let oSha = sha;
                     let conteudo = JSON.parse(req.response);
                     let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
                     let indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado);
-                    if (conteudo.info[indexdoconteudo].nome != this.parentElement.querySelector(".nomedoproduto").value) {
+                    if (conteudo.info[indexdoconteudo].nome == this.parentElement.querySelector(".nomedoproduto").value) {
                       console.log("Nada a alterar");
                     } else {
+                      //conteudo.info[indexdoconteudo].nome = this.parentElement.querySelector(".nomedoproduto").value;
                       console.log("Novo nome: " + this.parentElement.querySelector(".nomedoproduto").value);
                     }
                     let novo = conteudo.info.concat({
@@ -280,7 +278,7 @@
                       "nome": this.parentElement.querySelector(".nomedoproduto").value
                     })
                     console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo, novo);
-                  });
+                  };
                 }
               });
             }
@@ -348,17 +346,38 @@
                         let botaoModificar = document.createElement("button");
                         botaoModificar.textContent = 'Modificar';
                         botaoModificar.style = 'margin-top: 1px;';
-						botaoModificar.addEventListener("click",function(){
-							console.log(this);
-							                  /*let conteudo = JSON.parse(req.response);
-                  let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
-                  let novo = conteudo.info.concat({
-                    "src": conteudosendomodificado,
-                    "valor": this.parentElement.querySelector(".valordoproduto").value,
-                    "nome": this.parentElement.querySelector(".nomedoproduto").value
-                  })
-                  console.log(conteudo, conteudosendomodificado, novo);*/
-						});
+                        botaoModificar.onclick = function() {
+                          let onde = '';
+                          oo.split("/").forEach(function(e, i) {
+                            if (i != oo.split("/").length - 1) {
+                              if (e != "assets" || e != "img") {
+                                onde = e;
+                              }
+                            }
+                          })
+                          var req = new XMLHttpRequest();
+                          req.open('GET', 'https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/' + onde + '/info.txt', true);
+                          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                          req.send();
+                          req.onload = function() {
+                            if (req.response.includes("too many requests")) {
+                              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                            } else if (req.response.includes("/corsdemo")) {
+                              let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
+                              con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
+                            } else {
+							  let conteudo = JSON.parse(req.response);
+								let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
+								let novo = conteudo.info.concat({
+								"src": conteudosendomodificado,
+								"valor": this.parentElement.querySelector(".valordoproduto").value,
+								"nome": this.parentElement.querySelector(".nomedoproduto").value
+								})
+								console.log(conteudo, conteudosendomodificado, novo);
+                            }
+                          };
+                        };
                         divArquivo.append(botaoModificar);
                         let botaoDeletar = document.createElement("button");
                         botaoDeletar.textContent = 'Deletar';
