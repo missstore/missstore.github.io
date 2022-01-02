@@ -188,7 +188,7 @@
         };
       }
 
-      function deletarArquivo(nome, sha, shadoinfo) {
+      function deletarArquivo(nome, sha, tipo) {
         var req = new XMLHttpRequest();
         req.open('DELETE', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
         req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
