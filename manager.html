@@ -196,9 +196,9 @@
         req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
         req.send('{"message":"' + nome + ' deletado","sha":"' + sha + '"}');
 
-        function alterarInfo(sha, arquivo, content) {
+        function alterarInfo(sha, content) {
           req = new XMLHttpRequest();
-          req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + arquivo, true);
+          req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.txt", true);
           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
