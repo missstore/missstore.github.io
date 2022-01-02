@@ -179,6 +179,8 @@
             document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
           } else {
             alert("Modificado com sucesso!");
+			document.body.outerHTML = '';
+			obterContents();
           }
         };
       }
