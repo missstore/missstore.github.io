@@ -368,14 +368,13 @@
                               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
                             } else {
                               let conteudo = JSON.parse(req.response);
-                              console.log(this,essa,conteudo);
                               let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
                               let novo = conteudo.info.concat({
                                 "src": conteudosendomodificado,
                                 "valor": essa.parentElement.querySelector(".valordoproduto").value,
                                 "nome": essa.parentElement.querySelector(".nomedoproduto").value
                               })
-                              console.log(conteudo, conteudosendomodificado, novo);
+                              console.log(novo, btoa(JSON.stringify(novo)));
                             }
                           };
                         };
