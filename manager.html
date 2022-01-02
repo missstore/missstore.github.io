@@ -273,6 +273,7 @@
             } else {
               let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
               onde = onde.replace("main/", "") + "/";
+			  console.log(onde);
               JSON.parse(req.response).info.forEach(function(e) {
                 if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
                   let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
