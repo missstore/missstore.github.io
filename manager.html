@@ -80,7 +80,8 @@
           req.send();
           req.onload = function() {
             if (req.response.includes("too many requests")) {
-              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
             } else if (req.response.includes("/corsdemo")) {
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -105,7 +106,8 @@
           req.send('code=' + code + '&' + atob("Y2xpZW50X2lkPTFmZGY5ZmVlNjk5Njc4NmYyMDUzJmNsaWVudF9zZWNyZXQ9YjZlMjY4MTE3OTA2ZjI2MWQwODdmMDllNmMwNTRhZGU5NGZiNjEzYg==") + '&state=true');
           req.onload = function() {
             if (req.response.includes("too many requests")) {
-              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
             } else if (req.response.includes("/corsdemo")) {
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -123,19 +125,20 @@
         }
       }
 
-      function fazerUpload(indexUploaded, tipo) {
+      function fazerUpload(indexenviado, tipo) {
         let LerArquivo = new FileReader(),
-          arquivo = document.querySelector("input[type=file]").files.item(indexUploaded);
+          arquivo = document.querySelector("input[type=file]").files.item(indexenviado);
         LerArquivo.onload = function() {
           var req = new XMLHttpRequest();
           req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/" + arquivo.name, true);
           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-          req.send('{"message":"' + arquivo.name + ' uploaded","content":"' + LerArquivo.result.replace(/^data:image.+;base64,/, '') + '"}');
+          req.send('{"message":"' + arquivo.name + ' enviado","content":"' + LerArquivo.result.replace(/^data:image.+;base64,/, '') + '"}');
           req.onload = function() {
             if (req.response.includes("too many requests")) {
-              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
             } else if (req.response.includes("/corsdemo")) {
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -144,7 +147,7 @@
             } else {
               document.querySelector(".info_").textContent = "Arquivo " + arquivo.name + " enviado com sucesso!";
             }
-            indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? document.querySelector(".info_").textContent = "Todos os arquivos foram processados." : fazerUpload(indexUploaded + 1, document.querySelector("select").value);
+            indexenviado == document.querySelector("input[type=file]").files.length - 1 ? alert("Todos os arquivos foram enviados.") : fazerUpload(indexenviado + 1, document.querySelector("select").value);
           };
         };
         /*LerArquivo.onprogress = function(e) {
@@ -155,7 +158,7 @@
         LerArquivo.onerror = function(e) {
           document.querySelector(".info_").textContent = e;
         };*/
-        LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexUploaded));
+        LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexenviado));
       }
 
       function ModificarArquivo(sha, nome, content) {
@@ -167,7 +170,8 @@
         req.send('{"message":"info.txt alterado","sha":"' + sha + '","content":"' + content + '"}');
         req.onload = function() {
           if (req.response.includes("too many requests")) {
-            alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
+            alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+            window.location.assign("manager");
           } else if (req.response.includes("/corsdemo")) {
             let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
             con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -185,10 +189,11 @@
         req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
         req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-        req.send('{"message":"' + nome + ' deleted","sha":"' + sha + '"}');
+        req.send('{"message":"' + nome + ' deletado","sha":"' + sha + '"}');
         req.onload = function() {
           if (req.response.includes("too many requests")) {
-            alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
+            alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+            window.location.assign("manager");
           } else if (req.response.includes("/corsdemo")) {
             let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
             con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -200,7 +205,7 @@
             }
           } else if (JSON.parse(req.response).commit) {
             Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ? Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() : null;
-            document.querySelector(".info_").textContent = "Arquivo " + nome + " deletado";
+            alert("Arquivo " + nome + " deletado");
           }
         };
       }
@@ -234,7 +239,7 @@
         botaoEnviar.textContent = "Enviar fotos";
         botaoEnviar.addEventListener("click", function() {
           if (document.querySelector("input[type=file]").files.length == 0) {
-            document.querySelector(".info_").textContent = 'Selecione um arquivo primeiro';
+            alert('Selecione um arquivo primeiro');
           } else {
             let con = confirm("Selecionou o tipo?");
             con == true ? fazerUpload(0, document.querySelector("select").value) : null;
@@ -268,7 +273,8 @@
           req.send();
           req.onload = function() {
             if (req.response.includes("too many requests")) {
-              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
             } else if (req.response.includes("/corsdemo")) {
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
@@ -281,11 +287,11 @@
                   arEn.parentElement.querySelector(".nomedoproduto").value = e.nome;
                   arEn.parentElement.querySelector(".valordoproduto").value = e.valor;
                   arEn.parentElement.querySelector("button").onclick = function() {
-                    let oSha = sha;
-                    let conteudo = JSON.parse(req.response);
-                    let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
-                    let indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado);
-                    let nomeaenviar = onde.replace("assets/img/", "") + "/info.txt";
+                    let oSha = sha,
+                      conteudo = JSON.parse(req.response),
+                      conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent,
+                      indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado),
+                      nomeaenviar = onde.replace("assets/img/", "") + "/info.txt";
                     if (conteudo.info[indexdoconteudo].nome == this.parentElement.querySelector(".nomedoproduto").value && conteudo.info[indexdoconteudo].valor == this.parentElement.querySelector(".valordoproduto").value) {
                       alert("Nada a alterar");
                     } else {
@@ -311,7 +317,8 @@
           }
           req.onload = function() {
             if (req.response.includes("too many requests")) {
-              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
               erroStatus = true;
             } else if (req.response.includes("/corsdemo")) {
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
@@ -376,7 +383,8 @@
                             nomeaenviar = onde + '/info.txt';
                           req.onload = function() {
                             if (req.response.includes("too many requests")) {
-                              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");window.location.assign("manager");
+                              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                              window.location.assign("manager");
                             } else if (req.response.includes("/corsdemo")) {
                               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
                               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
