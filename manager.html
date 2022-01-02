@@ -235,7 +235,6 @@
             req.send();
           }
           req.onload = function() {
-		  console.log(req.response);
             if (req.response.includes("too many requests")) {
               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
               erroStatus = true;
@@ -253,7 +252,8 @@
 					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".valordoproduto").value=e.valor;
 					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector("button").addEventListener("click",function(){
 					 let oSha = sha;
-					 console.log(oSha);
+					 let conteudo = req.response;
+					 console.log(oSha, conteudo);
 					});
 				}
 			  });
