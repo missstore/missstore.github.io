@@ -357,6 +357,9 @@
                         let botaoModificar = document.createElement("button");
                         botaoModificar.textContent = 'Modificar';
                         botaoModificar.style = 'margin-top: 1px;';
+						botaoModificar.addEventListener("click",function(){
+							console.log(this);
+						});
                         divArquivo.append(botaoModificar);
                         let botaoDeletar = document.createElement("button");
                         botaoDeletar.textContent = 'Deletar';
