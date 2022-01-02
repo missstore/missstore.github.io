@@ -221,14 +221,15 @@
         let mainDiv = document.createElement("div");
         mainDiv.style = 'margin: 30px;width: auto;height: fit-content;display: flex;flex-flow: row wrap;align-items: center;justify-content: center;';
         let divEnviar = document.createElement("div");
-        divEnviar.style = 'width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;margin-bottom: 20px;';
+        divEnviar.style = 'width: 100%;height: auto;display: flex;align-items: center;place-content: center;margin-bottom: 20px;flex-direction: column;';
         let selecionar_arquivo = document.createElement("input");
         selecionar_arquivo.multiple = true;
         selecionar_arquivo.type = "file";
         selecionar_arquivo.accept = "image/*"
+		selecionar_arquivo.style = 'margin-bottom: 5px;';
         divEnviar.append(selecionar_arquivo);
         let selecionarCategoria = document.createElement("select");
-        selecionarCategoria.style = 'margin-right: 3px;';
+        selecionarCategoria.style = 'margin-bottom: 5px;';
         let myCat = ['saias', 'croppeds', 'vestidos', 'calcas', 'conjuntos'];
         myCat.forEach(function(e) {
           let tempRes = document.createElement("option");
@@ -239,6 +240,7 @@
         divEnviar.append(selecionarCategoria);
         let botaoEnviar = document.createElement("button");
         botaoEnviar.textContent = "Enviar fotos";
+		botaoEnviar.style = 'margin-bottom: 5px;';
         botaoEnviar.addEventListener("click", function() {
           if (document.querySelector("input[type=file]").files.length == 0) {
             alert('Selecione um arquivo primeiro');
