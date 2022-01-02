@@ -178,8 +178,8 @@
           } else if (JSON.parse(req.response).message) {
             document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
           } else {
+			localStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/","").split("/")[0], {"sha":JSON.parse(req.response).sha,"content":content});
             alert("Modificado com sucesso!");
-			localStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/","").split("/")[0], content);
             document.body.outerHTML = '';
             obterContents();
           }
