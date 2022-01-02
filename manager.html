@@ -210,7 +210,7 @@
               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
             } else if (JSON.parse(req.response).message) {
-              document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
+              alert("Falha ao tentar modificar\n" + JSON.parse(req.response).message);
             } else {
 				console.log(req.response);
             }
