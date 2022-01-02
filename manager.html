@@ -313,6 +313,7 @@
                   if (temp.length == 0) {
                     document.querySelector(".info_").textContent = "Não foram encontrado resultados";
                   } else {
+				  console.log(temp);
                     temp.forEach(function(e, i) {
                       if (!e.name.endsWith(".txt")) {
                         let divArquivo = document.createElement("div");
@@ -359,7 +360,7 @@
                           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
                           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                           req.send();
-						  let essa = this;
+						  let essa = this, oSha = e.sha;
                           req.onload = function() {
                             if (req.response.includes("too many requests")) {
                               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
