@@ -133,7 +133,7 @@
             } else {
               document.querySelector(".info_").textContent = "Arquivo " + arquivo.name + " enviado com sucesso!";
             }
-            indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? document.querySelector(".info_").textContent = "Todos os arquivos foram processados." : fazerUpload(indexUploaded + 1, document.querySelector("body > div > div:nth-child(1) > select").value);
+            indexUploaded == document.querySelector("input[type=file]").files.length - 1 ? document.querySelector(".info_").textContent = "Todos os arquivos foram processados." : fazerUpload(indexUploaded + 1, document.querySelector("select").value);
           };
         };
         /*LerArquivo.onprogress = function(e) {
@@ -203,7 +203,7 @@
             document.querySelector(".info_").textContent = 'Selecione um arquivo primeiro';
           } else {
             let con = confirm("Selecionou o tipo?");
-            con == true ? fazerUpload(0, document.querySelector("body > div > div:nth-child(1) > select").value) : null;
+            con == true ? fazerUpload(0, document.querySelector("select").value) : null;
           }
         });
         divEnviar.append(botaoEnviar);
