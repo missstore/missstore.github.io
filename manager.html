@@ -236,7 +236,8 @@
           } else if (JSON.parse(req.response).commit) {
             Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ? Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() : null;
             alterarInfo(JSON.parse(localStorage.getItem(tipo)).sha, JSON.parse(localStorage.getItem(tipo)).content);
-            alert("Arquivo " + nome + " deletado");
+			let apenasNome = nome.replace("assets/img/","").split("/")[1];
+            alert("Arquivo " + apenasNome + " deletado");
           }
         };
       }
