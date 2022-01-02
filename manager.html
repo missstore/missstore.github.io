@@ -61,7 +61,7 @@
        * @param {string} data
        * @return {string}
        */
-      function utoa(data) {
+      function btou(data) {
         return btoa(unescape(encodeURIComponent(data)));
       }
 
@@ -200,7 +200,7 @@
           req = new XMLHttpRequest();
 		  let contentAalterar = JSON.parse(atou(contentInfo));
 		  contentAalterar.info.splice(contentAalterar.info.findIndex(f=>f.src==nome.replace("assets/img/","").split("/")[1]),1);
-		  let contentConverted = utoa(JSON.stringify(contentAalterar));
+		  let contentConverted = btou(JSON.stringify(contentAalterar));
           req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.txt", true);
           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -332,7 +332,7 @@
                     } else {
                       conteudo.info[indexdoconteudo].nome = this.parentElement.querySelector(".nomedoproduto").value;
                       conteudo.info[indexdoconteudo].valor = this.parentElement.querySelector(".valordoproduto").value;
-                      ModificarArquivo(oSha, nomeaenviar, utoa(JSON.stringify(conteudo)));
+                      ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)));
                     }
                   };
                 }
@@ -433,7 +433,7 @@
                                   "valor": essa.parentElement.querySelector(".valordoproduto").value,
                                   "nome": essa.parentElement.querySelector(".nomedoproduto").value
                                 })
-                                ModificarArquivo(oSha, nomeaenviar, utoa(JSON.stringify(conteudo)));
+                                ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)));
                               }
                             }
                           };
