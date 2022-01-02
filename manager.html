@@ -360,7 +360,8 @@
                           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
                           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                           req.send();
-						  let essa = this, oSha = e.sha;
+						  let essa = this, oSha = temp.find(f=>f.name=="info.txt").sha;
+						  console.log(oSha);
                           req.onload = function() {
                             if (req.response.includes("too many requests")) {
                               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
