@@ -253,7 +253,7 @@
 					 let oSha = sha;
 					 let conteudo = JSON.parse(req.response);
 					 let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1];
-					 let indexdoconteudo = conteudo.info.findIndex(f=>f.nome==conteudosendomodificado);
+					 let indexdoconteudo = conteudo.info.findIndex(f=>f.src==conteudosendomodificado);
 					 /*if(conteudo.info[indexdoconteudo].nome!=this.parentElement.querySelector(".nomedoproduto").value){
 						console.log("Nada a alterar");
 					 }else{
