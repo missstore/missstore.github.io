@@ -23,472 +23,850 @@
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <script>
-	/*
-https: //api.github.com/repos/missstore/missstore.github.io/contents
-https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img
-https://docs.github.com/pt/rest/reference/repos
-*/
+      const Nm = E,
+        NZ = E,
+        Ne = E,
+        Nk = E;
 
-function wwm(s, f) {
-	return new Promise(resolve => {
-		if (document.querySelector(s)) return resolve(f);
-		const observer = new MutationObserver(m => {
-			if (document.querySelector(s)) {
-				resolve(f);
-				observer.disconnect();
-			}
-		});
-		observer.observe(document, {
-			childList: true,
-			subtree: true
-		});
-	});
-}
-wwm("body > div").then(function() {
-	document.querySelector("body > div").addEventListener("click", function() {
-		getUserInfo();
-	});
-});
-wwm(".novoacesso").then(function() {
-	document.querySelector(".novoacesso").addEventListener("click", function() {
-		getUserInfo("novoacesso");
-	});
-});
+      function P() {
+        const PA = ['novoacesso', 'login', 'gger', 'ottom:\x2010p', 'indexOf', 'string', 'a\x20mensagem', 'setPropert', '1175uGKayZ', 'access_tok', 'ts/img/cal', 'nts/assets', 'body\x20>\x20div', 'MWQwODdmMD', 'conjuntos', 'emo\x20server', 'ontents/as', 'ction:\x20col', 'uto', '\x5c(\x20*\x5c)', 'querySelec', '{\x22message\x22', 'Size', 'io/content', 'r%20repo%2', 'Não\x20foram\x20', 'readAsData', 's://github', '\x20e\x20tente\x20n', 'rs-anywher', 'nts/', '\x22sha\x22:\x22', 'contents/a', 'o\x20autoriza', 'apply', 'alterado\x22,', 'auto;displ', 'style', 'margin:\x2030', 'position', 'nome', '\x20essa\x20imag', 'Revoke\x20ace', '.info_', 'change', 'ontent:\x20ce', '\x20primeiro', '5706207tGmtEx', 'estidos|ht', 'src', 'issstore/m', 'tore/misss', 'ub.com/rep', 'ssets/img/', 'height', 'find', '\x20the\x20demo\x20', 'github.io', 'epos/misss', 're/misssto', 'download_u', 'message', 'button', '0read:repo', 'w.githubus', 'trace', '%;height:\x20', '.com/login', '/api.githu', 'main/asset', 'test', 'removeProp', 'width', 'ercontent.', 'ogin/oauth', 'ad:user&st', 'accept', 'EzYg==', 'ja\x20deletar', '\x20resultado', 'nao', 'file', 'call', 'com/repos/', 'x-wrap:\x20wr', 'append', 'appendChil', 'lastIndexO', 'nter;font-', '/authorize', 's/missstor', '0-9a-zA-Z_', 'Usuario\x20nã', '.nomedopro', '6212KyTquc', 'px;', 'background', 'from', 'none', '?client_id', 'odigo\x20e\x20co', 'click', 'E3OTA2ZjI2', '.gif', 'splice', ';font-fami', '\x20access\x20to', 'ZmVlNjk5Nj', 'Repeat', 'center;', 'keydown', 'PUT', 'em?', ';flex-dire', 'warn', 'bind', '\x20app\x20para\x20', 'split', 'thub.com/r', 'thub.com/s', 'ap;flex-di', 'createElem', 'margin-top', 'token\x20', 'alor', 'sstore.git', '.valordopr', 'ficar\x0a', 'p.com/', 'innerText', 'Forneça\x20um', '26XHczrW', 'equests', 'Content-Ty', 'toUpperCas', 'ithub.io/c', '%20admin:r', 'g/croppeds', 'setRequest', '053', 'Image', 'tials', '\x20o\x20tipo?', 'ntre\x2030\x20e\x20', '0repo_depl', 'ttom:\x2010px', 'e.herokuap', 'Falha\x20ao\x20t', 'thub.com/u', 'main/', '=1fdf9fee6', '\x20deletado\x22', 'lkPTFmZGY5', 'placeholde', 's://api.gi', 'sets/img/v', 'https://ap', 'Bad\x20creden', 'Modificado', 'exception', 'nt:\x20center', 'ettings/co', 'Erro\x20ao\x20te', 'com/missst', 'textConten', 'rm-urlenco', 'weight:\x2050', '/img/', 'observe', 'ogo\x20após\x20f', '\x22\x0aAguarde\x20', '(((.+)+)+)', 'gin-bottom', 'code=', 'er;margin-', 'display:\x20f', 'calcas', 'rquivos\x20fo', 'lign-items', '.svg', '.jpg', 'uest\x20tempo', 'imagens', 'a\x20que\x20dese', 'valor', ':\x2020px;pad', 'Accept', 'vestidos', 'Nada\x20a\x20alt', 'add', 'includes', 'irection:\x20', 'Selecione\x20', 'lex;flex-d', 'quivo\x20', 'Modificar', '&state=tru', 'then', 'input[type', '//api.gith', ':\x22info.txt', 'value', 'ay:\x20flex;a', 'tent:\x20cent', 'body', 'remove', '.jpeg', 'tems:\x20cent', 'path', 'error', 'length', 'stringify', ':\x20center;p', '=file]', 'assign', 'toString', 'multiple', 'GET', 'um\x20arquivo', 'r\x20o\x20arquiv', 'type', '\x20info.txt\x20', '4043550dvuVMU', 'ate=true', 'missstore', 'os/misssto', 'er\x0a', 'entar\x20modi', 'erar', ':\x20center;j', 'eche\x20a\x20jan', 'agem', 'ela', '/corsdemo', '0;margin-b', 'sstore/mis', 'erif;font-', 'uma\x20janela', '-content:\x20', 'nter;', 'sha', '\x20com\x20suces', 'debu', 'nviar\x20o\x20ar', 'er;flex-di', 'too\x20many\x20r', 'Procurar\x20i', 'table', 'label', 'Header', 'replace', '.png', '4690189FxaiSN', 'info_', 'om/repos/m', 'epo_hook%2', '\x22:\x22', 'JmNsaWVudF', '\x22content\x22:', 'erty', 'action', 'ly:\x20sans-s', 'search', 'classList', 'outerHTML', 'ctor(\x22retu', 'send', 'n/x-www-fo', '.io/main/a', 'ow;align-i', 'lace-conte', 'cas|https:', '\x20aguarde\x20e', 'ZGU5NGZiNj', ',\x22sha\x22:\x22', 'init', 'return\x20(fu', 'commit', '250px', 'sets/img/', 'tps://api.', 'procurarim', 'er;align-c', 'ntinuar', 'result', '\x20enviado\x22,', 'ntar\x20apaga', '{}.constru', 'Muitas\x20sol', 'tore.githu', '/assets/im', 'e6996786f2', 'Atualizar\x20', '\x20enviado\x20c', 'Tem\x20certez', '\x20\x22You\x20curr', 'Enviar\x20fot', 'do\x20|\x20Unaut', 'constructo', ':\x20flex;fle', 'horized\x20Us', 'log', '\x2010px;padd', 'oyment%20p', 'torAll', 'POST', 'onload', 'e)\x20{}', 'nction()\x20', 'server.\x22\x0aL', 'issstore.g', '\x20nome\x20ou\x20v', 'location', 'os|https:/', 'forEach', 'er;', 'column;mar', 'substring', '__proto__', 'icitações,', 'e/missstor', 'o/contents', 's/assets/i', 'so!', 'github.io/', '200631dapBhO', 'cover', 'https://ra', 'obter\x20um\x20c', 'n/vnd.gith', 'ion', 'ustify-con', 'rn\x20this\x22)(', 'onclick', 'missstore/', 'display', '\x20alterado\x22', '60\x20minutos', 'setItem', 'ser', 'ing-right:', '/info.txt', '_token', 'addEventLi', 'https://co', 'https://gi', 'console', 'nnections/', 'saias', 'ess_token', 'counter', 'assets/img', 'endsWith', 'findIndex', 'Deletar', 'open', '.txt', 'div', 'content', 'github.com', '$]*)', 'flex', 'b.com/repo', 'select', 'a-zA-Z_$][', '4463416kUZVOE', '/repos/mis', 'toLowerCas', 'ay:\x20flex;j', 'hub.io/con', 'duto', 'ovamente', 'p.com/http', 'display:no', 'info', 'keyup', 'push', 'chain', 'c4NmYyMDUz', 'llNmMwNTRh', 'ss?', 'ram\x20enviad', 'px;display', 'manager', 'ub.v3+json', 'parse', 'item', '9zZWNyZXQ9', 'info.txt', 'ns/1fdf9fe', 'ne;', 'url(', '.novoacess', 'URL', 'Todos\x20os\x20a', 'ublic_repo', 'om\x20sucesso', 'option', 'thubuserco', '\x2010px;', 'input', '_hook%20re', '100%;displ', 'DELETE', 'function\x20*', ':\x201px;', 'image/*', 'YjZlMjY4MT', 'parentElem', '\x20temporary', 's/img/', 'fixed', 'i.github.c', 'tom:\x2020px;', 'Selecionou', '|https://a', '851811tZPIhF', '/oauth/acc', 'head', 'nomedoprod', 'while\x20(tru', 'pi.github.', 'tents/asse', 'no-repeat', 'encontrado', 'croppeds', 'umn;', 're.github.', 'ore.github', 'rary\x20acces', '\x0anela\x20cliq', 'Autorize\x20o', '3&allow_si', '\x5c+\x5c+\x20*(?:[', '\x22,\x22content', 'Falha\x20ao\x20e', 's://raw.gi', 'rection:\x20r', 'width:\x20100', 'ded', 'applicatio', 'magem', 'Y2xpZW50X2', 'ently\x20have', 'files', ';margin-bo', 'name', 'ore/missst', 'margin-bot', 'mg/conjunt', 'prototype', 'b.io/conte', 'tom:\x205px;', 'stener', '\x20deletado', 'ntent.com/', 'valordopro', 'text', 'missstore.', 'gnup=false', 'size:\x2015px', 'setAttribu', 'oduto', 'os.', 'ding-left:', '996786f205', 'stateObjec', '&scope=use', 'ue\x20em\x20\x22Req', 'disconnect', '-align:\x20ce', 's\x20to\x20the\x20d', 'e.github.i', 'response', 'Authorizat', 'thub.com/l', 'bottom:\x2015', 'ow;justify', 'getItem', ':\x201px;text', 'ent', 'tor', 'Ira\x20abrir\x20', 'Arquivo\x20'];
+        P = function() {
+          return PA;
+        };
+        return P();
+      }(function(N, u) {
+        const h = E,
+          n = E,
+          R = E,
+          w = E,
+          H = E,
+          N0 = E,
+          N1 = E,
+          N2 = E,
+          N3 = E,
+          l = N();
+        while (!![]) {
+          try {
+            const C = -parseInt(h(0x349)) / 0x1 + parseInt(h(0x22c)) / 0x2 * (parseInt(h(0x2ee)) / 0x3) + -parseInt(n(0x207)) / 0x4 * (-parseInt(w(0x1b1)) / 0x5) + parseInt(w(0x287)) / 0x6 + parseInt(R(0x2a5)) / 0x7 + -parseInt(N2(0x316)) / 0x8 + -parseInt(N0(0x1d8)) / 0x9;
+            if (C === u) break;
+            else l['push'](l['shift']());
+          } catch (O) {
+            l['push'](l['shift']());
+          }
+        }
+      }(P, 0x82813));
 
-function atou(b64) {
-	return decodeURIComponent(escape(atob(b64)));
-}
+      function wwm(x, F) {
+        const L = (function() {
+            let V = !![];
+            return function(J, S) {
+              const T = V ? function() {
+                const N4 = E;
+                if (S) {
+                  const G = S[N4(0x1cb)](J, arguments);
+                  return S = null, G;
+                }
+              } : function() {};
+              return V = ![], T;
+            };
+          }()),
+          Q = L(this, function() {
+            const N5 = E,
+              N6 = E,
+              N7 = E,
+              N8 = E,
+              N9 = E,
+              NN = E,
+              Nu = E;
+            return Q[N5(0x280)]()[N5(0x2af)](N6(0x254) + '+$')[N8(0x280)]()[N8(0x2d3) + 'r'](Q)[NN(0x2af)](N8(0x254) + '+$');
+          });
+        Q();
+        const U = (function() {
+          let V = !![];
+          return function(J, S) {
+            const T = V ? function() {
+              const Np = E;
+              if (S) {
+                const G = S[Np(0x1cb)](J, arguments);
+                return S = null, G;
+              }
+            } : function() {};
+            return V = ![], T;
+          };
+        }());
+        (function() {
+          U(this, function() {
+            const Nl = E,
+              NC = E,
+              NO = E,
+              NP = E,
+              NE = E,
+              Nx = E,
+              NF = E,
+              NL = E,
+              NQ = E,
+              NU = E,
+              V = new RegExp(Nl(0x33d) + Nl(0x1bc)),
+              J = new RegExp(Nl(0x176) + NO(0x315) + NC(0x204) + Nx(0x311), 'i'),
+              S = p(NC(0x2bc));
+            !V[NO(0x1ef)](S + Nl(0x322)) || !J[NF(0x1ef)](S + Nx(0x339)) ? S('0') : p();
+          })();
+        }());
+        const c = (function() {
+            let V = !![];
+            return function(J, S) {
+              const T = V ? function() {
+                const Nc = E;
+                if (S) {
+                  const G = S[Nc(0x1cb)](J, arguments);
+                  return S = null, G;
+                }
+              } : function() {};
+              return V = ![], T;
+            };
+          }()),
+          v = c(this, function() {
+            const NG = E,
+              NA = E,
+              Nd = E,
+              Ns = E,
+              Ng = E,
+              No = E,
+              Nr = E,
+              NK = E,
+              ND = E,
+              NM = E,
+              V = function() {
+                const Nv = E,
+                  NV = E,
+                  NJ = E,
+                  NS = E,
+                  NT = E;
+                let G;
+                try {
+                  G = Function(Nv(0x2bd) + NV(0x2dd) + (Nv(0x2c8) + NJ(0x2b2) + Nv(0x2f5) + '\x20)') + ');')();
+                } catch (A) {
+                  G = window;
+                }
+                return G;
+              },
+              J = V(),
+              S = J[NG(0x303)] = J[NG(0x303)] || {},
+              T = [NA(0x2d6), NG(0x21b), Ng(0x31f), Ng(0x27a), No(0x248), No(0x2a0), Ns(0x1ea)];
+            for (let G = 0x0; G < T[ND(0x27b)]; G++) {
+              const A = c[Ng(0x2d3) + 'r'][Ng(0x187)][Ns(0x21c)](c),
+                d = T[G],
+                g = S[d] || A;
+              A[NG(0x2e7)] = c[Nr(0x21c)](c), A[No(0x280)] = g[No(0x280)][NA(0x21c)](g), S[d] = A;
+            }
+          });
+        return v(), new Promise(V => {
+          const NY = E,
+            NW = E,
+            Nq = E;
+          if (document[NY(0x1bd) + NW(0x1a6)](x)) return V(F);
+          const J = new MutationObserver(S => {
+            const Nt = NY,
+              NX = NY,
+              Nj = NY;
+            document[Nt(0x1bd) + NX(0x1a6)](x) && (V(F), J[Nt(0x19a)]());
+          });
+          J[Nq(0x251)](document, {
+            'childList': !![],
+            'subtree': !![]
+          });
+        });
+      }
+      wwm(Nm(0x1b5))[Nm(0x26e)](function() {
+        const NI = Nm,
+          Nz = NZ,
+          Ni = NZ,
+          NB = Nm,
+          Nf = NZ,
+          Nb = NZ;
+        document[NI(0x1bd) + NI(0x1a6)](Nz(0x1b5))[Ni(0x300) + Nz(0x18a)](NB(0x20e), function() {
+          getUserInfo();
+        });
+      }), wwm(Ne(0x331) + 'o')[NZ(0x26e)](function() {
+        const Ny = Ne,
+          Na = NZ,
+          Nh = Ne,
+          Nn = Nk,
+          NR = Nk,
+          Nw = Nk;
+        document[Ny(0x1bd) + Ny(0x1a6)](Na(0x331) + 'o')[Ny(0x300) + Ny(0x18a)](Nn(0x20e), function() {
+          const NH = NR;
+          getUserInfo(NH(0x1a9));
+        });
+      });
 
-function btou(data) {
-	return btoa(unescape(encodeURIComponent(data)));
-}
+      function atou(N) {
+        return decodeURIComponent(escape(atob(N)));
+      }
 
-function getUserInfo(novoacesso) {
-	novoacesso = novoacesso || "nao";
-	novoacesso != "nao" ? localStorage.setItem("_token", null) : null;
-	var req = new XMLHttpRequest(),
-		code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
+      function btou(N) {
+        return btoa(unescape(encodeURIComponent(N)));
+      }
 
-	function verificarUsuario() {
-		req = new XMLHttpRequest();
-		req.open('GET', 'https://cors-anywhere.herokuapp.com/https://api.github.com/user', true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-		req.send();
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (req.response.includes("/corsdemo")) {
-				let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
-				con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-			} else if (JSON.parse(req.response).message) {
-				obtertoken();
-			} else {
-				if (JSON.parse(req.response).login == "missstore") {
-					obterContents();
-				} else {
-					alert("Usuario não autorizado | Unauthorized User\n" + JSON.parse(req.response).login);
-					let con = confirm("Revoke acess?");
-					con == true ? window.open("https://github.com/settings/connections/applications/1fdf9fee6996786f2053") : null;
-				}
-			}
-		};
-	}
-	verificarUsuario();
+      function getUserInfo(N) {
+        const u0 = Nk,
+          u1 = Nk,
+          u2 = NZ,
+          u3 = NZ,
+          u4 = Nm,
+          u5 = Nm,
+          u6 = Nk,
+          u7 = NZ,
+          u8 = Nk,
+          u9 = Nk;
+        N = N || u0(0x1f9), N != u0(0x1f9) ? localStorage[u1(0x2fb)](u3(0x2ff), null) : null;
+        var u = new XMLHttpRequest(),
+          l = window[u1(0x2e1)][u5(0x2af)][u4(0x2e6)](window[u6(0x2e1)][u8(0x2af)][u5(0x1ad)](u4(0x256)) + 0x5, window[u2(0x2e1)][u1(0x2af)][u3(0x200) + 'f']('&'));
 
-	function obtertoken() {
-		req = new XMLHttpRequest();
-		req.open('POST', 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.send('code=' + code + '&' + atob("Y2xpZW50X2lkPTFmZGY5ZmVlNjk5Njc4NmYyMDUzJmNsaWVudF9zZWNyZXQ9YjZlMjY4MTE3OTA2ZjI2MWQwODdmMDllNmMwNTRhZGU5NGZiNjEzYg==") + '&state=true');
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (req.response.includes("/corsdemo")) {
-				let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
-				con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-			} else {
-				let _token = JSON.parse(req.response) ? JSON.parse(req.response).access_token : null;
-				if (_token) {
-					localStorage.setItem("_token", _token);
-					verificarUsuario();
-				} else {
-					let con = confirm("Autorize o app para obter um codigo e continuar")
-					con == true ? window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true") : null;
-				}
-			}
-		};
-	}
-}
+        function C() {
+          const uN = u8,
+            uu = u7,
+            up = u8,
+            ul = u7,
+            uC = u8,
+            uO = u3,
+            uP = u1,
+            uE = u4,
+            ux = u2,
+            uF = u3;
+          u = new XMLHttpRequest(), u[uN(0x30c)](uu(0x282), uu(0x301) + up(0x1c6) + uC(0x23b) + uO(0x31d) + ul(0x243) + uu(0x23d) + uu(0x2fc), !![]), u[uP(0x233) + up(0x2a2)](uF(0x263), uF(0x17d) + uP(0x2f2) + uu(0x329)), u[up(0x233) + uO(0x2a2)](uu(0x22e) + 'pe', uu(0x17d) + ul(0x2b4) + uN(0x24e) + uN(0x17c)), u[uP(0x233) + uE(0x2a2)](uE(0x19f) + uC(0x2f3), uF(0x224) + localStorage[up(0x1a3)](uF(0x2ff))), u[uF(0x2b3)](), u[uC(0x2db)] = function() {
+            const uL = uF,
+              uQ = uF,
+              uU = uu,
+              uc = uP,
+              uv = uF,
+              uV = ux,
+              uJ = uN,
+              uS = uN,
+              uT = ux,
+              uG = uP;
+            if (u[uL(0x19e)][uL(0x267)](uQ(0x29e) + uL(0x22d))) alert(uc(0x2c9) + uQ(0x2e8) + uV(0x2b9) + uv(0x238) + uS(0x2fa) + uJ(0x1c5) + uT(0x31c)), window[uS(0x2e1)][uJ(0x27f)](uc(0x328));
+            else {
+              if (u[uS(0x19e)][uS(0x267)](uc(0x292))) {
+                let x = confirm(uL(0x1a7) + uc(0x296) + uG(0x357) + uc(0x199) + uT(0x25e) + uL(0x356) + uL(0x19c) + uQ(0x1b8) + uV(0x253) + uL(0x1af) + uv(0x2d0) + uV(0x180) + uV(0x342) + uc(0x213) + uL(0x1e1) + uc(0x2de) + uQ(0x252) + uU(0x28f) + uL(0x291));
+                x == !![] ? window[uc(0x30c)](uQ(0x301) + uv(0x1c6) + uS(0x23b) + uV(0x229)) : null;
+              } else {
+                if (JSON[uS(0x32a)](u[uv(0x19e)])[uG(0x1e6)]) O();
+                else {
+                  if (JSON[uQ(0x32a)](u[uL(0x19e)])[uT(0x1aa)] == uJ(0x289)) obterContents();
+                  else {
+                    alert(uc(0x205) + uU(0x1ca) + uS(0x2d2) + uc(0x2d5) + uQ(0x28b) + JSON[uc(0x32a)](u[uJ(0x19e)])[uT(0x1aa)]);
+                    let F = confirm(uG(0x1d3) + uJ(0x325));
+                    F == !![] ? window[uS(0x30c)](uc(0x302) + uV(0x220) + uG(0x24a) + uc(0x304) + uQ(0x17d) + uQ(0x32e) + uV(0x2cc) + uJ(0x234)) : null;
+                  }
+                }
+              }
+            }
+          };
+        }
+        C();
 
-function fazerUpload(indexenviado, tipo) {
-	let LerArquivo = new FileReader(),
-		arquivo = document.querySelector("input[type=file]").files.item(indexenviado);
-	LerArquivo.onload = function() {
-		var req = new XMLHttpRequest();
-		req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/" + arquivo.name, true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-		req.send('{"message":"' + arquivo.name + ' enviado","content":"' + LerArquivo.result.replace(/^data:image.+;base64,/, '') + '"}');
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (req.response.includes("/corsdemo")) {
-				let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
-				con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-			} else if (JSON.parse(req.response).message) {
-				document.querySelector(".info_").textContent = ("Falha ao enviar o arquivo " + arquivo.name, "\n", JSON.parse(req.response).message);
-			} else {
-				document.querySelector(".info_").textContent = "Arquivo " + arquivo.name + " enviado com sucesso!";
-			}
-			indexenviado == document.querySelector("input[type=file]").files.length - 1 ? alert("Todos os arquivos foram enviados.") : fazerUpload(indexenviado + 1, document.querySelector("select").value);
-		};
-	};
-	/*LerArquivo.onprogress = function(e) {
-	  let percentComplete = e.loaded / e.total;
-	  percentComplete = parseInt(percentComplete * 100);
-	  percentComplete == 100 ? document.querySelector(".info_").textContent = "Arquivo enviado" : document.querySelector(".info_").textContent = "Enviando arquivo " + percentComplete + "%";
-	};
-	LerArquivo.onerror = function(e) {
-	  document.querySelector(".info_").textContent = e;
-	};*/
-	LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexenviado));
-}
+        function O() {
+          const uA = u7,
+            ud = u1,
+            us = u2,
+            ug = u8,
+            uo = u1,
+            ur = u2,
+            uK = u5,
+            uD = u8,
+            uM = u6,
+            uY = u5;
+          u = new XMLHttpRequest(), u[uA(0x30c)](ud(0x2da), uA(0x301) + ud(0x1c6) + us(0x23b) + uA(0x31d) + uA(0x1c4) + uK(0x1ec) + uM(0x34a) + uo(0x306), !![]), u[ug(0x233) + ug(0x2a2)](uo(0x263), us(0x17d) + ug(0x2f2) + ur(0x329)), u[uA(0x233) + uK(0x2a2)](us(0x22e) + 'pe', ur(0x17d) + ug(0x2b4) + us(0x24e) + uY(0x17c)), u[ug(0x2b3)](us(0x256) + l + '&' + atob(uY(0x17f) + ur(0x241) + uY(0x214) + ud(0x323) + ur(0x2aa) + uY(0x32c) + us(0x340) + uM(0x20f) + uA(0x1b6) + uM(0x324) + us(0x2ba) + ur(0x1f6)) + (ur(0x26d) + 'e')), u[uK(0x2db)] = function() {
+            const uW = ug,
+              ut = uM,
+              uX = ug,
+              uj = uY,
+              uq = ug,
+              um = uD,
+              uZ = uK,
+              uI = us,
+              uz = uA,
+              ui = uo;
+            if (u[uW(0x19e)][ut(0x267)](uW(0x29e) + uj(0x22d))) alert(uq(0x2c9) + uj(0x2e8) + uX(0x2b9) + uj(0x238) + uX(0x2fa) + ui(0x1c5) + uq(0x31c)), window[uW(0x2e1)][uI(0x27f)](uW(0x328));
+            else {
+              if (u[uI(0x19e)][ut(0x267)](uj(0x292))) {
+                let x = confirm(uW(0x1a7) + ui(0x296) + uX(0x357) + uz(0x199) + uX(0x25e) + uI(0x356) + ut(0x19c) + ut(0x1b8) + uz(0x253) + ui(0x1af) + uq(0x2d0) + ut(0x180) + uX(0x342) + um(0x213) + uZ(0x1e1) + uW(0x2de) + ui(0x252) + uI(0x28f) + uX(0x291));
+                x == !![] ? window[uq(0x30c)](uZ(0x301) + ut(0x1c6) + ut(0x23b) + um(0x229)) : null;
+              } else {
+                let F = JSON[uj(0x32a)](u[uW(0x19e)]) ? JSON[ut(0x32a)](u[uW(0x19e)])[ui(0x1b2) + 'en'] : null;
+                if (F) localStorage[uW(0x2fb)](uj(0x2ff), F), C();
+                else {
+                  let L = confirm(uW(0x174) + uj(0x21d) + uj(0x2f1) + uW(0x20d) + ut(0x2c4));
+                  L == !![] ? window[uZ(0x30c)](uj(0x302) + ui(0x1a0) + um(0x1f3) + ut(0x202) + uZ(0x20c) + uq(0x23f) + ui(0x196) + uI(0x175) + um(0x190) + uI(0x198) + ui(0x1c1) + uq(0x239) + uq(0x2d8) + uX(0x334) + uI(0x231) + uj(0x2a8) + uI(0x1e8) + uZ(0x33a) + ui(0x1f4) + um(0x288)) : null;
+                }
+              }
+            }
+          };
+        }
+      }
 
-function ModificarArquivo(sha, nome, content) {
-	var req = new XMLHttpRequest();
-	req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + nome, true);
-	req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-	req.send('{"message":"info.txt alterado","sha":"' + sha + '","content":"' + content + '"}');
-	req.onload = function() {
-		if (req.response.includes("too many requests")) {
-			alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-			window.location.assign("manager");
-		} else if (req.response.includes("/corsdemo")) {
-			let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
-			con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-		} else if (JSON.parse(req.response).message) {
-			document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
-		} else {
-			localStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
-				"sha": JSON.parse(req.response).content.sha,
-				"content": content
-			}));
-			alert("Modificado com sucesso!");
-		}
-	};
-}
+      function fazerUpload(N, u) {
+        const uB = Ne,
+          uf = NZ,
+          ub = Nk,
+          ue = Nk,
+          uk = Nm,
+          uy = Ne,
+          ua = Ne,
+          pO = Ne,
+          pP = Nk,
+          pE = Ne;
+        let l = new FileReader(),
+          C = document[uB(0x1bd) + uf(0x1a6)](uf(0x26f) + uf(0x27e))[uB(0x181)][uB(0x32b)](N);
+        l[ue(0x2db)] = function() {
+          const uh = uk,
+            un = ua,
+            uR = uB,
+            uw = uy,
+            uH = uf,
+            p0 = ua,
+            p1 = uf,
+            p2 = uf,
+            p3 = ua,
+            p4 = ua;
+          var O = new XMLHttpRequest();
+          O[uh(0x30c)](uh(0x218), uR(0x301) + uR(0x1c6) + uh(0x23b) + uw(0x31d) + uR(0x243) + p0(0x21f) + uH(0x1e3) + p1(0x1dc) + un(0x2ca) + un(0x188) + uh(0x1b4) + p1(0x250) + u + '/' + C[un(0x183)], !![]), O[uh(0x233) + un(0x2a2)](p2(0x263), p1(0x17d) + p3(0x2f2) + uh(0x329)), O[p0(0x233) + uH(0x2a2)](uH(0x22e) + 'pe', un(0x17d) + p0(0x2b4) + uw(0x24e) + p0(0x17c)), O[uR(0x233) + p2(0x2a2)](uh(0x19f) + uH(0x2f3), uh(0x224) + localStorage[p4(0x1a3)](p3(0x2ff))), O[p3(0x2b3)](p1(0x1be) + ':\x22' + C[p0(0x183)] + (p3(0x2c6) + un(0x2ab) + '\x22') + l[p2(0x2c5)][p1(0x2a3)](/^data:image.+;base64,/, '') + '\x22}'), O[p2(0x2db)] = function() {
+            const p5 = p2,
+              p6 = uR,
+              p7 = uw,
+              p8 = un,
+              p9 = uR,
+              pN = p3,
+              pu = un,
+              pp = uR,
+              pl = un,
+              pC = uH;
+            if (O[p5(0x19e)][p5(0x267)](p6(0x29e) + p5(0x22d))) alert(p6(0x2c9) + p8(0x2e8) + pu(0x2b9) + p9(0x238) + pu(0x2fa) + pC(0x1c5) + pC(0x31c)), window[p5(0x2e1)][p5(0x27f)](p5(0x328));
+            else {
+              if (O[p7(0x19e)][p6(0x267)](pl(0x292))) {
+                let x = confirm(pp(0x1a7) + p8(0x296) + pu(0x357) + p9(0x199) + pN(0x25e) + p7(0x356) + pC(0x19c) + p8(0x1b8) + p6(0x253) + pN(0x1af) + pl(0x2d0) + pN(0x180) + pC(0x342) + p9(0x213) + pN(0x1e1) + pl(0x2de) + p6(0x252) + p6(0x28f) + pp(0x291));
+                x == !![] ? window[pu(0x30c)](p6(0x301) + p5(0x1c6) + p5(0x23b) + p7(0x229)) : null;
+              } else JSON[p5(0x32a)](O[pl(0x19e)])[p6(0x1e6)] ? document[p5(0x1bd) + pC(0x1a6)](pC(0x1d4))[pN(0x24d) + 't'] = (p6(0x178) + pu(0x29c) + p5(0x26b) + C[p5(0x183)], '\x0a', JSON[p8(0x32a)](O[pl(0x19e)])[p6(0x1e6)]) : document[pl(0x1bd) + pu(0x1a6)](p9(0x1d4))[pl(0x24d) + 't'] = pN(0x1a8) + C[pu(0x183)] + (pC(0x2ce) + p8(0x335) + '!');
+            }
+            N == document[p6(0x1bd) + p8(0x1a6)](pu(0x26f) + p5(0x27e))[pp(0x181)][p9(0x27b)] - 0x1 ? alert(p6(0x333) + p6(0x25a) + pN(0x326) + pC(0x194)) : fazerUpload(N + 0x1, document[pN(0x1bd) + pN(0x1a6)](pu(0x314))[pN(0x272)]);
+          };
+        }, l[ua(0x1c3) + pP(0x332)](document[pE(0x1bd) + pP(0x1a6)](uB(0x26f) + uy(0x27e))[uy(0x181)][ua(0x32b)](N));
+      }
 
-function deletarArquivo(nome, sha) {
-	var req = new XMLHttpRequest();
-	req.open('DELETE', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
-	req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-	req.send('{"message":"' + nome + ' deletado","sha":"' + sha + '"}');
-	let tipo = nome.replace("assets/img/", "").split("/")[0];
+      function ModificarArquivo(N, u, l) {
+        const px = Nm,
+          pF = NZ,
+          pL = Nk,
+          pQ = NZ,
+          pU = Ne,
+          pc = Ne,
+          pv = Nm,
+          pV = NZ,
+          pJ = Nk,
+          pS = Nm;
+        var C = new XMLHttpRequest();
+        C[px(0x30c)](pF(0x218), pL(0x301) + pF(0x1c6) + px(0x23b) + px(0x31d) + px(0x243) + pc(0x21f) + pF(0x1e3) + pU(0x1dc) + pS(0x2ca) + pU(0x188) + pF(0x1b4) + px(0x250) + u, !![]), C[pL(0x233) + pU(0x2a2)](pV(0x263), pJ(0x17d) + pS(0x2f2) + pS(0x329)), C[pv(0x233) + pv(0x2a2)](pF(0x22e) + 'pe', px(0x17d) + pF(0x2b4) + pU(0x24e) + pQ(0x17c)), C[pU(0x233) + pc(0x2a2)](pv(0x19f) + pV(0x2f3), pF(0x224) + localStorage[pF(0x1a3)](pJ(0x2ff))), C[px(0x2b3)](pc(0x1be) + pS(0x271) + pF(0x2f9) + pS(0x2bb) + N + (pJ(0x177) + pF(0x2a9)) + l + '\x22}'), C[pv(0x2db)] = function() {
+          const pT = px,
+            pG = px,
+            pA = pv,
+            pd = pc,
+            ps = pv,
+            pg = pL,
+            po = pc,
+            pr = pF,
+            pK = pv,
+            pD = pc;
+          if (C[pT(0x19e)][pG(0x267)](pG(0x29e) + pT(0x22d))) alert(pA(0x2c9) + pG(0x2e8) + po(0x2b9) + ps(0x238) + pd(0x2fa) + pG(0x1c5) + pT(0x31c)), window[ps(0x2e1)][pT(0x27f)](ps(0x328));
+          else {
+            if (C[pD(0x19e)][pd(0x267)](pD(0x292))) {
+              let O = confirm(pT(0x1a7) + pG(0x296) + pA(0x357) + pG(0x199) + ps(0x25e) + pr(0x356) + pA(0x19c) + ps(0x1b8) + pA(0x253) + pd(0x1af) + ps(0x2d0) + ps(0x180) + pg(0x342) + pT(0x213) + po(0x1e1) + pG(0x2de) + pK(0x252) + po(0x28f) + pg(0x291));
+              O == !![] ? window[pD(0x30c)](pg(0x301) + pg(0x1c6) + pr(0x23b) + pA(0x229)) : null;
+            } else JSON[pT(0x32a)](C[pA(0x19e)])[pd(0x1e6)] ? document[pg(0x1bd) + pG(0x1a6)](pr(0x1d4))[pg(0x24d) + 't'] = po(0x23c) + pG(0x28c) + pd(0x228) + JSON[pT(0x32a)](C[pT(0x19e)])[pr(0x1e6)] : (localStorage[pA(0x2fb)](JSON[pA(0x32a)](C[pr(0x19e)])[ps(0x30f)][pr(0x279)][pG(0x2a3)](pT(0x308) + '/', '')[po(0x21e)]('/')[0x0], JSON[pT(0x27c)]({
+              'sha': JSON[pA(0x32a)](C[pT(0x19e)])[pA(0x30f)][pd(0x299)],
+              'content': l
+            })), alert(pd(0x247) + pK(0x29a) + pg(0x2ec)));
+          }
+        };
+      }
 
-	function alterarInfo(shaInfo, contentInfo) {
-		req = new XMLHttpRequest();
-		let contentAalterar = JSON.parse(atou(contentInfo));
-		contentAalterar.info.splice(contentAalterar.info.findIndex(f => f.src == nome.replace("assets/img/", "").split("/")[1]), 1);
-		let contentConverted = btou(JSON.stringify(contentAalterar));
-		req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.txt", true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-		req.send('{"message":"' + tipo + ' info.txt alterado","sha":"' + shaInfo + '","content":"' + contentConverted + '"}');
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (req.response.includes("/corsdemo")) {
-				let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
-				con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-			} else if (JSON.parse(req.response).message) {
-				alert("Falha ao tentar modificar\n" + JSON.parse(req.response).message);
-			} else {
-				localStorage.setItem(tipo, JSON.stringify({
-					"sha": JSON.parse(req.response).content.sha,
-					"content": contentConverted
-				}));
-			}
-		};
-	}
-	req.onload = function() {
-		if (req.response.includes("too many requests")) {
-			alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-			window.location.assign("manager");
-		} else if (req.response.includes("/corsdemo")) {
-			let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
-			con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-		} else if (JSON.parse(req.response).message) {
-			if (JSON.parse(req.response).message == 'Bad credentials') {
-				getUserInfo();
-			} else {
-				alert("Erro ao tentar apagar o arquivo " + nome + "\n" + JSON.parse(req.response).message);
-			}
-		} else if (JSON.parse(req.response).commit) {
-			Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ? Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() : null;
-			alterarInfo(JSON.parse(localStorage.getItem(tipo)).sha, JSON.parse(localStorage.getItem(tipo)).content);
-			let apenasNome = nome.replace("assets/img/", "").split("/")[1];
-			alert("Arquivo " + apenasNome + " deletado");
-		}
-	};
-}
+      function E(N, u) {
+        const p = P();
+        return E = function(l, C) {
+          l = l - 0x174;
+          let O = p[l];
+          return O;
+        }, E(N, u);
+      }
+      setInterval(function() {
+        p();
+      }, 0xfa0);
 
-function obterContents() {
-	var osLink = "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/vestidos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/calcas|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/conjuntos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/croppeds|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/saias";
-	document.body.outerHTML = '';
-	document.querySelectorAll("head").forEach(function(e) {
-		e.innerText.length == 0 ? e.remove() : null;
-	});
-	let mainDiv = document.createElement("div");
-	mainDiv.style = 'margin: 30px;width: auto;height: fit-content;display: flex;flex-flow: row wrap;align-items: center;justify-content: center;';
-	let divEnviar = document.createElement("div");
-	divEnviar.style = 'width: 100%;height: auto;display: flex;align-items: center;place-content: center;margin-bottom: 10px;flex-direction: column;';
-	let selecionar_arquivo = document.createElement("input");
-	selecionar_arquivo.multiple = true;
-	selecionar_arquivo.type = "file";
-	selecionar_arquivo.accept = "image/*"
-	selecionar_arquivo.style = 'margin-bottom: 5px;';
-	divEnviar.append(selecionar_arquivo);
-	let selecionarCategoria = document.createElement("select");
-	selecionarCategoria.style = 'margin-bottom: 5px;';
-	let myCat = ['saias', 'croppeds', 'vestidos', 'calcas', 'conjuntos'];
-	myCat.forEach(function(e) {
-		let tempRes = document.createElement("option");
-		tempRes.value = e;
-		tempRes.textContent = e.toUpperCase();
-		selecionarCategoria.append(tempRes)
-	});
-	divEnviar.append(selecionarCategoria);
-	let botaoEnviar = document.createElement("button");
-	botaoEnviar.textContent = "Enviar fotos";
-	botaoEnviar.style = 'margin-bottom: 5px;';
-	botaoEnviar.addEventListener("click", function() {
-		if (document.querySelector("input[type=file]").files.length == 0) {
-			alert('Selecione um arquivo primeiro');
-		} else {
-			let con = confirm("Selecionou o tipo?");
-			con == true ? fazerUpload(0, document.querySelector("select").value) : null;
-		}
-	});
-	divEnviar.append(botaoEnviar);
-	let labelInfo = document.createElement("label");
-	labelInfo.style = "width: 100%;height: auto;display: flex;align-items: center;justify-content: center;align-content: center;font-size: 15px;font-family: sans-serif;font-weight: 500;margin-bottom: 10px;";
-	labelInfo.classList.add("info_");
-	let divDorefresh = document.createElement("div");
-	divDorefresh.style = 'width: 100%;height: 100%;display: flex;justify-content: center;';
-	let butaoRefresh = document.createElement("button");
-	butaoRefresh.style = "margin-bottom: 20px;";
-	butaoRefresh.textContent = "Atualizar imagens";
-	butaoRefresh.addEventListener("click", function() {
-		document.body.outerHTML = '';
-		obterContents();
-	});
-	divDorefresh.append(butaoRefresh);
-	let procurarItem = document.createElement("div");
-	procurarItem.style = 'width: 100%;height: auto;display: flex;justify-content: center;flex-direction: row;align-items: center;margin-bottom: 15px;';
-	let inputProcurar = document.createElement("input");
-	inputProcurar.type="text";
-	inputProcurar.classList.add("procurarimagem");
-	inputProcurar.style="text-transform: lowercase;";
-	procurarItem.append(inputProcurar);
-	let botaoProcurar = document.createElement("button");
-	botaoProcurar.textContent="Procurar";
-	botaoProcurar.addEventListener("click",function(){
-		console.log(document.querySelector(".procurarimagem").value);
-	});
-	procurarItem.append(botaoProcurar);
-	mainDiv.append(procurarItem);
-	mainDiv.append(divEnviar);
-	mainDiv.append(labelInfo);
-	mainDiv.append(divDorefresh);
-	document.body.appendChild(mainDiv);
+      function deletarArquivo(N, u) {
+        const pM = Nk,
+          pY = NZ,
+          pW = Ne,
+          pt = Nm,
+          pX = Ne,
+          pj = Nm,
+          pq = Nk,
+          pm = Nm,
+          pZ = Nm,
+          pI = Ne;
+        var l = new XMLHttpRequest();
+        l[pM(0x30c)](pM(0x33c), pM(0x301) + pt(0x1c6) + pX(0x23b) + pj(0x31d) + pX(0x243) + pj(0x21f) + pm(0x1e3) + pM(0x1dc) + pI(0x2ca) + pm(0x188) + pX(0x1c7) + N, !![]), l[pq(0x233) + pj(0x2a2)](pt(0x263), pX(0x17d) + pm(0x2f2) + pq(0x329)), l[pI(0x233) + pI(0x2a2)](pq(0x22e) + 'pe', pt(0x17d) + pI(0x2b4) + pq(0x24e) + pI(0x17c)), l[pZ(0x233) + pM(0x2a2)](pm(0x19f) + pI(0x2f3), pZ(0x224) + localStorage[pZ(0x1a3)](pj(0x2ff))), l[pm(0x2b3)](pY(0x1be) + ':\x22' + N + (pj(0x240) + pW(0x2bb)) + u + '\x22}');
+        let C = N[pt(0x2a3)](pM(0x308) + '/', '')[pM(0x21e)]('/')[0x0];
 
-	function obterDados(caminho, sha) {
-		caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
-		var req = new XMLHttpRequest();
-		req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho + '/info.txt', true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.send();
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (req.response.includes("/corsdemo")) {
-				let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
-				con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-			} else {
-				let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
-				onde = onde.replace("main/", "") + "/";
-				JSON.parse(req.response).info.forEach(function(e) {
-					localStorage.setItem(onde.split("/")[2], JSON.stringify({
-						"sha": sha,
-						"content": btou(JSON.stringify(JSON.parse(req.response)))
-					}));
-					if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
-						let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
-						arEn.parentElement.querySelector(".nomedoproduto").value = e.nome;
-						arEn.parentElement.querySelector(".valordoproduto").value = e.valor;
-						arEn.parentElement.querySelector("button").onclick = function() {
-							let oSha = sha,
-								conteudo = JSON.parse(req.response),
-								conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent,
-								indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado),
-								nomeaenviar = onde.replace("assets/img/", "") + "/info.txt";
-							if (conteudo.info[indexdoconteudo].nome == this.parentElement.querySelector(".nomedoproduto").value && conteudo.info[indexdoconteudo].valor == this.parentElement.querySelector(".valordoproduto").value) {
-								alert("Nada a alterar");
-							} else {
-								conteudo.info[indexdoconteudo].nome = this.parentElement.querySelector(".nomedoproduto").value;
-								conteudo.info[indexdoconteudo].valor = this.parentElement.querySelector(".valordoproduto").value;
-								ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)));
-							}
-						};
-					}
-				});
-			}
-		};
-	}
+        function O(x, F) {
+          const pz = pY,
+            pi = pm,
+            pB = pm,
+            pf = pq,
+            pb = pj,
+            pe = pj,
+            pk = pq,
+            py = pj,
+            pa = pm,
+            ph = pI;
+          l = new XMLHttpRequest();
+          let L = JSON[pz(0x32a)](atou(F));
+          L[pi(0x31f)][pB(0x211)](L[pz(0x31f)][pz(0x30a)](U => U[pz(0x1da)] == N[pb(0x2a3)](pi(0x308) + '/', '')[pB(0x21e)]('/')[0x1]), 0x1);
+          let Q = btou(JSON[pa(0x27c)](L));
+          l[ph(0x30c)](py(0x218), pk(0x301) + pa(0x1c6) + pa(0x23b) + pz(0x31d) + ph(0x243) + pb(0x21f) + pb(0x1e3) + pb(0x1dc) + pk(0x2ca) + pe(0x188) + py(0x1b4) + pk(0x250) + C + ph(0x2fe), !![]), l[ph(0x233) + pz(0x2a2)](pf(0x263), pe(0x17d) + pk(0x2f2) + pf(0x329)), l[pi(0x233) + ph(0x2a2)](ph(0x22e) + 'pe', ph(0x17d) + pe(0x2b4) + pB(0x24e) + pz(0x17c)), l[pf(0x233) + pa(0x2a2)](ph(0x19f) + pz(0x2f3), pe(0x224) + localStorage[py(0x1a3)](pb(0x2ff))), l[pa(0x2b3)](ph(0x1be) + ':\x22' + C + (pB(0x286) + pa(0x1cc) + py(0x1c8)) + x + (py(0x177) + ph(0x2a9)) + Q + '\x22}'), l[pa(0x2db)] = function() {
+            const pn = pk,
+              pR = pB,
+              pw = pk,
+              pH = pB,
+              l0 = pb,
+              l1 = pf,
+              l2 = pk,
+              l3 = ph,
+              l4 = py,
+              l5 = pa;
+            if (l[pn(0x19e)][pR(0x267)](pw(0x29e) + pR(0x22d))) alert(pH(0x2c9) + pn(0x2e8) + pR(0x2b9) + pR(0x238) + pw(0x2fa) + pR(0x1c5) + pH(0x31c)), window[l3(0x2e1)][l4(0x27f)](l2(0x328));
+            else {
+              if (l[pn(0x19e)][l1(0x267)](pH(0x292))) {
+                let U = confirm(pn(0x1a7) + pR(0x296) + l4(0x357) + pH(0x199) + l1(0x25e) + l1(0x356) + l0(0x19c) + l4(0x1b8) + l0(0x253) + l0(0x1af) + l5(0x2d0) + l3(0x180) + pR(0x342) + pH(0x213) + pw(0x1e1) + pH(0x2de) + l5(0x252) + l4(0x28f) + l3(0x291));
+                U == !![] ? window[pw(0x30c)](l3(0x301) + l2(0x1c6) + l3(0x23b) + pH(0x229)) : null;
+              } else JSON[l1(0x32a)](l[l1(0x19e)])[l4(0x1e6)] ? alert(pn(0x23c) + l3(0x28c) + l5(0x228) + JSON[l2(0x32a)](l[pR(0x19e)])[l1(0x1e6)]) : localStorage[l2(0x2fb)](C, JSON[pH(0x27c)]({
+                'sha': JSON[pw(0x32a)](l[l1(0x19e)])[l0(0x30f)][pw(0x299)],
+                'content': Q
+              }));
+            }
+          };
+        }
+        l[pj(0x2db)] = function() {
+          const l6 = pj,
+            l7 = pI,
+            l8 = pY,
+            l9 = pI,
+            lN = pI,
+            lu = pI,
+            lp = pW,
+            ll = pm,
+            lC = pI,
+            lO = pX;
+          if (l[l6(0x19e)][l6(0x267)](l7(0x29e) + l9(0x22d))) alert(l6(0x2c9) + l9(0x2e8) + l8(0x2b9) + lu(0x238) + l6(0x2fa) + l8(0x1c5) + lu(0x31c)), window[l6(0x2e1)][l8(0x27f)](l6(0x328));
+          else {
+            if (l[ll(0x19e)][lN(0x267)](l8(0x292))) {
+              let x = confirm(lO(0x1a7) + ll(0x296) + l8(0x357) + lC(0x199) + l8(0x25e) + lC(0x356) + lC(0x19c) + l7(0x1b8) + lO(0x253) + ll(0x1af) + l7(0x2d0) + l9(0x180) + lu(0x342) + l8(0x213) + lN(0x1e1) + ll(0x2de) + lO(0x252) + l8(0x28f) + l7(0x291));
+              x == !![] ? window[l8(0x30c)](l9(0x301) + lO(0x1c6) + l9(0x23b) + l6(0x229)) : null;
+            } else {
+              if (JSON[lO(0x32a)](l[lN(0x19e)])[lO(0x1e6)]) JSON[lu(0x32a)](l[l6(0x19e)])[l7(0x1e6)] == lN(0x246) + lN(0x236) ? getUserInfo() : alert(lp(0x24b) + lO(0x2c7) + l7(0x284) + 'o\x20' + N + '\x0a' + JSON[l8(0x32a)](l[lp(0x19e)])[lC(0x1e6)]);
+              else {
+                if (JSON[lC(0x32a)](l[lN(0x19e)])[lC(0x2be)]) {
+                  Array[ll(0x20a)](document[lu(0x1bd) + l6(0x2d9)](l8(0x2a1)))[ll(0x1e0)](L => L[lO(0x24d) + 't'] == N) ? Array[l7(0x20a)](document[lC(0x1bd) + l6(0x2d9)](ll(0x2a1)))[lN(0x1e0)](L => L[l6(0x24d) + 't'] == N)[lp(0x341) + lN(0x1a5)][l9(0x276)]() : null, O(JSON[lN(0x32a)](localStorage[lO(0x1a3)](C))[l9(0x299)], JSON[lC(0x32a)](localStorage[lO(0x1a3)](C))[lu(0x30f)]);
+                  let F = N[lO(0x2a3)](l9(0x308) + '/', '')[lp(0x21e)]('/')[0x1];
+                  alert(ll(0x1a8) + F + lO(0x18b));
+                }
+              }
+            }
+          }
+        };
+      }
 
-	function obterTodos(caminho) {
-		var req = new XMLHttpRequest(),
-			erroStatus = false;
-		if (erroStatus != true) {
-			req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho, true);
-			req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-			req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-			req.send();
-		}
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-				erroStatus = true;
-			} else if (req.response.includes("/corsdemo")) {
-				let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
-				con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-			} else {
-				let temp = [];
-				erroStatus = false;
-				JSON.parse(req.response).forEach(function(e, i) {
-					e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") || e.name.endsWith(".gif") || e.name.endsWith(".txt") ? temp.push(e) : null;
-					if (i == JSON.parse(req.response).length - 1) {
-						if (temp.length == 0) {
-							document.querySelector(".info_").textContent = "Não foram encontrado resultados";
-						} else {
-							temp.forEach(function(e, i) {
-								if (!e.name.endsWith(".txt")) {
-									let divArquivo = document.createElement("div");
-									divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
-									let Imagem = document.createElement("div");
-									Imagem.style.backgroundImage = "url(" + e.download_url + ")";
-									Imagem.style.width = "250px";
-									Imagem.style.height = "250px";
-									Imagem.style.backgroundSize = "cover";
-									Imagem.style.backgroundRepeat = "no-repeat";
-									divArquivo.append(Imagem);
-									let SHA = document.createElement("label");
-									SHA.textContent = e.sha;
-									SHA.style = 'display:none;';
-									divArquivo.append(SHA);
-									let NOME = document.createElement("label");
-									NOME.textContent = e.name;
-									NOME.style = 'display:none;';
-									divArquivo.append(NOME);
-									let Caminho = document.createElement("label");
-									Caminho.textContent = e.path;
-									Caminho.style = 'display:none;';
-									divArquivo.append(Caminho);
-									let nomeDoproduto = document.createElement("input");
-									nomeDoproduto.classList.add("nomedoproduto");
-									nomeDoproduto.type = "text";
-									nomeDoproduto.style = "margin-top: 1px;text-align: center;";
-									divArquivo.append(nomeDoproduto);
-									let valorDoproduto = document.createElement("input");
-									valorDoproduto.classList.add("valordoproduto");
-									valorDoproduto.type = "text";
-									valorDoproduto.style = "margin-top: 1px;text-align: center;";
-									divArquivo.append(valorDoproduto);
-									let botaoModificar = document.createElement("button");
-									botaoModificar.textContent = 'Modificar';
-									botaoModificar.style = 'margin-top: 1px;';
-									botaoModificar.onclick = function() {
-										let onde = this.parentElement.querySelectorAll("label")[2].textContent;
-										onde.split("/").forEach(function(e, i) {
-											i == 2 ? onde = e : null;
-										});
-										var req = new XMLHttpRequest();
-										req.open('GET', 'https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/' + onde + '/info.txt', true);
-										req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-										req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-										req.send();
-										let essa = this,
-											oSha = temp.find(f => f.name == "info.txt").sha,
-											nomeaenviar = onde + '/info.txt';
-										req.onload = function() {
-											if (req.response.includes("too many requests")) {
-												alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-												window.location.assign("manager");
-											} else if (req.response.includes("/corsdemo")) {
-												let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
-												con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
-											} else {
-												let conteudo = JSON.parse(req.response);
-												let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
-												if (essa.parentElement.querySelector(".valordoproduto").value.length == 0 && essa.parentElement.querySelector(".nomedoproduto").value.length == 0) {
-													alert("Forneça um nome ou valor");
-												} else {
-													conteudo.info.push({
-														"src": conteudosendomodificado,
-														"valor": essa.parentElement.querySelector(".valordoproduto").value,
-														"nome": essa.parentElement.querySelector(".nomedoproduto").value
-													})
-													ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)));
-												}
-											}
-										};
-									};
-									divArquivo.append(botaoModificar);
-									let botaoDeletar = document.createElement("button");
-									botaoDeletar.textContent = 'Deletar';
-									botaoDeletar.style = 'margin-top: 1px;';
-									botaoDeletar.addEventListener("click", function() {
-										let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
-										let sha = this.parentElement.querySelectorAll("label")[0].textContent;
-										let path = this.parentElement.querySelectorAll("label")[2].textContent;
-										let con = confirm("Tem certeza que deseja deletar essa imagem?");
-										con == true ? deletarArquivo(path, sha) : null;
-									});
-									divArquivo.append(botaoDeletar);
-									document.querySelector("body > div").append(divArquivo);
-								} else {
-									new obterDados(caminho, e.sha);
-								}
-							});
-						}
-					}
-				});
-			}
-		};
-	}
-	let no = osLink.split("|"),
-		requests = new Array();
-	for (let i = 0; i < no.length; i++) {
-		requests.push(new obterTodos(no[i]));
-	}
-}
-	</script>
+      function obterContents() {
+        const lP = Ne,
+          lE = NZ,
+          lx = NZ,
+          lF = Ne,
+          lL = NZ,
+          lQ = Nm,
+          lU = NZ,
+          lc = Nk,
+          lv = Nk,
+          lV = Nk;
+        var N = lP(0x245) + lE(0x345) + lP(0x2a7) + lE(0x1db) + lx(0x2df) + lQ(0x230) + lP(0x1b9) + lx(0x244) + lQ(0x1d9) + lU(0x2c1) + lU(0x310) + lU(0x317) + lF(0x294) + lc(0x226) + lQ(0x31a) + lU(0x34f) + lQ(0x1b3) + lc(0x2b8) + lQ(0x270) + lL(0x1dd) + lL(0x28a) + lF(0x1e4) + lc(0x354) + lc(0x1c0) + lE(0x2eb) + lL(0x186) + lP(0x2e2) + lv(0x1ed) + lL(0x313) + lV(0x203) + lQ(0x2e9) + lv(0x19d) + lE(0x2ea) + lL(0x2cb) + lx(0x232) + lF(0x348) + lP(0x34e) + lL(0x1fc) + lV(0x2f7) + lU(0x18f) + lF(0x2ed) + lc(0x1c9) + lQ(0x1de) + lQ(0x305);
+        document[lU(0x275)][lE(0x2b1)] = '', document[lL(0x1bd) + lQ(0x2d9)](lx(0x34b))[lx(0x2e3)](function(G) {
+          const lJ = lF,
+            lS = lc,
+            lT = lx;
+          G[lJ(0x22a)][lS(0x27b)] == 0x0 ? G[lS(0x276)]() : null;
+        });
+        let u = document[lF(0x222) + lU(0x1a5)](lU(0x30e));
+        u[lF(0x1ce)] = lQ(0x1cf) + lL(0x327) + lx(0x2d4) + lc(0x1fd) + lQ(0x221) + lU(0x17a) + lU(0x1a2) + lQ(0x297) + lL(0x216);
+        let l = document[lP(0x222) + lU(0x1a5)](lU(0x30e));
+        l[lP(0x1ce)] = lc(0x17b) + lL(0x1eb) + lV(0x1cd) + lQ(0x273) + lv(0x25b) + lP(0x27d) + lv(0x2b7) + lv(0x249) + lc(0x182) + lP(0x23a) + lP(0x21a) + lE(0x1ba) + lQ(0x353);
+        let C = document[lQ(0x222) + lv(0x1a5)](lx(0x339));
+        C[lP(0x281)] = !![], C[lV(0x285)] = lE(0x1fa), C[lF(0x1f5)] = lF(0x33f), C[lx(0x1ce)] = lU(0x185) + lE(0x189), l[lQ(0x1fe)](C);
+        let O = document[lF(0x222) + lF(0x1a5)](lL(0x314));
+        O[lP(0x1ce)] = lU(0x185) + lF(0x189);
+        let x = [lQ(0x305), lU(0x352), lL(0x264), lV(0x259), lv(0x1b7)];
+        x[lc(0x2e3)](function(G) {
+          const lG = lU,
+            lA = lV,
+            ld = lx,
+            ls = lP,
+            lg = lx,
+            lo = lF,
+            lr = lx;
+          let A = document[lG(0x222) + lA(0x1a5)](lG(0x336));
+          A[ld(0x272)] = G, A[ld(0x24d) + 't'] = G[lg(0x22f) + 'e'](), O[ld(0x1fe)](A);
+        }), l[lF(0x1fe)](O);
+        let F = document[lE(0x222) + lV(0x1a5)](lF(0x1e7));
+        F[lV(0x24d) + 't'] = lE(0x2d1) + 'os', F[lE(0x1ce)] = lv(0x185) + lx(0x189), F[lc(0x300) + lx(0x18a)](lP(0x20e), function() {
+          const lK = lc,
+            lD = lE,
+            lM = lv,
+            lY = lx,
+            lW = lE,
+            lt = lF,
+            lX = lx,
+            lj = lQ,
+            lq = lF,
+            lm = lQ;
+          if (document[lK(0x1bd) + lK(0x1a6)](lD(0x26f) + lM(0x27e))[lM(0x181)][lD(0x27b)] == 0x0) alert(lK(0x269) + lD(0x283) + lY(0x1d7));
+          else {
+            let G = confirm(lX(0x347) + lt(0x237));
+            G == !![] ? fazerUpload(0x0, document[lK(0x1bd) + lm(0x1a6)](lj(0x314))[lW(0x272)]) : null;
+          }
+        }), l[lE(0x1fe)](F);
+        let L = document[lU(0x222) + lL(0x1a5)](lL(0x2a1));
+        L[lv(0x1ce)] = lv(0x17b) + lx(0x1eb) + lP(0x1cd) + lx(0x273) + lQ(0x25b) + lV(0x28e) + lv(0x2f4) + lE(0x274) + lE(0x2c3) + lx(0x1d6) + lx(0x201) + lV(0x191) + lx(0x212) + lL(0x2ae) + lx(0x295) + lL(0x24f) + lE(0x293) + lU(0x1ac) + 'x;', L[lU(0x2b0)][lV(0x266)](lQ(0x2a6));
+        let Q = document[lU(0x222) + lL(0x1a5)](lQ(0x30e));
+        Q[lL(0x1ce)] = lx(0x17b) + lV(0x1eb) + lQ(0x33b) + lv(0x319) + lE(0x2f4) + lE(0x274) + lL(0x2e4);
+        let U = document[lU(0x222) + lv(0x1a5)](lx(0x1e7));
+        U[lU(0x1ce)] = lc(0x185) + lE(0x346), U[lU(0x24d) + 't'] = lv(0x2cd) + lc(0x25f), U[lc(0x300) + lv(0x18a)](lL(0x20e), function() {
+          const lZ = lL,
+            lI = lL;
+          document[lZ(0x275)][lZ(0x2b1)] = '', obterContents();
+        }), Q[lQ(0x1fe)](U);
+        let c = document[lV(0x222) + lQ(0x1a5)](lx(0x30e));
+        c[lx(0x1ce)] = lP(0x17b) + lU(0x1eb) + lV(0x1cd) + lV(0x319) + lP(0x2f4) + lv(0x274) + lV(0x29d) + lv(0x17a) + lv(0x2b6) + lc(0x278) + lV(0x257) + lE(0x1a1) + lU(0x208);
+        let v = document[lU(0x222) + lV(0x1a5)](lx(0x339));
+        v[lV(0x285)] = lF(0x18e), v[lP(0x2b0)][lQ(0x266)](lv(0x2c2) + lQ(0x290)), v[lP(0x192) + 'te'](lU(0x242) + 'r', lL(0x29f) + lE(0x17e)), v[lc(0x300) + lF(0x18a)](lv(0x1d5), function() {
+          const lz = lx,
+            li = lc,
+            lB = lL,
+            lf = lV,
+            lb = lU,
+            le = lQ;
+          let G = this[lz(0x272)];
+          document[li(0x1bd) + lB(0x2d9)](lf(0x206) + lb(0x31b))[lz(0x2e3)](function(A) {
+            const lk = le,
+              ly = lz,
+              la = le,
+              lh = li,
+              ln = lB,
+              lR = lB,
+              lw = lf,
+              lH = le,
+              C0 = lz,
+              C1 = lb;
+            A[lk(0x272)][ly(0x318) + 'e']()[la(0x267)](G) ? (A[lk(0x341) + ly(0x1a5)][la(0x1ce)][lk(0x1f0) + ln(0x2ac)](C0(0x1d0)), A[lR(0x341) + C1(0x1a5)][lk(0x1ce)][lh(0x1b0) + 'y'](la(0x2f8), C0(0x312))) : (A[lw(0x341) + lH(0x1a5)][lh(0x1ce)][la(0x1b0) + 'y'](lk(0x1d0), C0(0x344)), A[C1(0x341) + lk(0x1a5)][la(0x1ce)][lR(0x1b0) + 'y'](lH(0x2f8), lR(0x20b)));
+          });
+        }), v[lx(0x300) + lE(0x18a)](lV(0x217), function() {
+          const C2 = lQ,
+            C3 = lF,
+            C4 = lU,
+            C5 = lE,
+            C6 = lv,
+            C7 = lQ;
+          let G = this[C2(0x272)];
+          document[C2(0x1bd) + C4(0x2d9)](C3(0x206) + C4(0x31b))[C3(0x2e3)](function(A) {
+            const C8 = C2,
+              C9 = C5,
+              CN = C5,
+              Cu = C5,
+              Cp = C2,
+              Cl = C6,
+              CC = C6,
+              CO = C6,
+              CP = C4,
+              CE = C4;
+            A[C8(0x272)][C9(0x318) + 'e']()[C8(0x267)](G) ? (A[Cu(0x341) + C9(0x1a5)][Cu(0x1ce)][Cu(0x1f0) + CC(0x2ac)](CN(0x1d0)), A[Cl(0x341) + Cu(0x1a5)][Cp(0x1ce)][Cu(0x1b0) + 'y'](CP(0x2f8), CE(0x312))) : (A[Cp(0x341) + C8(0x1a5)][C9(0x1ce)][CC(0x1b0) + 'y'](CE(0x1d0), CP(0x344)), A[CN(0x341) + Cp(0x1a5)][CN(0x1ce)][CC(0x1b0) + 'y'](Cu(0x2f8), C9(0x20b)));
+          });
+        }), v[lF(0x300) + lF(0x18a)](lP(0x320), function() {
+          const Cx = lV,
+            CF = lV,
+            CL = lv,
+            CQ = lE,
+            CU = lV,
+            Cc = lv;
+          let G = this[Cx(0x272)];
+          document[Cx(0x1bd) + Cx(0x2d9)](Cx(0x206) + CU(0x31b))[CF(0x2e3)](function(A) {
+            const Cv = CU,
+              CV = CL,
+              CJ = CF,
+              CS = CU,
+              CT = CF,
+              CG = Cc,
+              CA = CU,
+              Cd = CU,
+              Cs = CU,
+              Cg = Cx;
+            A[Cv(0x272)][Cv(0x318) + 'e']()[CJ(0x267)](G) ? (A[Cv(0x341) + Cv(0x1a5)][CJ(0x1ce)][CJ(0x1f0) + Cd(0x2ac)](CJ(0x1d0)), A[Cs(0x341) + CG(0x1a5)][Cg(0x1ce)][CA(0x1b0) + 'y'](CJ(0x2f8), CJ(0x312))) : (A[CT(0x341) + Cs(0x1a5)][CA(0x1ce)][Cs(0x1b0) + 'y'](Cv(0x1d0), CV(0x344)), A[CV(0x341) + Cs(0x1a5)][Cs(0x1ce)][CV(0x1b0) + 'y'](Cg(0x2f8), CT(0x20b)));
+          });
+        }), c[lx(0x1fe)](v), u[lL(0x1fe)](l), u[lv(0x1fe)](L), u[lL(0x1fe)](Q), u[lV(0x1fe)](c), document[lP(0x275)][lE(0x1ff) + 'd'](u);
+
+        function V(G, A) {
+          const Co = lv,
+            Cr = lF,
+            CK = lV,
+            CD = lx,
+            CM = lE,
+            CY = lv,
+            CW = lE,
+            Ct = lc,
+            CX = lF,
+            Cj = lF;
+          G = G[Co(0x2a3)](Cr(0x245) + Co(0x345) + Cr(0x2a7) + CD(0x1db) + Co(0x2df) + Co(0x230) + CM(0x1b9) + CD(0x2c0), Cr(0x2f0) + CW(0x1e9) + Cj(0x1f2) + Cr(0x24c) + CD(0x184) + Ct(0x355) + Cj(0x2b5) + CK(0x1de));
+          var d = new XMLHttpRequest();
+          d[CD(0x30c)](Cr(0x282), CM(0x301) + CX(0x1c6) + Cj(0x23b) + CX(0x229) + G + CM(0x2fe), !![]), d[CM(0x233) + Ct(0x2a2)](Ct(0x263), CX(0x17d) + CW(0x2f2) + Co(0x329)), d[CX(0x233) + CM(0x2a2)](CM(0x22e) + 'pe', CY(0x17d) + CW(0x2b4) + CW(0x24e) + CD(0x17c)), d[Co(0x2b3)](), d[CW(0x2db)] = function() {
+            const Cq = Cj,
+              Cm = Ct,
+              CZ = CX,
+              CI = CY,
+              Cz = CD,
+              Ci = Cj,
+              CB = Co,
+              Cf = CD,
+              Cb = CW,
+              Ce = CY;
+            if (d[Cq(0x19e)][Cq(0x267)](Cq(0x29e) + Cm(0x22d))) alert(Cq(0x2c9) + CI(0x2e8) + CI(0x2b9) + Cz(0x238) + Ci(0x2fa) + CI(0x1c5) + Ci(0x31c)), window[Ce(0x2e1)][Ce(0x27f)](Ci(0x328));
+            else {
+              if (d[CZ(0x19e)][Ci(0x267)](Cf(0x292))) {
+                let s = confirm(CZ(0x1a7) + CI(0x296) + Cb(0x357) + Cb(0x199) + CI(0x25e) + Cm(0x356) + CI(0x19c) + CI(0x1b8) + Cf(0x253) + Cb(0x1af) + Cb(0x2d0) + CI(0x180) + Ci(0x342) + Cb(0x213) + Cz(0x1e1) + Cz(0x2de) + CB(0x252) + Ci(0x28f) + Ce(0x291));
+                s == !![] ? window[Ce(0x30c)](CI(0x301) + Cf(0x1c6) + CB(0x23b) + Cz(0x229)) : null;
+              } else {
+                let g = G[Ce(0x2e6)](G[Cb(0x1ad)](Cz(0x18f) + Cm(0x1e2)) + 0x14, G[CB(0x27b)]);
+                g = g[CZ(0x2a3)](CB(0x23e), '') + '/', JSON[Cq(0x32a)](d[CZ(0x19e)])[CI(0x31f)][Cm(0x2e3)](function(o) {
+                  const Ck = Cb,
+                    Cy = CZ,
+                    Ca = CB,
+                    Ch = CZ,
+                    Cn = CB,
+                    CR = CI,
+                    Cw = CB,
+                    CH = Cf,
+                    O0 = CZ,
+                    O1 = Ce;
+                  localStorage[Ck(0x2fb)](g[Ck(0x21e)]('/')[0x2], JSON[Ca(0x27c)]({
+                    'sha': A,
+                    'content': btou(JSON[Ck(0x27c)](JSON[Ch(0x32a)](d[Ch(0x19e)])))
+                  }));
+                  if (Array[Ck(0x20a)](document[Ck(0x1bd) + Ck(0x2d9)](CH(0x2a1)))[O0(0x1e0)](r => r[O1(0x24d) + 't'] == g + o[O1(0x1da)])) {
+                    let r = Array[Cw(0x20a)](document[O1(0x1bd) + O0(0x2d9)](Cy(0x2a1)))[Cy(0x1e0)](K => K[Ch(0x24d) + 't'] == g + o[Ck(0x1da)]);
+                    r[CR(0x341) + O1(0x1a5)][CR(0x1bd) + Cn(0x1a6)](Cw(0x206) + Cn(0x31b))[Ck(0x272)] = o[Cn(0x1d1)], r[Cy(0x341) + Ca(0x1a5)][Ck(0x1bd) + O0(0x1a6)](CR(0x227) + Ca(0x193))[O0(0x272)] = o[O0(0x261)], r[Ch(0x341) + CR(0x1a5)][Cn(0x1bd) + Cy(0x1a6)](Ck(0x1e7))[O1(0x2f6)] = function() {
+                      const O2 = Cn,
+                        O3 = Ck,
+                        O4 = CR,
+                        O5 = Cy,
+                        O6 = Cy,
+                        O7 = CR,
+                        O8 = CR,
+                        O9 = Ch,
+                        ON = O0,
+                        Ou = O0;
+                      let K = A,
+                        D = JSON[O2(0x32a)](d[O3(0x19e)]),
+                        M = this[O4(0x341) + O4(0x1a5)][O6(0x1bd) + O3(0x2d9)](O4(0x2a1))[0x1][O2(0x24d) + 't'],
+                        Y = D[O5(0x31f)][O4(0x30a)](t => t[O3(0x1da)] == M),
+                        W = g[O8(0x2a3)](O6(0x308) + '/', '') + O9(0x2fe);
+                      D[O5(0x31f)][Y][O5(0x1d1)] == this[O4(0x341) + O8(0x1a5)][O5(0x1bd) + O9(0x1a6)](O9(0x206) + ON(0x31b))[O3(0x272)] && D[O2(0x31f)][Y][O2(0x261)] == this[O4(0x341) + ON(0x1a5)][Ou(0x1bd) + O5(0x1a6)](ON(0x227) + O7(0x193))[O7(0x272)] ? alert(O5(0x265) + O2(0x28d)) : (D[O6(0x31f)][Y][ON(0x1d1)] = this[O6(0x341) + O6(0x1a5)][Ou(0x1bd) + O9(0x1a6)](O3(0x206) + Ou(0x31b))[O5(0x272)], D[O9(0x31f)][Y][O9(0x261)] = this[O4(0x341) + O5(0x1a5)][O6(0x1bd) + O8(0x1a6)](O8(0x227) + O5(0x193))[O8(0x272)], ModificarArquivo(K, W, btou(JSON[O5(0x27c)](D))));
+                    };
+                  }
+                });
+              }
+            }
+          };
+        }
+
+        function J(G) {
+          const Op = lv,
+            Ol = lV,
+            OC = lE,
+            OO = lc,
+            OP = lP,
+            OE = lQ,
+            Ox = lP,
+            OF = lF,
+            OL = lx,
+            OQ = lQ;
+          var A = new XMLHttpRequest(),
+            d = ![];
+          d != !![] && (A[Op(0x30c)](Ol(0x282), OC(0x301) + OO(0x1c6) + Ol(0x23b) + Op(0x229) + G, !![]), A[OC(0x233) + OE(0x2a2)](Ol(0x263), OO(0x17d) + OF(0x2f2) + OO(0x329)), A[OF(0x233) + OC(0x2a2)](OQ(0x22e) + 'pe', OO(0x17d) + OC(0x2b4) + OL(0x24e) + OE(0x17c)), A[Ol(0x2b3)]()), A[OF(0x2db)] = function() {
+            const OU = Op,
+              Oc = OE,
+              Ov = Ol,
+              OV = OO,
+              OJ = OF,
+              OS = OP,
+              OT = Ox,
+              OG = Ox,
+              OA = Op,
+              Od = OE;
+            if (A[OU(0x19e)][OU(0x267)](Oc(0x29e) + OV(0x22d))) alert(OU(0x2c9) + OV(0x2e8) + OV(0x2b9) + OJ(0x238) + OV(0x2fa) + OA(0x1c5) + OG(0x31c)), window[OA(0x2e1)][Ov(0x27f)](Oc(0x328)), d = !![];
+            else {
+              if (A[OA(0x19e)][OA(0x267)](Od(0x292))) {
+                let s = confirm(Oc(0x1a7) + OT(0x296) + Od(0x357) + OV(0x199) + OV(0x25e) + OJ(0x356) + OV(0x19c) + OT(0x1b8) + Oc(0x253) + OV(0x1af) + Oc(0x2d0) + Ov(0x180) + Ov(0x342) + Od(0x213) + Ov(0x1e1) + OV(0x2de) + OG(0x252) + Oc(0x28f) + Ov(0x291));
+                s == !![] ? window[Ov(0x30c)](OV(0x301) + Ov(0x1c6) + Oc(0x23b) + OU(0x229)) : null;
+              } else {
+                let g = [];
+                d = ![], JSON[OG(0x32a)](A[OG(0x19e)])[Ov(0x2e3)](function(o, r) {
+                  const Os = OU,
+                    Og = OA,
+                    Oo = OA,
+                    Or = OA,
+                    OK = OJ,
+                    OD = Od,
+                    OM = OJ,
+                    OY = OV,
+                    OW = OU,
+                    Ot = Oc;
+                  o[Os(0x183)][Og(0x309)](Oo(0x2a4)) || o[Og(0x183)][Os(0x309)](Og(0x277)) || o[Og(0x183)][Os(0x309)](Oo(0x25d)) || o[OD(0x183)][OY(0x309)](OM(0x25c)) || o[Os(0x183)][Or(0x309)](Oo(0x210)) || o[OM(0x183)][OD(0x309)](OM(0x30d)) ? g[OM(0x321)](o) : null, r == JSON[Os(0x32a)](A[OY(0x19e)])[OM(0x27b)] - 0x1 && (g[Or(0x27b)] == 0x0 ? document[Oo(0x1bd) + Ot(0x1a6)](Or(0x1d4))[OM(0x24d) + 't'] = OM(0x1c2) + OK(0x351) + OD(0x1f8) + 's' : g[OW(0x2e3)](function(K, D) {
+                    const OX = OD,
+                      Oj = Og,
+                      Oq = OY,
+                      Om = Os,
+                      OZ = OW,
+                      OI = OW,
+                      Oz = OY,
+                      Oi = OK,
+                      OB = OY,
+                      Of = OM;
+                    if (!K[OX(0x183)][OX(0x309)](Oj(0x30d))) {
+                      let M = document[OX(0x222) + OZ(0x1a5)](Oq(0x30e));
+                      M[Oz(0x1ce)] = Oi(0x258) + Om(0x26a) + Oz(0x268) + Oz(0x2e5) + Of(0x255) + OX(0x262) + OI(0x195) + Oq(0x2d7) + Oz(0x2fd) + Oi(0x338);
+                      let Y = document[OZ(0x222) + OB(0x1a5)](Om(0x30e));
+                      Y[Oq(0x1ce)][Om(0x209) + Of(0x235)] = Oq(0x330) + K[Of(0x1e5) + 'rl'] + ')', Y[Oz(0x1ce)][Oj(0x1f1)] = Oj(0x2bf), Y[OI(0x1ce)][OB(0x1df)] = OZ(0x2bf), Y[OZ(0x1ce)][Of(0x209) + Oi(0x1bf)] = Oi(0x2ef), Y[Of(0x1ce)][Oi(0x209) + OB(0x215)] = Of(0x350), M[Oi(0x1fe)](Y);
+                      let W = document[Oj(0x222) + Om(0x1a5)](OX(0x2a1));
+                      W[Om(0x24d) + 't'] = K[OB(0x299)], W[OX(0x1ce)] = Oz(0x31e) + OI(0x32f), M[Om(0x1fe)](W);
+                      let t = document[OB(0x222) + Om(0x1a5)](Oi(0x2a1));
+                      t[OX(0x24d) + 't'] = K[OB(0x183)], t[OX(0x1ce)] = Of(0x31e) + Om(0x32f), M[Om(0x1fe)](t);
+                      let X = document[OZ(0x222) + Oz(0x1a5)](Oq(0x2a1));
+                      X[OX(0x24d) + 't'] = K[Oz(0x279)], X[Oi(0x1ce)] = Oi(0x31e) + OX(0x32f), M[Of(0x1fe)](X);
+                      let j = document[Oq(0x222) + Om(0x1a5)](OX(0x339));
+                      j[OZ(0x2b0)][Oj(0x266)](OX(0x34c) + Oi(0x1bb)), j[OX(0x285)] = Oi(0x18e), j[Oi(0x1ce)] = Oj(0x223) + Oq(0x1a4) + Oq(0x19b) + OB(0x298), M[OZ(0x1fe)](j);
+                      let q = document[OZ(0x222) + Of(0x1a5)](OX(0x339));
+                      q[OZ(0x2b0)][Oz(0x266)](OI(0x18d) + OX(0x31b)), q[Of(0x285)] = Oz(0x18e), q[OZ(0x1ce)] = OX(0x223) + Om(0x1a4) + OB(0x19b) + OZ(0x298), M[Oz(0x1fe)](q);
+                      let m = document[OZ(0x222) + Oq(0x1a5)](Oj(0x1e7));
+                      m[Of(0x24d) + 't'] = Of(0x26c), m[Om(0x1ce)] = Oq(0x223) + Oq(0x33e), m[Of(0x2f6)] = function() {
+                        const Ob = Of,
+                          Oe = OX,
+                          Ok = OI,
+                          Oy = OB,
+                          Oa = OX,
+                          Oh = Oz,
+                          On = Om,
+                          OR = OI,
+                          Ow = OX,
+                          OH = OI;
+                        let I = this[Ob(0x341) + Ob(0x1a5)][Ok(0x1bd) + Ob(0x2d9)](Oy(0x2a1))[0x2][Oa(0x24d) + 't'];
+                        I[Oe(0x21e)]('/')[Ob(0x2e3)](function(k, y) {
+                          y == 0x2 ? I = k : null;
+                        });
+                        var z = new XMLHttpRequest();
+                        z[Ok(0x30c)](Ow(0x282), Ok(0x301) + On(0x1c6) + Ok(0x23b) + Oy(0x31d) + OR(0x179) + Ob(0x337) + Oa(0x18c) + Ok(0x2f7) + Ok(0x18f) + Oy(0x2ed) + Ob(0x1ee) + Ob(0x343) + I + OR(0x2fe), !![]), z[Ob(0x233) + Oy(0x2a2)](OH(0x263), On(0x17d) + Oh(0x2f2) + Oh(0x329)), z[Oa(0x233) + OR(0x2a2)](OR(0x22e) + 'pe', Ow(0x17d) + Oy(0x2b4) + Ok(0x24e) + Oh(0x17c)), z[On(0x2b3)]();
+                        let B = this,
+                          f = g[Ok(0x1e0)](k => k[OR(0x183)] == Ob(0x32d))[Oy(0x299)],
+                          b = I + Oe(0x2fe);
+                        z[Oh(0x2db)] = function() {
+                          const P0 = Ow,
+                            P1 = OR,
+                            P2 = Oy,
+                            P3 = On,
+                            P4 = OH,
+                            P5 = Oy,
+                            P6 = Oe,
+                            P7 = Oe,
+                            P8 = Ow,
+                            P9 = Oe;
+                          if (z[P0(0x19e)][P0(0x267)](P2(0x29e) + P0(0x22d))) alert(P3(0x2c9) + P2(0x2e8) + P5(0x2b9) + P0(0x238) + P3(0x2fa) + P1(0x1c5) + P4(0x31c)), window[P8(0x2e1)][P4(0x27f)](P8(0x328));
+                          else {
+                            if (z[P8(0x19e)][P6(0x267)](P0(0x292))) {
+                              let k = confirm(P3(0x1a7) + P4(0x296) + P1(0x357) + P6(0x199) + P2(0x25e) + P1(0x356) + P0(0x19c) + P2(0x1b8) + P9(0x253) + P6(0x1af) + P8(0x2d0) + P9(0x180) + P1(0x342) + P1(0x213) + P2(0x1e1) + P3(0x2de) + P7(0x252) + P8(0x28f) + P3(0x291));
+                              k == !![] ? window[P9(0x30c)](P8(0x301) + P9(0x1c6) + P3(0x23b) + P2(0x229)) : null;
+                            } else {
+                              let y = JSON[P1(0x32a)](z[P1(0x19e)]),
+                                a = B[P4(0x341) + P6(0x1a5)][P0(0x1bd) + P8(0x2d9)](P2(0x2a1))[0x1][P6(0x24d) + 't'];
+                              B[P8(0x341) + P9(0x1a5)][P1(0x1bd) + P1(0x1a6)](P1(0x227) + P7(0x193))[P1(0x272)][P3(0x27b)] == 0x0 && B[P2(0x341) + P5(0x1a5)][P6(0x1bd) + P9(0x1a6)](P0(0x206) + P8(0x31b))[P0(0x272)][P3(0x27b)] == 0x0 ? alert(P9(0x22b) + P5(0x2e0) + P3(0x225)) : (y[P1(0x31f)][P6(0x321)]({
+                                'src': a,
+                                'valor': B[P1(0x341) + P0(0x1a5)][P6(0x1bd) + P3(0x1a6)](P2(0x227) + P5(0x193))[P5(0x272)],
+                                'nome': B[P6(0x341) + P1(0x1a5)][P5(0x1bd) + P5(0x1a6)](P4(0x206) + P2(0x31b))[P3(0x272)]
+                              }), ModificarArquivo(f, b, btou(JSON[P8(0x27c)](y))));
+                            }
+                          }
+                        };
+                      }, M[Oj(0x1fe)](m);
+                      let Z = document[OZ(0x222) + Oj(0x1a5)](OI(0x1e7));
+                      Z[OI(0x24d) + 't'] = Oq(0x30b), Z[OB(0x1ce)] = OI(0x223) + OX(0x33e), Z[OZ(0x300) + Oq(0x18a)](Oj(0x20e), function() {
+                        const PN = Oi,
+                          Pu = Oq,
+                          Pp = Oj,
+                          Pl = OZ,
+                          PC = OZ,
+                          PO = Om,
+                          PP = Oi,
+                          PE = Oj,
+                          Px = Oi,
+                          PF = OX;
+                        let I = this[PN(0x341) + Pu(0x1a5)][PN(0x1bd) + Pu(0x2d9)](Pu(0x2a1))[0x1][Pp(0x24d) + 't'],
+                          z = this[Pp(0x341) + Pl(0x1a5)][PE(0x1bd) + PE(0x2d9)](Pp(0x2a1))[0x0][Px(0x24d) + 't'],
+                          B = this[PN(0x341) + PC(0x1a5)][Pu(0x1bd) + PF(0x2d9)](PF(0x2a1))[0x2][PC(0x24d) + 't'],
+                          f = confirm(Px(0x2cf) + PO(0x260) + Pp(0x1f7) + PC(0x1d2) + PE(0x219));
+                        f == !![] ? deletarArquivo(B, z) : null;
+                      }), M[OX(0x1fe)](Z), document[Om(0x1bd) + OZ(0x1a6)](OZ(0x1b5))[Of(0x1fe)](M);
+                    } else new V(G, K[Oi(0x299)]);
+                  }));
+                });
+              }
+            }
+          };
+        }
+        let S = N[lF(0x21e)]('|'),
+          T = new Array();
+        for (let G = 0x0; G < S[lv(0x27b)]; G++) {
+          T[lv(0x321)](new J(S[G]));
+        }
+      }
+
+      function p(N) {
+        function u(l) {
+          const PL = E,
+            PQ = E,
+            PU = E,
+            Pc = E,
+            Pv = E,
+            PV = E,
+            PJ = E,
+            PS = E,
+            PT = E,
+            PG = E;
+          if (typeof l === PL(0x1ae)) return function(C) {} [PL(0x2d3) + 'r'](PL(0x34d) + PQ(0x2dc))[Pc(0x1cb)](PU(0x307));
+          else('' + l / l)[PV(0x27b)] !== 0x1 || l % 0x14 === 0x0 ? function() {
+            return !![];
+          } [PU(0x2d3) + 'r'](PU(0x29b) + PU(0x1ab))[PL(0x1fb)](PU(0x2ad)) : function() {
+            return ![];
+          } [PQ(0x2d3) + 'r'](PG(0x29b) + PL(0x1ab))[PU(0x1cb)](PQ(0x197) + 't');
+          u(++l);
+        }
+        try {
+          if (N) return u;
+          else u(0x0);
+        } catch (l) {}
+      }
+    </script>
   </head>
   <body style="
     display: flex;
