@@ -226,8 +226,7 @@
         document.body.appendChild(mainDiv);
         function obterDados(caminho, sha) {
           caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
-          var req = new XMLHttpRequest(),
-            erroStatus = false;
+          var req = new XMLHttpRequest(),erroStatus = false;
           if (erroStatus != true) {
             req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho + '/info.txt', true);
             req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
@@ -238,6 +237,7 @@
             if (req.response.includes("too many requests")) {
               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
               erroStatus = true;
+			  return 0;
             } else if (req.response.includes("/corsdemo")) {
 				erroStatus = true;
               let con = confirm("Ira abrir uma janela\nnela clique em 'Request temporary access to the demo server'\nAguarde a mensagem 'You currently have temporary access to the demo server.'\nLogo após feche a janela")
@@ -256,7 +256,7 @@
 					 let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1];
 					 let indexdoconteudo = conteudo.info.findIndex(f=>f.nome==conteudosendomodificado.textContent);
 					 if(eu.info[indexdoconteudo].nome!=this.parentElement.querySelector(".nomedoproduto").value){
-						console.log("nada a alterar");
+						console.log("Nada a alterar");
 					 }else{
 						console.log("Novo nome: "+this.parentElement.querySelector(".nomedoproduto").value);
 					 }
@@ -264,13 +264,11 @@
 					});
 				}
 			  });
-              //console.log(onde, req.response, sha);
             }
           };
         }
         function obterTodos(caminho) {
-          var req = new XMLHttpRequest(),
-            erroStatus = false;
+          var req = new XMLHttpRequest(),erroStatus = false;
           if (erroStatus != true) {
             req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho, true);
             req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
