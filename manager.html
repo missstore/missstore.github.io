@@ -173,7 +173,7 @@
       		} else if (JSON.parse(req.response).message) {
       			document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
       		} else {
-      			document.querySelector(".info_").textContent = "Modificado com sucesso!";
+      			alert("Modificado com sucesso!");
       		}
       	};
       }
@@ -273,7 +273,6 @@
             } else {
               let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
               onde = onde.replace("main/", "") + "/";
-			  console.log(onde);
               JSON.parse(req.response).info.forEach(function(e) {
                 if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
                   let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
@@ -284,16 +283,17 @@
                     let conteudo = JSON.parse(req.response);
                     let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
                     let indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado);
+					let nomeaenviar = onde.replace("assets/img/","") + "/info.txt";
                     if (conteudo.info[indexdoconteudo].nome == this.parentElement.querySelector(".nomedoproduto").value
 					&&
 					conteudo.info[indexdoconteudo].valor == this.parentElement.querySelector(".valordoproduto").value) {
-                      document.querySelector(".info_").textContent = "Nada a alterar";
+                      alert("Nada a alterar");
                     } else {
                       conteudo.info[indexdoconteudo].nome = this.parentElement.querySelector(".nomedoproduto").value;
 					  conteudo.info[indexdoconteudo].valor = this.parentElement.querySelector(".valordoproduto").value;
 					  document.querySelector(".info_").textContent = "Produto alterado!";
+					  ModificarArquivo(oSha,nomeaenviar,btoa(JSON.stringify(conteudo)));
                     }
-                    console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo);
                   };
                 }
               });
@@ -381,12 +381,16 @@
                             } else {
                               let conteudo = JSON.parse(req.response);
                               let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
-                              conteudo.info.push({
+							  if(essa.parentElement.querySelector(".valordoproduto").value.length==0&&essa.parentElement.querySelector(".nomedoproduto").value.length==0){
+							    alert("Forneça um nome ou valor");
+							  }else{
+							                                conteudo.info.push({
                                 "src": conteudosendomodificado,
                                 "valor": essa.parentElement.querySelector(".valordoproduto").value,
                                 "nome": essa.parentElement.querySelector(".nomedoproduto").value
                               })
-                              console.log(oSha, nomeaenviar, btoa(JSON.stringify(conteudo)));
+							  ModificarArquivo(oSha,nomeaenviar,btoa(JSON.stringify(conteudo)));
+							  }
                             }
                           };
                         };
