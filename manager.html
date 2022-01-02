@@ -180,7 +180,7 @@
           } else {
 		  console.log(req.response);
 			localStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/","").split("/")[0],
-			JSON.stringify({"sha":JSON.parse(req.response).sha,"content":content}));
+			JSON.stringify({"sha":JSON.parse(req.response).content.sha,"content":content}));
             alert("Modificado com sucesso!");
             document.body.outerHTML = '';
             obterContents();
