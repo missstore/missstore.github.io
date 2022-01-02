@@ -176,7 +176,9 @@
       function obterContents() {
         var osLink = "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/vestidos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/calcas|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/conjuntos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/croppeds|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/saias";
         document.body.outerHTML = '';
-        document.querySelectorAll("head").forEach(function(e) {e.innerText.length == 0 ? e.remove() : null;});
+        document.querySelectorAll("head").forEach(function(e) {
+          e.innerText.length == 0 ? e.remove() : null;
+        });
         let mainDiv = document.createElement("div");
         mainDiv.style = 'margin: 30px;width: auto;height: fit-content;display: flex;flex-flow: row wrap;align-items: center;justify-content: center;';
         let divEnviar = document.createElement("div");
@@ -224,59 +226,53 @@
         mainDiv.append(labelInfo);
         mainDiv.append(divDorefresh);
         document.body.appendChild(mainDiv);
+
         function obterDados(caminho, sha) {
           caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
-          var req = new XMLHttpRequest(),erroStatus = false;
-          if (erroStatus != true) {
-            req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho + '/info.txt', true);
-            req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            req.send();
-          }
+          var req = new XMLHttpRequest();
+          req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho + '/info.txt', true);
+          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          req.send();
           req.onload = function() {
             if (req.response.includes("too many requests")) {
               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-			  return erroStatus = true;
             } else if (req.response.includes("/corsdemo")) {
-				erroStatus = true;
               let con = confirm("Ira abrir uma janela\nnela clique em 'Request temporary access to the demo server'\nAguarde a mensagem 'You currently have temporary access to the demo server.'\nLogo após feche a janela")
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
             } else {
-              erroStatus = false;
               let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
-              onde = onde.replace("main/", "") + '/';
-			  JSON.parse(req.response).info.forEach(function(e){
-				if(Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)){
-					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".nomedoproduto").value=e.nome;
-					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".valordoproduto").value=e.valor;
-					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector("button").addEventListener("click",function(){
-					 let oSha = sha;
-					 let conteudo = JSON.parse(req.response);
-					 let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
-					 let indexdoconteudo = conteudo.info.findIndex(f=>f.src==conteudosendomodificado);
-					 /*if(conteudo.info[indexdoconteudo].nome!=this.parentElement.querySelector(".nomedoproduto").value){
+              onde = onde.replace("main/", "/");
+              JSON.parse(req.response).info.forEach(function(e) {
+                if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
+                  Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".nomedoproduto").value = e.nome;
+                  Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".valordoproduto").value = e.valor;
+                  Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector("button").addEventListener("click", function() {
+                    let oSha = sha;
+                    let conteudo = JSON.parse(req.response);
+                    let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
+                    let indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado);
+                    /*if(conteudo.info[indexdoconteudo].nome!=this.parentElement.querySelector(".nomedoproduto").value){
 						console.log("Nada a alterar");
 					 }else{
 						console.log("Novo nome: "+this.parentElement.querySelector(".nomedoproduto").value);
 					 }*/
-						let novo = '{"src":"'
-						+conteudosendomodificado+
-						'","valor":"'
-						+this.parentElement.querySelector(".valordoproduto").value+
-						'","nome":"'
-						+this.parentElement.querySelector(".nomedoproduto").value+
-						'"}'
-						let emString = JSON.stringify(req.response);
-						let novoConteudoAdicionado = emString.replace(emString.substring(emString.indexOf("}]}")+1,emString.indexOf("}]}")+2),','+novo+"]");
-						console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo, JSON.parse(novoConteudoAdicionado));
-					});
-				}
-			  });
+                    let novo = '{"src":"' + conteudosendomodificado + '","valor":"' 
+					+ this.parentElement.querySelector(".valordoproduto").value + 
+					'","nome":"' + this.parentElement.querySelector(".nomedoproduto").value + '"}'
+                    let emString = JSON.stringify(req.response);
+                    let novoConteudoAdicionado = emString.replace(emString.substring(emString.indexOf("}]}") + 1, emString.indexOf("}]}") + 2), ',' + novo + "]");
+                    console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo, JSON.parse(novoConteudoAdicionado));
+                  });
+                }
+              });
             }
           };
         }
+
         function obterTodos(caminho) {
-          var req = new XMLHttpRequest(),erroStatus = false;
+          var req = new XMLHttpRequest(),
+            erroStatus = false;
           if (erroStatus != true) {
             req.open('GET', 'https://cors-anywhere.herokuapp.com/' + caminho, true);
             req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
@@ -323,12 +319,12 @@
                         Caminho.style = 'display:none;';
                         divArquivo.append(Caminho);
                         let nomeDoproduto = document.createElement("input");
-						nomeDoproduto.classList.add("nomedoproduto");
+                        nomeDoproduto.classList.add("nomedoproduto");
                         nomeDoproduto.type = "text";
                         nomeDoproduto.style = "margin-top: 1px;text-align: center;";
                         divArquivo.append(nomeDoproduto);
                         let valorDoproduto = document.createElement("input");
-						valorDoproduto.classList.add("valordoproduto");
+                        valorDoproduto.classList.add("valordoproduto");
                         valorDoproduto.type = "text";
                         valorDoproduto.style = "margin-top: 1px;text-align: center;";
                         divArquivo.append(valorDoproduto);
@@ -343,8 +339,8 @@
                           let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
                           let sha = this.parentElement.querySelectorAll("label")[0].textContent;
                           let path = this.parentElement.querySelectorAll("label")[2].textContent;
-						  let con = confirm("Tem certeza que deseja deletar essa imagem?");
-						  con==true?deletarArquivo(path, sha):null;
+                          let con = confirm("Tem certeza que deseja deletar essa imagem?");
+                          con == true ? deletarArquivo(path, sha) : null;
                         });
                         divArquivo.append(botaoDeletar);
                         document.querySelector("body > div").append(divArquivo);
@@ -358,7 +354,8 @@
             }
           };
         }
-        let no = osLink.split("|"),requests = new Array();
+        let no = osLink.split("|"),
+          requests = new Array();
         for (let i = 0; i < no.length; i++) {
           requests.push(new obterTodos(no[i]));
         }
