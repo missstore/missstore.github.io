@@ -198,9 +198,9 @@
         function alterarInfo(shaInfo, contentInfo) {
           req = new XMLHttpRequest();
 		  let tipo = nome.replace("assets/img/","").split("/")[0];
-		  let novoContent = JSON.parse(atou(contentInfo));
-		  novoContent.info.splice(novoContent.info.findIndex(f=>f.src==nome.replace("assets/img/","").split("/")[1]),1);
-		  let contentConverted = utoa(JSON.stringify(novoContent));
+		  let contentAalterar = JSON.parse(atou(contentInfo));
+		  contentAalterar.info.splice(contentAalterar.info.findIndex(f=>f.src==nome.replace("assets/img/","").split("/")[1]),1);
+		  let contentConverted = utoa(JSON.stringify(contentAalterar));
           req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.txt", true);
           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
