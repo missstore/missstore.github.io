@@ -252,20 +252,19 @@
 					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector("button").addEventListener("click",function(){
 					 let oSha = sha;
 					 let conteudo = JSON.parse(req.response);
-					 console.log(conteudo);
 					 let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1];
 					 let indexdoconteudo = conteudo.info.findIndex(f=>f.nome==conteudosendomodificado);
-					 if(conteudo.info[indexdoconteudo].nome!=this.parentElement.querySelector(".nomedoproduto").value){
+					 /*if(conteudo.info[indexdoconteudo].nome!=this.parentElement.querySelector(".nomedoproduto").value){
 						console.log("Nada a alterar");
 					 }else{
 						console.log("Novo nome: "+this.parentElement.querySelector(".nomedoproduto").value);
-					 }
+					 }*/
 						let novo = '{"src":"'
 						+conteudosendomodificado+
 						'","valor":"'
-						+this.parentElement.querySelector(".valordoproduto")+
+						+this.parentElement.querySelector(".valordoproduto").value+
 						'","nome":"'
-						+this.parentElement.querySelector(".nomedoproduto")+
+						+this.parentElement.querySelector(".nomedoproduto").value+
 						'"}'
 						let emString = JSON.stringify(req.response);
 						emString=emString.replace(emString.substring(emString.indexOf("}]}")+1,emString.indexOf("}]}")+2),','+novo+"]");
