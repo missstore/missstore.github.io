@@ -202,8 +202,7 @@
           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-          req.send('{"message":"' + tipo + '" info.txt alterado","sha":"' + shaInfo + '","content":"' + contentConverted + '"}');
-		  console.log(shaInfo, contentConverted, tipo);
+          req.send('{"message":"' + tipo + ' info.txt alterado","sha":"' + shaInfo + '","content":"' + contentConverted + '"}');
           req.onload = function() {
             if (req.response.includes("too many requests")) {
               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
