@@ -48,6 +48,22 @@
           getUserInfo("novoacesso");
         });
       });
+      /**
+       * ASCII to Unicode (decode Base64 to original data)
+       * @param {string} b64
+       * @return {string}
+       */
+      function atou(b64) {
+        return decodeURIComponent(escape(atob(b64)));
+      }
+      /**
+       * Unicode to ASCII (encode data to Base64)
+       * @param {string} data
+       * @return {string}
+       */
+      function utoa(data) {
+        return btoa(unescape(encodeURIComponent(data)));
+      }
 
       function getUserInfo(novoacesso) {
         novoacesso = novoacesso || "nao";
