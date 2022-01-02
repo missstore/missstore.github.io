@@ -48,7 +48,7 @@
           getUserInfo("novoacesso");
         });
       });
-      /**
+      /*
        * ASCII to Unicode (decode Base64 to original data)
        * @param {string} b64
        * @return {string}
@@ -56,7 +56,7 @@
       function atou(b64) {
         return decodeURIComponent(escape(atob(b64)));
       }
-      /**
+      /*
        * Unicode to ASCII (encode data to Base64)
        * @param {string} data
        * @return {string}
@@ -266,11 +266,14 @@
                     let conteudo = JSON.parse(req.response);
                     let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
                     let indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado);
-                    if (conteudo.info[indexdoconteudo].nome == this.parentElement.querySelector(".nomedoproduto").value) {
+                    if (conteudo.info[indexdoconteudo].nome == this.parentElement.querySelector(".nomedoproduto").value
+					&&
+					conteudo.info[indexdoconteudo].valor == this.parentElement.querySelector(".valordoproduto").value) {
                       console.log("Nada a alterar");
                     } else {
                       //conteudo.info[indexdoconteudo].nome = this.parentElement.querySelector(".nomedoproduto").value;
                       console.log("Novo nome: " + this.parentElement.querySelector(".nomedoproduto").value);
+					  console.log("Novo valor: " + this.parentElement.querySelector(".valordoproduto").value);
                     }
                     let novo = conteudo.info.concat({
                       "src": conteudosendomodificado,
@@ -348,12 +351,15 @@
                         botaoModificar.style = 'margin-top: 1px;';
                         botaoModificar.onclick = function() {
                           let onde = this.parentElement.querySelectorAll("label")[2].textContent;
-                          onde.split("/").forEach(function(e, i) {i == 2 ? onde = e : null;});
+                          onde.split("/").forEach(function(e, i) {
+                            i == 2 ? onde = e : null;
+                          });
                           var req = new XMLHttpRequest();
                           req.open('GET', 'https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/' + onde + '/info.txt', true);
                           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
                           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                           req.send();
+						  var essa = this;
                           req.onload = function() {
                             if (req.response.includes("too many requests")) {
                               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
@@ -361,15 +367,15 @@
                               let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
                               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
                             } else {
-							  let conteudo = JSON.parse(req.response);
-							  console.log(this);
-								let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
-								let novo = conteudo.info.concat({
-								"src": conteudosendomodificado,
-								"valor": this.parentElement.querySelector(".valordoproduto").value,
-								"nome": this.parentElement.querySelector(".nomedoproduto").value
-								})
-								console.log(conteudo, conteudosendomodificado, novo);
+                              let conteudo = JSON.parse(req.response);
+                              console.log(this,essa);
+                              let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
+                              let novo = conteudo.info.concat({
+                                "src": conteudosendomodificado,
+                                "valor": essa.parentElement.querySelector(".valordoproduto").value,
+                                "nome": essa.parentElement.querySelector(".nomedoproduto").value
+                              })
+                              console.log(conteudo, conteudosendomodificado, novo);
                             }
                           };
                         };
