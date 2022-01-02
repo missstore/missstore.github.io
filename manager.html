@@ -216,8 +216,6 @@
             } else if (JSON.parse(req.response).message) {
               alert("Falha ao tentar modificar\n" + JSON.parse(req.response).message);
             } else {
-              console.log(req.response);
-			  console.log(contentConverted);
               localStorage.setItem(tipo, JSON.stringify({
                 "sha": JSON.parse(req.response).content.sha,
                 "content": contentConverted
