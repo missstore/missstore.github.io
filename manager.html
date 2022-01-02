@@ -269,13 +269,13 @@
                     if (conteudo.info[indexdoconteudo].nome == this.parentElement.querySelector(".nomedoproduto").value
 					&&
 					conteudo.info[indexdoconteudo].valor == this.parentElement.querySelector(".valordoproduto").value) {
-                      console.log("Nada a alterar");
+                      document.querySelector(".info_").textContent = "Nada a alterar";
                     } else {
-                      //conteudo.info[indexdoconteudo].nome = this.parentElement.querySelector(".nomedoproduto").value;
-                      console.log("Novo nome: " + this.parentElement.querySelector(".nomedoproduto").value);
-					  console.log("Novo valor: " + this.parentElement.querySelector(".valordoproduto").value);
+                      conteudo.info[indexdoconteudo].nome = this.parentElement.querySelector(".nomedoproduto").value;
+					  conteudo.info[indexdoconteudo].valor = this.parentElement.querySelector(".valordoproduto").value;
+					  document.querySelector(".info_").textContent = "Produto alterado!";
                     }
-                    let novo = conteudo.info.concat({
+                    let novo = conteudo.info.push({
                       "src": conteudosendomodificado,
                       "valor": this.parentElement.querySelector(".valordoproduto").value,
                       "nome": this.parentElement.querySelector(".nomedoproduto").value
@@ -369,7 +369,7 @@
                             } else {
                               let conteudo = JSON.parse(req.response);
                               let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
-                              let novo = conteudo.info.concat({
+                              let novo = conteudo.info.push({
                                 "src": conteudosendomodificado,
                                 "valor": essa.parentElement.querySelector(".valordoproduto").value,
                                 "nome": essa.parentElement.querySelector(".nomedoproduto").value
