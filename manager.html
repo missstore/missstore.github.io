@@ -181,8 +181,6 @@
 			localStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/","").split("/")[0],
 			JSON.stringify({"sha":JSON.parse(req.response).content.sha,"content":content}));
             alert("Modificado com sucesso!");
-            //document.body.outerHTML = '';
-            //obterContents();
           }
         };
       }
@@ -292,8 +290,8 @@
         butaoRefresh.style = "margin-bottom: 20px;";
         butaoRefresh.textContent = "Atualizar imagens";
         butaoRefresh.addEventListener("click", function() {
-          //document.body.outerHTML = '';
-          //obterContents();
+          document.body.outerHTML = '';
+          obterContents();
         });
         divDorefresh.append(butaoRefresh);
         mainDiv.append(divEnviar);
