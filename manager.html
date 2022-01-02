@@ -188,7 +188,7 @@
         };
       }
 
-      function deletarArquivo(nome, sha, tipo) {
+      function deletarArquivo(nome, sha) {
         var req = new XMLHttpRequest();
         req.open('DELETE', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
         req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
@@ -292,7 +292,6 @@
         mainDiv.append(labelInfo);
         mainDiv.append(divDorefresh);
         document.body.appendChild(mainDiv);
-
         function obterDados(caminho, sha) {
           caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
           var req = new XMLHttpRequest();
