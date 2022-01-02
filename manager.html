@@ -291,7 +291,6 @@
                     } else {
                       conteudo.info[indexdoconteudo].nome = this.parentElement.querySelector(".nomedoproduto").value;
 					  conteudo.info[indexdoconteudo].valor = this.parentElement.querySelector(".valordoproduto").value;
-					  document.querySelector(".info_").textContent = "Produto alterado!";
 					  ModificarArquivo(oSha,nomeaenviar,btoa(JSON.stringify(conteudo)));
                     }
                   };
