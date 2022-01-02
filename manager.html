@@ -235,6 +235,7 @@
             req.send();
           }
           req.onload = function() {
+		  console.log(req.response);
             if (req.response.includes("too many requests")) {
               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
               erroStatus = true;
@@ -246,15 +247,14 @@
               erroStatus = false;
               let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
               onde = onde.replace("main/", "") + '/';
-              /*console.log(Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + JSON.parse(req.response).info.src))
-              console.log(JSON.parse(req.response).info.src);
-              console.log(JSON.parse(req.response).info);*/
 			  JSON.parse(req.response).info.forEach(function(e){
-				//console.log(Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src
-				console.log(e);
 				if(Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)){
 					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".nomedoproduto").value=e.nome;
 					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".valordoproduto").value=e.valor;
+					Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector("button").addEventListener("click",function(){
+					 let oSha = sha;
+					 console.log(oSha);
+					});
 				}
 			  });
               //console.log(onde, req.response, sha);
