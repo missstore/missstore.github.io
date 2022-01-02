@@ -259,7 +259,13 @@
 					 }else{
 						console.log("Novo nome: "+this.parentElement.querySelector(".nomedoproduto").value);
 					 }
-						let novo = '{"src":"5.jpeg","valor":"5,00","nome":"NOME"}'
+						let novo = '{"src":"'
+						+conteudosendomodificado+
+						'","valor":"'
+						+this.parentElement.querySelector(".valordoproduto")+
+						'","nome":"'
+						+this.parentElement.querySelector(".nomedoproduto")+
+						'"}'
 						let emString = JSON.stringify(req.response);
 						emString=emString.replace(emString.substring(emString.indexOf("}]}")+1,emString.indexOf("}]}")+2),','+novo+"]");
 						console.log(oSha, conteudo, conteudosendomodificado, indexdoconteudo);
