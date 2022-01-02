@@ -195,13 +195,17 @@
         req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
         req.send('{"message":"' + nome + ' deletado","sha":"' + sha + '"}');
-        function alterarInfo(shaInfo, contentInfo) {
+        function alterarInfo(shaInfo, contentInfo, nomeDoarquivo) {
           req = new XMLHttpRequest();
+		  let tipo = nome.replace("assets/img/","").split("/")[0];
+		  let novoContent = JSON.parse(atou(JSON.parse(localStorage.getItem(tipo)).content));
+		  novoContent.info.splice(novoContent.info.findIndex(f=>f.src==nome.replace("assets/img/","").split("/")[1]),1);
+		  let contentConverted = utoa(JSON.stringify(novoContent));
           req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.txt", true);
           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-          req.send('{"message":"info.txt alterado","sha":"' + shaInfo + '","content":"' + contentInfo + '"}');
+          req.send('{"message":"info.txt alterado","sha":"' + shaInfo + '","content":"' + contentConverted + '"}');
           req.onload = function() {
             if (req.response.includes("too many requests")) {
               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
@@ -440,7 +444,7 @@
                           let sha = this.parentElement.querySelectorAll("label")[0].textContent;
                           let path = this.parentElement.querySelectorAll("label")[2].textContent;
                           let con = confirm("Tem certeza que deseja deletar essa imagem?");
-                          con == true ? console.log(path)/*deletarArquivo(path, sha)*/ : null;
+                          con == true ? deletarArquivo(path, sha) : null;
                         });
                         divArquivo.append(botaoDeletar);
                         document.querySelector("body > div").append(divArquivo);
