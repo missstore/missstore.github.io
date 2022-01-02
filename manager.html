@@ -245,9 +245,10 @@
               onde = onde.replace("main/", "/");
               JSON.parse(req.response).info.forEach(function(e) {
                 if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
-                  Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".nomedoproduto").value = e.nome;
-                  Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector(".valordoproduto").value = e.valor;
-                  Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src).parentElement.querySelector("button").addEventListener("click", function() {
+				  let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
+                  arEn.parentElement.querySelector(".nomedoproduto").value = e.nome;
+                  arEn.parentElement.querySelector(".valordoproduto").value = e.valor;
+                  arEn.parentElement.querySelector("button").addEventListener("click", function() {
                     let oSha = sha;
                     let conteudo = JSON.parse(req.response);
                     let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
