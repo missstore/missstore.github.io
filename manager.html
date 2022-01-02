@@ -268,11 +268,11 @@
                     let conteudo = JSON.parse(req.response);
                     let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
                     let indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado);
-                    /*if(conteudo.info[indexdoconteudo].nome!=this.parentElement.querySelector(".nomedoproduto").value){
+                    if(conteudo.info[indexdoconteudo].nome!=this.parentElement.querySelector(".nomedoproduto").value){
 						console.log("Nada a alterar");
-					 }else{
+					}else{
 						console.log("Novo nome: "+this.parentElement.querySelector(".nomedoproduto").value);
-					 }*/
+					}
                     let novo = conteudo.info.concat({
 					"src":conteudosendomodificado,
 					"valor":this.parentElement.querySelector(".valordoproduto").value,
