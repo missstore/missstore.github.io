@@ -179,19 +179,44 @@
             document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
           } else {
             alert("Modificado com sucesso!");
-			document.body.outerHTML = '';
-			obterContents();
+			console.log(req.response);
+            document.body.outerHTML = '';
+            obterContents();
           }
         };
       }
 
-      function deletarArquivo(nome, sha) {
+      function deletarArquivo(nome, sha, shadoinfo) {
         var req = new XMLHttpRequest();
         req.open('DELETE', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
         req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
         req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
         req.send('{"message":"' + nome + ' deletado","sha":"' + sha + '"}');
+
+        function alterarInfo(sha, arquivo, content) {
+          req = new XMLHttpRequest();
+          req.open('PUT', 'https://cors-anywhere.herokuapp.com/https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + arquivo, true);
+          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+          req.send('{"message":"info.txt alterado","sha":"' + sha + '","content":"' + content + '"}');
+          req.onload = function() {
+            if (req.response.includes("too many requests")) {
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
+            } else if (req.response.includes("/corsdemo")) {
+              let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\nAguarde a mensagem "You currently have temporary access to the demo server."\nLogo após feche a janela')
+              con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
+            } else if (JSON.parse(req.response).message) {
+              document.querySelector(".info_").textContent = "Falha ao tentar modificar\n" + JSON.parse(req.response).message;
+            } else {
+              alert("Modificado com sucesso!");
+              document.body.outerHTML = '';
+              obterContents();
+            }
+          };
+        }
         req.onload = function() {
           if (req.response.includes("too many requests")) {
             alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
@@ -207,6 +232,7 @@
             }
           } else if (JSON.parse(req.response).commit) {
             Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ? Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() : null;
+            alterarInfo(shadoinfo, nome, ss);
             alert("Arquivo " + nome + " deletado");
           }
         };
@@ -226,7 +252,7 @@
         selecionar_arquivo.multiple = true;
         selecionar_arquivo.type = "file";
         selecionar_arquivo.accept = "image/*"
-		selecionar_arquivo.style = 'margin-bottom: 5px;';
+        selecionar_arquivo.style = 'margin-bottom: 5px;';
         divEnviar.append(selecionar_arquivo);
         let selecionarCategoria = document.createElement("select");
         selecionarCategoria.style = 'margin-bottom: 5px;';
@@ -240,7 +266,7 @@
         divEnviar.append(selecionarCategoria);
         let botaoEnviar = document.createElement("button");
         botaoEnviar.textContent = "Enviar fotos";
-		botaoEnviar.style = 'margin-bottom: 5px;';
+        botaoEnviar.style = 'margin-bottom: 5px;';
         botaoEnviar.addEventListener("click", function() {
           if (document.querySelector("input[type=file]").files.length == 0) {
             alert('Selecione um arquivo primeiro');
