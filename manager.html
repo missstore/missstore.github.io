@@ -347,14 +347,8 @@
                         botaoModificar.textContent = 'Modificar';
                         botaoModificar.style = 'margin-top: 1px;';
                         botaoModificar.onclick = function() {
-                          let onde = '';
-                          oo.split("/").forEach(function(e, i) {
-                            if (i != oo.split("/").length - 1) {
-                              if (e != "assets" || e != "img") {
-                                onde = e;
-                              }
-                            }
-                          })
+                          let onde = this.parentElement.querySelectorAll("label")[2].textContent;
+                          onde.split("/").forEach(function(e, i) {i == 2 ? onde = e : null;});
                           var req = new XMLHttpRequest();
                           req.open('GET', 'https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/' + onde + '/info.txt', true);
                           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
@@ -368,6 +362,7 @@
                               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : null;
                             } else {
 							  let conteudo = JSON.parse(req.response);
+							  console.log(this);
 								let conteudosendomodificado = this.parentElement.querySelectorAll("label")[1].textContent;
 								let novo = conteudo.info.concat({
 								"src": conteudosendomodificado,
