@@ -430,6 +430,7 @@ label.nomedoproduto {
 
 .loadercontainer label {
     cursor: default;
+    visibility: hidden;
 }
 
 .loadercontainer.carregando .loader {
@@ -451,6 +452,7 @@ label.nomedoproduto {
   filter: drop-shadow(1px 2px 2px black);
   user-select:none;
   font-family: 'Inconsolata';
+  visibility: visible;
 }
 
 .categorias.aberto {
