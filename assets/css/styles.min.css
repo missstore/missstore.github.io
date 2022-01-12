@@ -364,7 +364,7 @@ i.fab.fa-instagram {
 
 .conteudoadicionado {
     display: flex;
-    min-width: 43%;
+    width: 345px;
     padding-bottom: 10px;
 }
 
@@ -767,7 +767,7 @@ i.fas.fa-paper-plane {
     text-align: center;
 }
 
-.valoretrash {display: flex;flex-direction: column;align-items: flex-end;justify-content: space-between;margin-left: 5px;width: 90px;}
+.valoretrash {display: flex;flex-direction: column;align-items: flex-end;justify-content: space-between;margin-left: 5px;width: 75px;}
 
 .valoretrash > i {cursor: pointer;color: #000000a3;margin-top: 2px;}
 
