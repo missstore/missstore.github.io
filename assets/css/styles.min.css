@@ -184,6 +184,7 @@ p.textalternativo {
     font-family: 'Inconsolata';
     font-size: 21px;
     font-weight: 900;
+    text-align: center;
 }
 
 .formasenvioimgs {
