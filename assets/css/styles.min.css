@@ -564,7 +564,7 @@ label.nomedoproduto {
 
 .adicionados {
     display: flex;
-    max-height: calc(100% - 125px);
+    max-height: calc(100% - 150px);
     flex-direction: row;
     flex-wrap: wrap;
     overflow: auto;
