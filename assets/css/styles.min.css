@@ -587,7 +587,7 @@ label.nomedoproduto {
 
 .enviarevalortotal {
     width: 100%;
-    height: 70px;
+    height: 95px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -618,7 +618,30 @@ i.fas.fa-paper-plane {
 
 .fa-paper-plane label {
     margin-left: 5px;
-    padding-right: 3px;
+    padding-right: 4px;
+}
+
+i.fas.fa-eraser {
+    display: flex;
+    align-items: flex-end;
+    cursor: pointer;
+    border-style: groove;
+    border-color: #cd22990f;
+    border-radius: 10px;
+    justify-content: center;
+    align-content: stretch;
+    background-color: #fff;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    box-shadow: 0 0 5px 0px #17202a;
+    color: #17202a;
+    margin-top: 8px;
+    margin-bottom: 3px;
+}
+
+.fa-eraser > label {
+    margin-left: 5px;
+    padding-right: 4px;
 }
 
 /** * Extracted from: SweetAlert * Modified by: Istiak Tridip */
