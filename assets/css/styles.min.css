@@ -616,6 +616,7 @@ i.fas.fa-paper-plane {
     color: #17202a;
     width: 170px;
     letter-spacing: 2.5;
+    flex-wrap: wrap;
 }
 
 .fa-paper-plane label {
@@ -640,6 +641,7 @@ i.fas.fa-eraser {
     margin-top: 8px;
     margin-bottom: 3px;
     width: 170px;
+    flex-wrap: wrap;
 }
 
 .fa-eraser > label {
