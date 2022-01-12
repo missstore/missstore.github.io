@@ -564,7 +564,7 @@ label.nomedoproduto {
 
 .adicionados {
     display: flex;
-    max-height: calc(100% - 152px);
+    max-height: calc(100% - 150px);
     flex-direction: row;
     flex-wrap: wrap;
     overflow: auto;
@@ -577,7 +577,6 @@ label.nomedoproduto {
     border-top-width: 1.4;
     padding-right: 15px;
     padding-left: 15px;
-    padding-bottom: 12px;
 }
 
 .enviarpedido {
@@ -594,8 +593,8 @@ label.nomedoproduto {
     align-items: center;
     align-content: center;
     font-family: 'Inconsolata';
-    position: relative;
-    bottom: 18px;
+    position: fixed;
+    bottom: 8px;
     background-color: #fff;
     justify-content: center;
     border-top-style: ridge;
@@ -639,7 +638,7 @@ i.fas.fa-eraser {
     padding-bottom: 2px;
     box-shadow: 0 0 5px 0px #17202a;
     color: #17202a;
-    margin-top: 9px;
+    margin-top: 8px;
     margin-bottom: 3px;
     width: 170px;
     flex-wrap: wrap;
