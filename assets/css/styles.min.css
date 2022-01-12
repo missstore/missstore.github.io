@@ -539,7 +539,6 @@ label.nomedoproduto {
     flex-wrap: wrap;
     margin: 20px;
     margin-bottom: 5px;
-    width: fit-content;
 }
 
 .categorias .fa-images label {
