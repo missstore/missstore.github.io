@@ -488,8 +488,8 @@ label.nomedoproduto {
 }
 
 .categorias .contentsCategorias {
-    width: 50%;
-    height: 40%;
+    width: fit-content;
+    height: fit-content;
     border-style: solid;
     border-width: 2px;
     border-radius: 30px;
@@ -520,15 +520,15 @@ label.nomedoproduto {
 }
 
 .categorias .catCont {
-    width: 80%;
+    width: auto;
     height: 100%;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-start;
     z-index: 1;
     opacity: 1;
+    padding-bottom: 20px;
 }
 
 .categorias i.far.fa-images {
@@ -538,6 +538,8 @@ label.nomedoproduto {
     font-weight: 500;
     cursor: pointer;
     flex-wrap: wrap;
+    padding: 20px;
+    padding-bottom: 5px;
 }
 
 .categorias .fa-images label {
