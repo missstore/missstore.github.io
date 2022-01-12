@@ -833,6 +833,55 @@ input.quantidadeacomprar {
     max-width: 100%;
 }
 
+.verfotofull.carregando {
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	backdrop-filter: brightness(0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	transition: .6s;
+	transform: scale(1);
+}
+
+.verfotofull {
+    width: 100%;
+    height: 100%;
+	transition: .6s;
+    transform: scale(0);
+    position: fixed;
+}
+
+.verfotofull.carregando > label{
+  color: #3498db;
+  font-weight: bold;
+  font-size: 32px;
+  text-shadow: 0 0 3px #3498db;
+  filter: drop-shadow(1px 2px 2px black);
+  user-select:none;
+  font-family: 'Inconsolata';
+  visibility: visible;
+  text-transform: uppercase;
+}
+
+.verfotofull label {
+    cursor: default;
+    visibility: hidden;
+}
+
+.verfotofull.carregando .loader {
+    margin-top: 15px;
+    border: 16px solid #dcdcdc;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
 .bodysucesso {
     position: fixed;
     top: 50%;
