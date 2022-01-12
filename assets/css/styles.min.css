@@ -468,7 +468,6 @@ label.nomedoproduto {
     position: fixed;
     top: 33px;
     left: 0;
-    background-color: #17202a91;
     z-index: 10000;
     padding-top: 19px;
     transform: translate(0, 0px);
@@ -538,8 +537,9 @@ label.nomedoproduto {
     font-weight: 500;
     cursor: pointer;
     flex-wrap: wrap;
-    padding: 20px;
-    padding-bottom: 5px;
+    margin: 20px;
+    margin-bottom: 5px;
+    width: fit-content;
 }
 
 .categorias .fa-images label {
