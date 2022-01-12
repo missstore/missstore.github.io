@@ -842,14 +842,13 @@ input.quantidadeacomprar {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	transition: .6s;
+	transition: .3s;
 	transform: scale(1);
 }
 
 .verfotofull {
     width: 100%;
     height: 100%;
-	transition: .6s;
     transform: scale(0);
     position: fixed;
 }
