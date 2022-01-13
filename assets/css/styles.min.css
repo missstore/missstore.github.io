@@ -63,6 +63,7 @@ label.nome {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    color: #17202a;
 }
 
 .loadercontainer.carregando .produtodiv {
@@ -130,9 +131,10 @@ label.nome {
     flex-direction: column;
     box-shadow: 1px 1px 5px #17202a;
     border-radius: 5px;
-    margin-top: 10px;
+    margin-top: 13px;
     align-items: center;
     max-width: 85.5%;
+    color: #17202a;
 }
 
 .entregamos,.aceitamos,.seguranca {
@@ -238,9 +240,7 @@ p.textalternativo {
     padding-top: 6px;
 }
 
-.fecharcarrinho .fa-chevron-circle-left > label {
-margin-left: 5px;
-}
+.fecharcarrinho .fa-chevron-circle-left > label {margin-left: 5px;color: #17202ab5;}
 
 .fecharcarrinho > i {
     cursor: pointer;
@@ -248,6 +248,7 @@ margin-left: 5px;
     align-items: flex-end;
     justify-content: flex-start;
     width: fit-content;
+    color: #17202a;
 }
 
 .formasdecontato > i > label {
@@ -303,6 +304,7 @@ i.fab.fa-instagram {
 .footer > label {
     white-space: break-spaces;
     letter-spacing: 2px;
+    color: #17202a;
 }
 
 .fullimage > i {
@@ -365,6 +367,7 @@ i.fab.fa-instagram {
 	align-items: center;
 	border-radius: 20px;
 	filter: drop-shadow(0 0 10px #fff);
+	color: #17202a;
 }
 
 @media (max-width: 728px) {
@@ -405,6 +408,7 @@ label.nomedoproduto {
     margin-top: 0;
     margin-left: 2px;
     font-size: larger;
+    color: #17202a;
 }
 
 .logo > img {
@@ -819,6 +823,7 @@ i.fas.fa-eraser {
     font-weight: 600;
     font-size: larger;
     text-align: center;
+    color: #17202a;
 }
 
 .valoretrash {display: flex;flex-direction: column;align-items: flex-end;justify-content: space-between;margin-left: 5px;width: 75px;}
