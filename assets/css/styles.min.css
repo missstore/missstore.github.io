@@ -13,10 +13,6 @@
     left: 0;
 }
 
-body {
-    box-shadow: 0 0 20px 0 hotpink;
-}
-
 .header > i {
     display: flex;
     flex-direction: column;
@@ -965,4 +961,5 @@ input.quantidadeacomprar {
     height: auto;
     justify-content: center;
     padding-top: 15px;
+    /* filter: drop-shadow(0 0 0px #17202a75); */
 }
