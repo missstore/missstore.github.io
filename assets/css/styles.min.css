@@ -44,6 +44,8 @@ label.nome {
     flex-wrap: wrap;
     justify-content: center;
     z-index: 100;
+    align-items: center;
+    align-content: center;
 }
 
 .loadercontainer .produtodiv {
@@ -445,6 +447,7 @@ label.nomedoproduto {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .loadercontainer label {
