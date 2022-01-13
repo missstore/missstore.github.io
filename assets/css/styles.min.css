@@ -364,9 +364,10 @@ i.fab.fa-instagram {
 
 .conteudoadicionado {
     display: flex;
-    width: 345px;
+    width: 100%;
     padding-bottom: 10px;
     justify-content: space-between;
+    max-width: 345px;
 }
 
 .imgcontainer {
