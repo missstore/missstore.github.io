@@ -364,7 +364,6 @@ i.fab.fa-instagram {
 
 @media (max-width: 695px) {
 	.conteudoadicionado {
-        width: 100% !important;
         max-width: none !important;
     }
 }
