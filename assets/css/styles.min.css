@@ -366,6 +366,7 @@ i.fab.fa-instagram {
     display: flex;
     width: 345px;
     padding-bottom: 10px;
+    justify-content: space-between;
 }
 
 .imgcontainer {
