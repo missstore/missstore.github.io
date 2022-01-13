@@ -362,9 +362,10 @@ i.fab.fa-instagram {
 	filter: drop-shadow(0 0 10px #fff);
 }
 
-@media (max-width: 695px) {
+@media (max-width: 728px) {
 	.conteudoadicionado {
         max-width: none !important;
+        justify-content: space-evenly !important;
     }
 }
 
