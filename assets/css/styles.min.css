@@ -393,6 +393,7 @@ img.imagemdoproduto {
     border-color: #000000a3;
     border-style: groove;
     cursor: zoom-in;
+    max-height: 99px;
 }
 
 label.nomedoproduto {
