@@ -579,7 +579,7 @@ label.nomedoproduto {
 	top: 0;
 	justify-content: center;
 	overflow: hidden;
-	flex-direction: row;
+	flex-direction: column;
 	opacity: 1;
 	margin-bottom: 25px;
 	flex-wrap: wrap;
