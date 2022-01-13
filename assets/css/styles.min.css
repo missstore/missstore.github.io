@@ -46,7 +46,7 @@ label.nome {
     z-index: 100;
 }
 
-.produtodiv {
+.loadercontainer .produtodiv {
     width: 150px;
     height: 293px;
     margin-bottom: 5px;
@@ -59,9 +59,13 @@ label.nome {
     flex-direction: column;
     margin-left: 3px;
     margin-right: 3px;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+.loadercontainer.carregando .produtodiv {
+    display: none;
 }
 
 .produtonome {
@@ -436,15 +440,16 @@ label.nomedoproduto {
 }
 
 .loadercontainer {
-    width: 0;
-    height: 0;
-    opacity: 0;
-    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .loadercontainer label {
     cursor: default;
-    visibility: hidden;
+    display: none;
 }
 
 .loadercontainer.carregando .loader {
@@ -463,10 +468,10 @@ label.nomedoproduto {
   font-weight: bold;
   font-size: 32px;
   text-shadow: 0 0 3px #3498db;
-  filter: drop-shadow(1px 2px 2px black);
+  filter: drop-shadow(1px 3px 1px #17202a);
   user-select:none;
   font-family: 'Inconsolata';
-  visibility: visible;
+  display: inline;
 }
 
 .categorias.aberto {
@@ -567,9 +572,11 @@ label.nomedoproduto {
 	top: 0;
 	justify-content: center;
 	overflow: hidden;
-	flex-direction: column;
+	flex-direction: row;
 	opacity: 1;
 	margin-bottom: 25px;
+	flex-wrap: wrap;
+	align-content: center;
 }
 
 .adicionados {
