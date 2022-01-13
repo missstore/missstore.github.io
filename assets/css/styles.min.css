@@ -839,7 +839,7 @@ i.fas.fa-eraser {
     align-content: center;
     justify-content: center;
     border-radius: 50px;
-    filter: drop-shadow(0px 0px 15px black);
+    filter: drop-shadow(0 0 20px #4caf50);
 }
 
 .sucessoadicionado label {
@@ -957,6 +957,7 @@ input.quantidadeacomprar {
     right: calc(100% - 50%);
     width: 0;
     height: 0;
+    color: #17202acf;
 }
 
 .logo {
