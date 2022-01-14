@@ -245,7 +245,7 @@ p.textalternativo {
 .fecharcarrinho > i {
     cursor: pointer;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: flex-start;
     width: fit-content;
     color: #17202a;
@@ -396,7 +396,7 @@ img.imagemdoproduto {
     border-color: #000000a3;
     border-style: groove;
     cursor: zoom-in;
-    max-height: 99px;
+    max-height: 102px;
 }
 
 label.nomedoproduto {
