@@ -182,6 +182,7 @@
           let contentAalterar = JSON.parse(atou(contentInfo));
           contentAalterar.info.splice(contentAalterar.info.findIndex(f => f.src == nome.replace("assets/img/", "").split("/")[1]), 1);
           let contentConverted = btou(JSON.stringify(contentAalterar));
+		  console.log(contentAalterar);
           req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.txt", true);
           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -515,22 +516,22 @@
                   arEn.parentElement.querySelector(".valordoproduto").value = e.valor;
                   arEn.parentElement.querySelectorAll("button")[1].onclick = function() {
                     let _this = this;
-                    if (this.parentElement.querySelector("select").value != this.parentElement.getAttribute("tipo")) {
+                    if (_this.parentElement.querySelector("select").value != _this.parentElement.getAttribute("tipo")) {
                       let con = confirm("Tem certeza que deseja mudar o tipo?");
                       if (con == true) {
-                        let tsha = this.parentElement.querySelectorAll("label")[0].textContent;
-                        let tpath = this.parentElement.querySelectorAll("label")[2].textContent;
-                        let src = this.parentElement.querySelectorAll("label")[2].textContent;
-                        let nomedoproduto = this.parentElement.querySelector(".nomedoproduto").value;
-                        let valordoproduto = this.parentElement.querySelector(".valordoproduto").value;
-                        let novotipo = this.parentElement.querySelector("select").value;
-                        let url = this.parentElement.children[0].style.backgroundImage;
-                        let srcsempath = this.parentElement.querySelectorAll("label")[2].textContent.split("/")[3];
+                        let tsha = _this.parentElement.querySelectorAll("label")[0].textContent;
+                        let tpath = _this.parentElement.querySelectorAll("label")[2].textContent;
+                        let src = _this.parentElement.querySelectorAll("label")[2].textContent;
+                        let nomedoproduto = _this.parentElement.querySelector(".nomedoproduto").value;
+                        let valordoproduto = _this.parentElement.querySelector(".valordoproduto").value;
+                        let novotipo = _this.parentElement.querySelector("select").value;
+                        let url = _this.parentElement.children[0].style.backgroundImage;
+                        let srcsempath = _this.parentElement.querySelectorAll("label")[2].textContent.split("/")[3];
                         let adicionarnovotipo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(novotipo)).content))
-                        if (adicionarnovotipo.info.find(f => f.src == _this.parentElement.querySelectorAll("label")[1].textContent)) {
-                          let indexdo = adicionarnovotipo.info.findIndex(f => f.src == _this.parentElement.querySelectorAll("label")[1].textContent);
-                          adicionarnovotipo.info[indexdo].nome = _this.parentElement.querySelector(".nomedoproduto").value;
-                          adicionarnovotipo.info[indexdo].valor = _this.parentElement.querySelector(".valordoproduto").value;
+                        if (adicionarnovotipo.info.find(f => f.src == __this.parentElement.querySelectorAll("label")[1].textContent)) {
+                          let indexdo = adicionarnovotipo.info.findIndex(f => f.src == __this.parentElement.querySelectorAll("label")[1].textContent);
+                          adicionarnovotipo.info[indexdo].nome = __this.parentElement.querySelector(".nomedoproduto").value;
+                          adicionarnovotipo.info[indexdo].valor = __this.parentElement.querySelector(".valordoproduto").value;
                         } else {
                           adicionarnovotipo.info.push({
                             "src": src.split("/")[3],
@@ -597,14 +598,14 @@
                     } else {
                       let oSha = JSON.parse(sessionStorage.getItem(onde.split("/")[2])).sha,
                         conteudo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(onde.split("/")[2])).content)),
-                        conteudosendomodificado = _this.parentElement.querySelectorAll("label")[1].textContent,
+                        conteudosendomodificado = __this.parentElement.querySelectorAll("label")[1].textContent,
                         indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado),
                         nomeaenviar = onde.replace("assets/img/", "") + "info.txt";
-                      if (conteudo.info[indexdoconteudo].nome == _this.parentElement.querySelector(".nomedoproduto").value && conteudo.info[indexdoconteudo].valor == _this.parentElement.querySelector(".valordoproduto").value) {
+                      if (conteudo.info[indexdoconteudo].nome == __this.parentElement.querySelector(".nomedoproduto").value && conteudo.info[indexdoconteudo].valor == __this.parentElement.querySelector(".valordoproduto").value) {
                         alert("Nada a alterar");
                       } else {
                         let con = confirm("Tem certeza que deseja inserir / modificar esta foto?");
-                        con == true ? (conteudo.info[indexdoconteudo].nome = _this.parentElement.querySelector(".nomedoproduto").value, conteudo.info[indexdoconteudo].valor = _this.parentElement.querySelector(".valordoproduto").value, ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)))) : null;
+                        con == true ? (conteudo.info[indexdoconteudo].nome = __this.parentElement.querySelector(".nomedoproduto").value, conteudo.info[indexdoconteudo].valor = __this.parentElement.querySelector(".valordoproduto").value, ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)))) : null;
                       }
                     }
                   };
