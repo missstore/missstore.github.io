@@ -23,960 +23,947 @@
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <script>
-    /*
+      /*
 	https: //api.github.com/repos/missstore/missstore.github.io/contents
 	https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img
 	https://docs.github.com/pt/rest/reference/repos
 */
-	
-function wwm(s, f) {
-	return new Promise(resolve => {
-		if (document.querySelector(s)) return resolve(f);
-		const observer = new MutationObserver(m => {
-			if (document.querySelector(s)) {
-				resolve(f);
-				observer.disconnect();
-			}
-		});
-		observer.observe(document, {
-			childList: true,
-			subtree: true
-		});
-	});
-}
+      function wwm(s, f) {
+        return new Promise(resolve => {
+          if (document.querySelector(s)) return resolve(f);
+          const observer = new MutationObserver(m => {
+            if (document.querySelector(s)) {
+              resolve(f);
+              observer.disconnect();
+            }
+          });
+          observer.observe(document, {
+            childList: true,
+            subtree: true
+          });
+        });
+      }
+      wwm("body > div").then(function() {
+        document.querySelector("body > div").addEventListener("click", function() {
+          getUserInfo();
+        });
+      });
 
-wwm("body > div").then(function() {
-	document.querySelector("body > div").addEventListener("click", function() {
-		getUserInfo();
-	});
-});
+      function atou(b64) {
+        return decodeURIComponent(escape(atob(b64)));
+      }
 
-function atou(b64) {
-	return decodeURIComponent(escape(atob(b64)));
-}
+      function btou(data) {
+        return btoa(unescape(encodeURIComponent(data)));
+      }
 
-function btou(data) {
-	return btoa(unescape(encodeURIComponent(data)));
-}
+      function getUserInfo() {
+        var req = new XMLHttpRequest(),
+          code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
 
-function getUserInfo() {
-	var req = new XMLHttpRequest(),
-		code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"));
+        function verificarUsuario() {
+          req = new XMLHttpRequest();
+          req.open('GET', 'https://api.github.com/user', true);
+          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+          req.send();
+          req.onload = function() {
+            if (req.response.includes("too many requests")) {
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
+            } else if (JSON.parse(req.response).message) {
+              obtertoken();
+            } else {
+              if (JSON.parse(req.response).login == "missstore") {
+                obterContents();
+              } else {
+                alert("Usuario não autorizado | Unauthorized User\n" + JSON.parse(req.response).login);
+                let con = confirm("Revogar acesso? | Revoke acess?");
+                con == true ? window.open("https://github.com/settings/connections/applications/1fdf9fee6996786f2053") : null;
+              }
+            }
+          };
+        }
+        verificarUsuario();
 
-	function verificarUsuario() {
-		req = new XMLHttpRequest();
-		req.open('GET', 'https://api.github.com/user', true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-		req.send();
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (JSON.parse(req.response).message) {
-				obtertoken();
-			} else {
-				if (JSON.parse(req.response).login == "missstore") {
-					obterContents();
-				} else {
-					alert("Usuario não autorizado | Unauthorized User\n" + JSON.parse(req.response).login);
-					let con = confirm("Revogar acesso? | Revoke acess?");
-					con == true ? window.open("https://github.com/settings/connections/applications/1fdf9fee6996786f2053") : null;
-				}
-			}
-		};
-	}
-	verificarUsuario();
+        function obtertoken() {
+          req = new XMLHttpRequest();
+          req.open('POST', 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', true);
+          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          req.send('code=' + code + '&' + atob("Y2xpZW50X2lkPTFmZGY5ZmVlNjk5Njc4NmYyMDUzJmNsaWVudF9zZWNyZXQ9YjZlMjY4MTE3OTA2ZjI2MWQwODdmMDllNmMwNTRhZGU5NGZiNjEzYg==") + '&state=true');
+          req.onload = function() {
+            if (req.response.includes("too many requests")) {
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
+            } else if (req.response.includes("/corsdemo")) {
+              let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\n• ↓↓↓ Aguarde a mensagem ↓↓↓ •\n"You currently have temporary access to the demo server."\nLogo após feche a janela')
+              con == true ? window.open("https://cors-anywhere.herokuapp.com/") : window.open("https://cors-anywhere.herokuapp.com/");
+            } else {
+              let _token = JSON.parse(req.response) ? JSON.parse(req.response).access_token : null;
+              if (_token) {
+                localStorage.setItem("_token", _token);
+                verificarUsuario();
+              } else {
+                let con = confirm("Autorize o app para obter um codigo e continuar")
+                con == true ? window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true") : null;
+              }
+            }
+          };
+        }
+      }
 
-	function obtertoken() {
-		req = new XMLHttpRequest();
-		req.open('POST', 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.send('code=' + code + '&' + atob("Y2xpZW50X2lkPTFmZGY5ZmVlNjk5Njc4NmYyMDUzJmNsaWVudF9zZWNyZXQ9YjZlMjY4MTE3OTA2ZjI2MWQwODdmMDllNmMwNTRhZGU5NGZiNjEzYg==") + '&state=true');
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (req.response.includes("/corsdemo")) {
-				let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\n• ↓↓↓ Aguarde a mensagem ↓↓↓ •\n"You currently have temporary access to the demo server."\nLogo após feche a janela')
-				con == true ? window.open("https://cors-anywhere.herokuapp.com/") : window.open("https://cors-anywhere.herokuapp.com/");
-			} else {
-				let _token = JSON.parse(req.response) ? JSON.parse(req.response).access_token : null;
-				if (_token) {
-					localStorage.setItem("_token", _token);
-					verificarUsuario();
-				} else {
-					let con = confirm("Autorize o app para obter um codigo e continuar")
-					con == true ? window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true") : null;
-				}
-			}
-		};
-	}
-}
+      function fazerUpload(indexenviado, tipo) {
+        let LerArquivo = new FileReader(),
+          arquivo = document.querySelector("input[type=file]").files.item(indexenviado);
+        LerArquivo.onload = function() {
+          var req = new XMLHttpRequest();
+          req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/" + arquivo.name, true);
+          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+          req.send('{"message":"' + arquivo.name + ' enviado","content":"' + LerArquivo.result.replace(/^data:image.+;base64,/, '') + '"}');
+          req.onload = function() {
+            if (req.response.includes("too many requests")) {
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
+            } else if (JSON.parse(req.response).message) {
+              if (JSON.parse(req.response).message.includes("sha")) {
+                document.querySelector(".info_").textContent = "";
+                alert("Uma foto com o mesmo nome já existe nesse tipo\nClique em atualizar imagens e procure essa foto");
+              } else {
+                document.querySelector(".info_").textContent = "";
+                alert("Falha ao enviar a foto " + arquivo.name + "\n" + JSON.parse(req.response).message);
+              }
+            } else {
+              document.querySelector(".info_").textContent = JSON.parse(req.response).content.name + " enviado com sucesso!";
+              indexenviado == document.querySelector("input[type=file]").files.length - 1 ? (document.querySelector(".info_").textContent = "", alert("Todos os arquivos foram enviados.")) : fazerUpload(indexenviado + 1, document.querySelector("select").value);
+            }
+          };
+        };
+        LerArquivo.onerror = function() {
+          alert("Falha ao tentar enviar a foto...\nVerifique sua conexão e tente novamente");
+        };
+        /*LerArquivo.onprogress = function(e) {
+          let percentComplete = e.loaded / e.total;
+          percentComplete = parseInt(percentComplete * 100);
+          percentComplete == 100 ? document.querySelector(".info_").textContent = "Arquivo enviado" : document.querySelector(".info_").textContent = "Enviando arquivo " + percentComplete + "%";
+        };
+        */
+        document.querySelector(".info_").textContent = "Enviando fotos...";
+        LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexenviado));
+      }
 
-function fazerUpload(indexenviado, tipo) {
-	let LerArquivo = new FileReader(),
-		arquivo = document.querySelector("input[type=file]").files.item(indexenviado);
-	LerArquivo.onload = function() {
-		var req = new XMLHttpRequest();
-		req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/" + arquivo.name, true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-		req.send('{"message":"' + arquivo.name + ' enviado","content":"' + LerArquivo.result.replace(/^data:image.+;base64,/, '') + '"}');
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (JSON.parse(req.response).message) {
-				if (JSON.parse(req.response).message.includes("sha")) {
-					document.querySelector(".info_").textContent =  "";
-					alert("Uma foto com o mesmo nome já existe nesse tipo\nClique em atualizar imagens e procure essa foto");
-				} else {
-						document.querySelector(".info_").textContent =  "";
-					alert("Falha ao enviar a foto " + arquivo.name + "\n" + JSON.parse(req.response).message);
-				}
-			} else {
-				document.querySelector(".info_").textContent = JSON.parse(req.response).content.name + " enviado com sucesso!";
-				indexenviado == document.querySelector("input[type=file]").files.length - 1 ?
-					(
-						document.querySelector(".info_").textContent = "", alert("Todos os arquivos foram enviados.")
-					)
-					:
-					fazerUpload(indexenviado + 1, document.querySelector("select").value);
-			}
-		};
-	};
-	LerArquivo.onerror = function() {
-		alert("Falha ao tentar enviar a foto...\nVerifique sua conexão e tente novamente");
-	};
-	/*LerArquivo.onprogress = function(e) {
-	  let percentComplete = e.loaded / e.total;
-	  percentComplete = parseInt(percentComplete * 100);
-	  percentComplete == 100 ? document.querySelector(".info_").textContent = "Arquivo enviado" : document.querySelector(".info_").textContent = "Enviando arquivo " + percentComplete + "%";
-	};
-	*/
-	document.querySelector(".info_").textContent =  "Enviando fotos...";
-	LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexenviado));
-}
+      function ModificarArquivo(sha, nome, content) {
+        var req = new XMLHttpRequest();
+        req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + nome, true);
+        req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+        req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+        req.send('{"message":"' + nome.split("/")[0] + ' info.txt alterado","sha":"' + sha + '","content":"' + content + '"}');
+        req.onload = function() {
+          if (req.response.includes("too many requests")) {
+            alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+            window.location.assign("manager");
+          } else if (JSON.parse(req.response).message) {
+            alert("Falha ao tentar modificar\n" + JSON.parse(req.response).message);
+            obterContents();
+          } else {
+            sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
+              "sha": JSON.parse(req.response).content.sha,
+              "content": content
+            }));
+            alert("Informações inseridas / modificadas com sucesso!");
+          }
+        };
+      }
 
-function ModificarArquivo(sha, nome, content) {
-	var req = new XMLHttpRequest();
-	req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + nome, true);
-	req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-	req.send('{"message":"' + nome.split("/")[0] + ' info.txt alterado","sha":"' + sha + '","content":"' + content + '"}');
-	req.onload = function() {
-		if (req.response.includes("too many requests")) {
-			alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-			window.location.assign("manager");
-		} else if (JSON.parse(req.response).message) {
-			alert("Falha ao tentar modificar\n" + JSON.parse(req.response).message);
-			obterContents();
-		} else {
-			sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
-				"sha": JSON.parse(req.response).content.sha,
-				"content": content
-			}));
-			alert("Informações inseridas / modificadas com sucesso!");
+      function deletarArquivo(nome, sha) {
+        let tipo = nome.replace("assets/img/", "").split("/")[0];
+        let apenasNome = nome.replace("assets/img/", "").split("/")[1];
+        var req = new XMLHttpRequest();
+
+        function alterarInfo(shaInfo, contentInfo) {
+          let contentAalterar = JSON.parse(atou(contentInfo));
+          contentAalterar.info.find(f => f.src == nome.replace("assets/img/", "").split("/")[1]) ? contentAalterar.info.splice(contentAalterar.info.findIndex(f => f.src == nome.replace("assets/img/", "").split("/")[1]), 1) : null;
+          let contentConverted = btou(JSON.stringify(contentAalterar));
+          if (JSON.parse(sessionStorage.getItem(tipo)).content == contentConverted) {
+            deletarafoto();
+          } else {
+            req = new XMLHttpRequest();
+            req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.txt", true);
+            req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+            req.send('{"message":"' + tipo + ' info.txt alterado","sha":"' + shaInfo + '","content":"' + contentConverted + '"}');
+            req.onload = function() {
+              if (req.response.includes("too many requests")) {
+                alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                window.location.assign("manager");
+              } else if (JSON.parse(req.response).message) {
+                alert("Falha ao tentar excluir do info\n" + JSON.parse(req.response).message);
+                obterContents();
+              } else {
+                sessionStorage.setItem(tipo, JSON.stringify({
+                  "sha": JSON.parse(req.response).content.sha,
+                  "content": contentConverted
+                }));
+                deletarafoto();
+              }
+            };
+          }
+        }
+        alterarInfo(JSON.parse(sessionStorage.getItem(tipo)).sha, JSON.parse(sessionStorage.getItem(tipo)).content);
+
+        function deletarafoto() {
+          req = new XMLHttpRequest();
+          req.open('DELETE', 'https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
+          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+          req.send('{"message":"' + nome + ' deletado","sha":"' + sha + '"}');
+          req.onload = function() {
+            if (req.response.includes("too many requests")) {
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
+            } else if (JSON.parse(req.response).message) {
+              if (JSON.parse(req.response).message.includes("Not Found")) {
+                alert("Foto já apagada!\nClique em atualizar imagens\nAté desaperecer essa foto");
+              } else {
+                alert("Erro ao tentar apagar a foto\n" + apenasNome + "\n" + JSON.parse(req.response).message);
+              }
+              obterContents();
+            } else if (JSON.parse(req.response).commit) {
+              Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ? Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() : null;
+              alert("Foto\n" + apenasNome + "\ndeletada");
+            }
+          };
+        }
+      }
+
+      function filtrartipo() {
+        let temp = [];
+		if(document.querySelectorAll("input[type=checkbox]:checked").length<=6){
+			document.querySelector("input[type=checkbox][value=todos]").checked=false;
+		}else{
+			document.querySelector("input[type=checkbox][value=todos]").checked=false;
 		}
-	};
-}
+        document.querySelectorAll("input[type=checkbox]:checked").forEach(function(e) {
+          temp.push(e.value);
+        });
+        document.querySelectorAll("div[tipo]").forEach(function(e) {
+          if (!temp.includes(e.getAttribute("tipo"))) {
+            e.style.display = "none";
+          } else {
+            e.style.display = "flex";
+          }
+          if (temp.includes("nomevalor")) {
+            if (e.querySelector(".nomedoproduto").value == "" || e.querySelector(".valordoproduto").value == "") {
+              e.style.display = "flex";
+            }
+          }
+        });
+      }
 
-function deletarArquivo(nome, sha) {
-	let tipo = nome.replace("assets/img/", "").split("/")[0];
-	let apenasNome = nome.replace("assets/img/", "").split("/")[1];
-	var req = new XMLHttpRequest();
+      function obterContents() {
+        var osLink = "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/vestidos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/calcas|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/conjuntos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/croppeds|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/saias";
+        document.body.outerHTML = '';
+        document.querySelectorAll("head").forEach(function(e) {
+          e.innerText.length == 0 ? e.remove() : null;
+        });
+        let mainDiv = document.createElement("div");
+        mainDiv.style = 'display: flex;flex-wrap: wrap;flex-direction: row;justify-content: center;';
+        let divEnviar = document.createElement("div");
+        divEnviar.style = 'width: 100%;height: auto;display: flex;align-items: center;place-content: center;margin-bottom: 10px;flex-direction: row;flex-wrap: wrap;';
+        let selecionar_arquivo = document.createElement("input");
+        selecionar_arquivo.multiple = true;
+        selecionar_arquivo.type = "file";
+        selecionar_arquivo.accept = "image/*"
+        selecionar_arquivo.style = 'margin: 5px;';
+        divEnviar.append(selecionar_arquivo);
+        let selecionarCategoria = document.createElement("select");
+        selecionarCategoria.style = 'margin: 5px;border-radius: 7px;text-align: center;';
+        let myCat = ['saias', 'croppeds', 'vestidos', 'calcas', 'conjuntos'];
+        myCat.forEach(function(e) {
+          let tempRes = document.createElement("option");
+          tempRes.value = e;
+          tempRes.textContent = e.toUpperCase();
+          selecionarCategoria.append(tempRes)
+        });
+        divEnviar.append(selecionarCategoria);
+        let botaoEnviar = document.createElement("button");
+        botaoEnviar.textContent = "Enviar fotos";
+        botaoEnviar.style = 'margin: 5px;border-radius: 7px;';
+        botaoEnviar.addEventListener("click", function() {
+          if (document.querySelector("input[type=file]").files.length == 0) {
+            alert('Selecione um arquivo primeiro');
+          } else {
+            let con = confirm("Selecionou o tipo?");
+            con == true ? fazerUpload(0, document.querySelector("select").value) : null;
+          }
+        });
+        divEnviar.append(botaoEnviar);
+        let labelInfo = document.createElement("label");
+        labelInfo.style = "width: 100%;height: auto;display: flex;align-items: center;place-content: center;font-size: 15px;font-family: sans-serif;font-weight: 500;margin-bottom: 10px;justify-content: center;align-content: center;";
+        labelInfo.classList.add("info_");
+        let divDorefresh = document.createElement("div");
+        divDorefresh.style = 'width: 100%;height: 100%;display: flex;justify-content: center;flex-direction: column;align-items: center;';
+        let addGrupo = document.createElement("button");
+        addGrupo.style = "margin-bottom: 20px;border-radius: 7px;";
+        addGrupo.textContent = "Adicionar / Modificar / Apagar : Grupo";
+        addGrupo.addEventListener("click", function() {
+          console.log("teste..");
+        });
+        divDorefresh.append(addGrupo);
+        let butaoRefresh = document.createElement("button");
+        butaoRefresh.style = "margin-bottom: 20px;border-radius: 7px;";
+        butaoRefresh.textContent = "Atualizar imagens";
+        butaoRefresh.addEventListener("click", function() {
+          document.body.outerHTML = '';
+          obterContents();
+        });
+        divDorefresh.append(butaoRefresh);
+        let procurarItem = document.createElement("div");
+        procurarItem.style = 'width: 100%;height: auto;display: flex;justify-content: center;flex-direction: row;align-items: center;margin-bottom: 15px;';
+        let inputProcurar = document.createElement("input");
+        inputProcurar.type = "text";
+        inputProcurar.style = "border-radius: 5px;text-align: center;";
+        inputProcurar.classList.add("procurarimagem");
+        inputProcurar.setAttribute("placeholder", "Procurar imagem");
+        inputProcurar.addEventListener("change", function() {
+          filtrartipo();
+          let inputfiltrado = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+          if (this.value.length > 0) {
+            document.querySelector(".clearTexto").style.removeProperty("display");
+          } else {
+            document.querySelector(".clearTexto").style.setProperty("display", "none");
+          }
+          document.querySelectorAll(".nomedoproduto").forEach(function(e) {
+            if (e.parentElement.style.display != "none") {
+              let textofiltrado = e.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+              if (textofiltrado.includes(inputfiltrado)) {
+                e.parentElement.style.removeProperty("position");
+                e.parentElement.style.setProperty("display", "flex");
+              } else {
+                e.parentElement.style.setProperty("position", "fixed");
+                e.parentElement.style.setProperty("display", "none");
+              }
+            }
+          });
+        });
+        inputProcurar.addEventListener("keydown", function() {
+          filtrartipo();
+          let inputfiltrado = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+          if (this.value.length > 0) {
+            document.querySelector(".clearTexto").style.removeProperty("display");
+          } else {
+            document.querySelector(".clearTexto").style.setProperty("display", "none");
+          }
+          document.querySelectorAll(".nomedoproduto").forEach(function(e) {
+            if (e.parentElement.style.display != "none") {
+              let textofiltrado = e.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+              if (textofiltrado.includes(inputfiltrado)) {
+                e.parentElement.style.removeProperty("position");
+                e.parentElement.style.setProperty("display", "flex");
+              } else {
+                e.parentElement.style.setProperty("position", "fixed");
+                e.parentElement.style.setProperty("display", "none");
+              }
+            }
+          });
+        });
+        inputProcurar.addEventListener("keyup", function() {
+          filtrartipo();
+          let inputfiltrado = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+          if (this.value.length > 0) {
+            document.querySelector(".clearTexto").style.removeProperty("display");
+          } else {
+            document.querySelector(".clearTexto").style.setProperty("display", "none");
+          }
+          document.querySelectorAll(".nomedoproduto").forEach(function(e) {
+            if (e.parentElement.style.display != "none") {
+              let textofiltrado = e.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+              if (textofiltrado.includes(inputfiltrado)) {
+                e.parentElement.style.removeProperty("position");
+                e.parentElement.style.setProperty("display", "flex");
+              } else {
+                e.parentElement.style.setProperty("position", "fixed");
+                e.parentElement.style.setProperty("display", "none");
+              }
+            }
+          });
+        });
+        procurarItem.append(inputProcurar);
+        let clearTexto = document.createElement("div");
+        clearTexto.style.backgroundImage = 'url("data:image/png;base64,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")';
+        clearTexto.style.width = '14px';
+        clearTexto.style.height = '14px';
+        clearTexto.style.backgroundRepeat = 'no-repeat';
+        clearTexto.style.backgroundSize = 'contain';
+        clearTexto.style.backgroundPosition = 'center, center';
+        clearTexto.style.marginLeft = '-18px';
+        clearTexto.style.cursor = 'pointer';
+        clearTexto.style.display = 'none';
+        clearTexto.classList.add("clearTexto");
+        clearTexto.addEventListener("click", function() {
+          document.querySelector(".procurarimagem").value = '';
+          document.querySelectorAll(".nomedoproduto").forEach(function(e) {
+            e.parentElement.style.removeProperty("position");
+          });
+          filtrartipo();
+          this.style.setProperty("display", "none");
+        });
+        procurarItem.append(clearTexto);
+        mainDiv.append(divEnviar);
+        mainDiv.append(labelInfo);
+        mainDiv.append(divDorefresh);
+        mainDiv.append(procurarItem);
+        let DivPrincipalFiltrar = document.createElement("div");
+        DivPrincipalFiltrar.style = "margin: 10px;font-family: sans-serif;font-size: 20px;width: 100%;height: auto;display: flex;flex-direction: column;flex-wrap: wrap;align-content: center;justify-content: center;align-items: center;";
+        let LabelFiltrar = document.createElement("label");
+        LabelFiltrar.textContent = "Filtrar tipos";
+        DivPrincipalFiltrar.append(LabelFiltrar);
+        let DivDosCheckbox = document.createElement("div");
+        DivDosCheckbox.style = "display: flex;flex-direction: row;margin: 10px;align-items: center;font-family: monospace;font-size: 13px;flex-wrap: wrap;justify-content: center;align-content: center;width: 85%;";
+        let checkboxtodosdiv = document.createElement("div");
+        checkboxtodosdiv.style = "display: flex;align-items: center;justify-content: center;";
+        checkboxtodosdiv.addEventListener("click", function() {
+          if (this.querySelector("input").checked) {
+            document.querySelectorAll("input[type=checkbox]").forEach(function(e) {
+              e.checked = true;
+            });
+            filtrartipo();
+          } else {
+            document.querySelectorAll("input[type=checkbox]").forEach(function(e) {
+              e.checked = false;
+            });
+            filtrartipo();
+          }
+        });
+        let checkboxtodoscheckbox = document.createElement("input");
+        checkboxtodoscheckbox.type = "checkbox";
+        checkboxtodoscheckbox.value = "todos";
+        checkboxtodoscheckbox.checked = true;
+        checkboxtodosdiv.append(checkboxtodoscheckbox);
+        let checkboxtodoslabel = document.createElement("label");
+        checkboxtodoslabel.style = "padding-right: 2px;padding-left: 2px;";
+        checkboxtodoslabel.textContent = "Todos";
+        checkboxtodosdiv.append(checkboxtodoslabel);
+        DivDosCheckbox.append(checkboxtodosdiv);
+        let checkboxsaiassdiv = document.createElement("div");
+        checkboxsaiassdiv.style = "display: flex;align-items: center;justify-content: center;";
+        checkboxsaiassdiv.addEventListener("click", function() {
+          filtrartipo();
+        });
+        let checkboxsaiascheckbox = document.createElement("input");
+        checkboxsaiascheckbox.type = "checkbox";
+        checkboxsaiascheckbox.value = "saias";
+        checkboxsaiascheckbox.checked = true;
+        checkboxsaiassdiv.append(checkboxsaiascheckbox);
+        let checkboxsaiaslabel = document.createElement("label");
+        checkboxsaiaslabel.style = "padding-right: 2px;padding-left: 2px;";
+        checkboxsaiaslabel.textContent = "Saias";
+        checkboxsaiassdiv.append(checkboxsaiaslabel);
+        DivDosCheckbox.append(checkboxsaiassdiv);
+        let checkboxcalcasdiv = document.createElement("div");
+        checkboxcalcasdiv.style = "display: flex;align-items: center;justify-content: center;";
+        checkboxcalcasdiv.addEventListener("click", function() {
+          filtrartipo();
+        });
+        let checkboxcalcascheckbox = document.createElement("input");
+        checkboxcalcascheckbox.type = "checkbox";
+        checkboxcalcascheckbox.value = "calcas";
+        checkboxcalcascheckbox.checked = true;
+        checkboxcalcasdiv.append(checkboxcalcascheckbox);
+        let checkboxcalcaslabel = document.createElement("label");
+        checkboxcalcaslabel.style = "padding-right: 2px;padding-left: 2px;";
+        checkboxcalcaslabel.textContent = "Calças";
+        checkboxcalcasdiv.append(checkboxcalcaslabel);
+        DivDosCheckbox.append(checkboxcalcasdiv);
+        let checkboxvestidosdiv = document.createElement("div");
+        checkboxvestidosdiv.style = "display: flex;align-items: center;justify-content: center;";
+        checkboxvestidosdiv.addEventListener("click", function() {
+          filtrartipo();
+        });
+        let checkboxvestidoscheckbox = document.createElement("input");
+        checkboxvestidoscheckbox.type = "checkbox";
+        checkboxvestidoscheckbox.value = "vestidos";
+        checkboxvestidoscheckbox.checked = true;
+        checkboxvestidosdiv.append(checkboxvestidoscheckbox);
+        let checkboxvestidoslabel = document.createElement("label");
+        checkboxvestidoslabel.style = "padding-right: 2px;padding-left: 2px;";
+        checkboxvestidoslabel.textContent = "Vestidos";
+        checkboxvestidosdiv.append(checkboxvestidoslabel);
+        DivDosCheckbox.append(checkboxvestidosdiv);
+        let checkboxconjuntossdiv = document.createElement("div");
+        checkboxconjuntossdiv.style = "display: flex;align-items: center;justify-content: center;";
+        checkboxconjuntossdiv.addEventListener("click", function() {
+          filtrartipo();
+        });
+        let checkboxconjuntoscheckbox = document.createElement("input");
+        checkboxconjuntoscheckbox.type = "checkbox";
+        checkboxconjuntoscheckbox.value = "conjuntos";
+        checkboxconjuntoscheckbox.checked = true;
+        checkboxconjuntossdiv.append(checkboxconjuntoscheckbox);
+        let checkboxconjuntoslabel = document.createElement("label");
+        checkboxconjuntoslabel.style = "padding-right: 2px;padding-left: 2px;";
+        checkboxconjuntoslabel.textContent = "Conjuntos";
+        checkboxconjuntossdiv.append(checkboxconjuntoslabel);
+        DivDosCheckbox.append(checkboxconjuntossdiv);
+        let checkboxcroppedsssdiv = document.createElement("div");
+        checkboxcroppedsssdiv.style = "display: flex;align-items: center;justify-content: center;";
+        checkboxcroppedsssdiv.addEventListener("click", function() {
+          filtrartipo();
+        });
+        let checkboxcroppedscheckbox = document.createElement("input");
+        checkboxcroppedscheckbox.type = "checkbox";
+        checkboxcroppedscheckbox.value = "croppeds";
+        checkboxcroppedscheckbox.checked = true;
+        checkboxcroppedsssdiv.append(checkboxcroppedscheckbox);
+        let checkboxcroppedslabel = document.createElement("label");
+        checkboxcroppedslabel.style = "padding-right: 2px;padding-left: 2px;";
+        checkboxcroppedslabel.textContent = "Croppeds";
+        checkboxcroppedsssdiv.append(checkboxcroppedslabel);
+        DivDosCheckbox.append(checkboxcroppedsssdiv);
+        let checkboxsemnomevalordiv = document.createElement("div");
+        checkboxsemnomevalordiv.style = "display: flex;align-items: center;justify-content: center;";
+        checkboxsemnomevalordiv.addEventListener("click", function() {
+          filtrartipo();
+        });
+        let checkboxsemnomevalorcheckbox = document.createElement("input");
+        checkboxsemnomevalorcheckbox.type = "checkbox";
+        checkboxsemnomevalorcheckbox.value = "nomevalor";
+        checkboxsemnomevalorcheckbox.checked = true;
+        checkboxsemnomevalordiv.append(checkboxsemnomevalorcheckbox);
+        let checkboxsemnomevalorlabel = document.createElement("label");
+        checkboxsemnomevalorlabel.style = "padding-right: 2px;padding-left: 2px;";
+        checkboxsemnomevalorlabel.textContent = "Sem nome / valor";
+        checkboxsemnomevalordiv.append(checkboxsemnomevalorlabel);
+        DivDosCheckbox.append(checkboxsemnomevalordiv);
+        DivPrincipalFiltrar.append(DivDosCheckbox);
+        mainDiv.append(DivPrincipalFiltrar);
+        document.body.appendChild(mainDiv);
 
-	function alterarInfo(shaInfo, contentInfo) {
-		let contentAalterar = JSON.parse(atou(contentInfo));
-		contentAalterar.info.find(f => f.src == nome.replace("assets/img/", "").split("/")[1]) ?
-			contentAalterar.info.splice(contentAalterar.info.findIndex(f => f.src == nome.replace("assets/img/", "").split("/")[1]), 1) :
-			null;
-		let contentConverted = btou(JSON.stringify(contentAalterar));
-		if (JSON.parse(sessionStorage.getItem(tipo)).content == contentConverted) {
-			deletarafoto();
-		} else {
-			req = new XMLHttpRequest();
-			req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.txt", true);
-			req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-			req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-			req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-			req.send('{"message":"' + tipo + ' info.txt alterado","sha":"' + shaInfo + '","content":"' + contentConverted + '"}');
-			req.onload = function() {
-				if (req.response.includes("too many requests")) {
-					alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-					window.location.assign("manager");
-				} else if (JSON.parse(req.response).message) {
-					alert("Falha ao tentar excluir do info\n" + JSON.parse(req.response).message);
-					obterContents();
-				} else {
-					sessionStorage.setItem(tipo, JSON.stringify({
-						"sha": JSON.parse(req.response).content.sha,
-						"content": contentConverted
-					}));
-					deletarafoto();
-				}
-			};
-		}
-	}
-	alterarInfo(JSON.parse(sessionStorage.getItem(tipo)).sha, JSON.parse(sessionStorage.getItem(tipo)).content);
+        function obterDados(caminho, sha) {
+          caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
+          var req = new XMLHttpRequest();
+          req.open('GET', caminho + '/info.txt', true);
+          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          req.send();
+          req.onload = function() {
+            if (req.response.includes("too many requests")) {
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
+            } else if (JSON.parse(req.response).message) {
+              alert("Falha ao obter dados\n" + JSON.parse(req.response).message);
+            } else {
+              let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
+              onde = onde.replace("main/", "") + "/";
+              let tipo = caminho.split("/")[8];
+              JSON.parse(req.response).info.forEach(function(e) {
+                sessionStorage.setItem(onde.split("/")[2], JSON.stringify({
+                  "sha": sha,
+                  "content": btou(JSON.stringify(JSON.parse(req.response)))
+                }));
+                if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
+                  let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
+                  arEn.parentElement.querySelector(".nomedoproduto").value = e.nome;
+                  arEn.parentElement.querySelector(".valordoproduto").value = e.valor;
+                  arEn.parentElement.querySelectorAll("button")[1].onclick = function() {
+                    let _this = this;
+                    if (_this.parentElement.querySelector("select").value != _this.parentElement.getAttribute("tipo")) {
+                      let con = confirm("Tem certeza que deseja mudar o tipo?");
+                      if (con == true) {
+                        alert("Não faça nenhuma ação\nAguarde no máximo 5 minutos ou até aparecer uma mensagem\nSe nada acontecer atualize a página");
+                        let tsha = _this.parentElement.querySelectorAll("label")[0].textContent;
+                        let tpath = _this.parentElement.querySelectorAll("label")[2].textContent;
+                        let src = _this.parentElement.querySelectorAll("label")[2].textContent;
+                        let nomedoproduto = _this.parentElement.querySelector(".nomedoproduto").value;
+                        let valordoproduto = _this.parentElement.querySelector(".valordoproduto").value;
+                        let novotipo = _this.parentElement.querySelector("select").value;
+                        let url = _this.parentElement.children[0].style.backgroundImage;
+                        let srcsempath = _this.parentElement.querySelectorAll("label")[2].textContent.split("/")[3];
+                        let adicionarnovotipo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(novotipo)).content))
+                        if (adicionarnovotipo.info.find(f => f.src == _this.parentElement.querySelectorAll("label")[1].textContent)) {
+                          let indexdo = adicionarnovotipo.info.findIndex(f => f.src == _this.parentElement.querySelectorAll("label")[1].textContent);
+                          adicionarnovotipo.info[indexdo].nome = _this.parentElement.querySelector(".nomedoproduto").value;
+                          adicionarnovotipo.info[indexdo].valor = _this.parentElement.querySelector(".valordoproduto").value;
+                        } else {
+                          adicionarnovotipo.info.push({
+                            "src": src.split("/")[3],
+                            "valor": valordoproduto,
+                            "nome": nomedoproduto
+                          });
+                        }
+                        let conteudoformatado = btou(JSON.stringify(adicionarnovotipo));
+                        let shadonovotipo = JSON.parse(sessionStorage.getItem(novotipo)).sha;
+                        var img = new Image();
+                        var req = new XMLHttpRequest();
+                        img.crossOrigin = 'Anonymous';
+                        url = url.substring(5, url.length - 2);
+                        img.src = url;
+                        img.onload = function() {
+                          var canvas = document.createElement('canvas'),
+                            ctx = canvas.getContext('2d');
+                          canvas.height = img.naturalHeight;
+                          canvas.width = img.naturalWidth;
+                          ctx.drawImage(img, 0, 0);
+                          var uri = canvas.toDataURL('image/' + img.src.split(".")[img.src.split(".").length - 1]),
+                            b64 = uri.replace(/^data:image.+;base64,/, '');
+                          req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/" + srcsempath, true);
+                          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                          req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+                          req.send('{"message":"' + srcsempath + ' enviado","content":"' + b64 + '"}');
+                          req.onload = function() {
+                            if (req.response.includes("too many requests")) {
+                              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                              window.location.assign("manager");
+                            } else if (JSON.parse(req.response).message) {
+                              if (JSON.parse(req.response).message.includes("sha")) {
+                                req = new XMLHttpRequest();
+                                req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
+                                req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+                                req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
+                                req.onload = function() {
+                                  if (req.response.includes("too many requests")) {
+                                    alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                                    window.location.assign("manager");
+                                  } else if (JSON.parse(req.response).message) {
+                                    alert("Falha ao tentar modificar / inserir\n" + JSON.parse(req.response).message);
+                                    obterContents();
+                                  } else {
+                                    sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
+                                      "sha": JSON.parse(req.response).content.sha,
+                                      "content": conteudoformatado
+                                    }));
+                                    deletarArquivo(tpath, tsha);
+                                    alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
+                                  }
+                                };
+                              } else {
+                                alert("Falha ao enviar a foto " + srcsempath + "\n" + JSON.parse(req.response).message);
+                              }
+                            } else {
+                              req = new XMLHttpRequest();
+                              req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
+                              req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                              req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                              req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+                              req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
+                              req.onload = function() {
+                                if (req.response.includes("too many requests")) {
+                                  alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                                  window.location.assign("manager");
+                                } else if (JSON.parse(req.response).message) {
+                                  alert("Falha ao tentar modificar / inserir\n" + JSON.parse(req.response).message);
+                                  obterContents();
+                                } else {
+                                  sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
+                                    "sha": JSON.parse(req.response).content.sha,
+                                    "content": conteudoformatado
+                                  }));
+                                  deletarArquivo(tpath, tsha);
+                                  alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
+                                }
+                              };
+                            }
+                          };
+                        };
+                        img.onerror = function() {
+                          alert("Falha ao tentar modificar o tipo\nVerifique sua conexão e tente novamente");
+                        };
+                      }
+                    } else {
+                      let oSha = JSON.parse(sessionStorage.getItem(onde.split("/")[2])).sha,
+                        conteudo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(onde.split("/")[2])).content)),
+                        conteudosendomodificado = _this.parentElement.querySelectorAll("label")[1].textContent,
+                        indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado),
+                        nomeaenviar = onde.replace("assets/img/", "") + "info.txt";
+                      if (conteudo.info[indexdoconteudo].nome == _this.parentElement.querySelector(".nomedoproduto").value && conteudo.info[indexdoconteudo].valor == _this.parentElement.querySelector(".valordoproduto").value) {
+                        alert("Nada a alterar");
+                      } else {
+                        let con = confirm("Tem certeza que deseja inserir / modificar esta foto?");
+                        con == true ? (conteudo.info[indexdoconteudo].nome = _this.parentElement.querySelector(".nomedoproduto").value, conteudo.info[indexdoconteudo].valor = _this.parentElement.querySelector(".valordoproduto").value, ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)))) : null;
+                      }
+                    }
+                  };
+                }
+              });
+            }
+          };
+        }
 
-	function deletarafoto() {
-		req = new XMLHttpRequest();
-		req.open('DELETE', 'https://api.github.com/repos/missstore/missstore.github.io/contents/' + nome, true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-		req.send('{"message":"' + nome + ' deletado","sha":"' + sha + '"}');
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (JSON.parse(req.response).message) {
-				if (JSON.parse(req.response).message.includes("Not Found")) {
-					alert("Foto já apagada!\nClique em atualizar imagens\nAté desaperecer essa foto");
-				} else {
-					alert("Erro ao tentar apagar a foto\n" + apenasNome + "\n" + JSON.parse(req.response).message);
-				}
-				obterContents();
-			} else if (JSON.parse(req.response).commit) {
-				Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome) ? Array.from(document.querySelectorAll("label")).find(f => f.textContent == nome).parentElement.remove() : null;
-				alert("Foto\n" + apenasNome + "\ndeletada");
-			}
-		};
-	}
-}
-
-function filtrartipo() {
-	let temp = [];
-	document.querySelectorAll("input[type=checkbox]:checked").forEach(function(e) {
-		temp.push(e.value);
-	});
-	document.querySelectorAll("div[tipo]").forEach(function(e) {
-		if (!temp.includes(e.getAttribute("tipo"))) {
-			e.style.display = "none";
-		} else {
-			e.style.display = "flex";
-		}
-		if(temp.includes("nomevalor")){
-			if(e.querySelector(".nomedoproduto").value==""||e.querySelector(".valordoproduto").value==""){
-				e.style.display = "flex";		
-			}
-		}
-	});
-}
-
-function obterContents() {
-	var osLink = "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/vestidos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/calcas|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/conjuntos|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/croppeds|https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/saias";
-	document.body.outerHTML = '';
-	document.querySelectorAll("head").forEach(function(e) {
-		e.innerText.length == 0 ? e.remove() : null;
-	});
-	let mainDiv = document.createElement("div");
-	mainDiv.style = 'display: flex;flex-wrap: wrap;flex-direction: row;justify-content: center;';
-	let divEnviar = document.createElement("div");
-	divEnviar.style = 'width: 100%;height: auto;display: flex;align-items: center;place-content: center;margin-bottom: 10px;flex-direction: row;flex-wrap: wrap;';
-	let selecionar_arquivo = document.createElement("input");
-	selecionar_arquivo.multiple = true;
-	selecionar_arquivo.type = "file";
-	selecionar_arquivo.accept = "image/*"
-	selecionar_arquivo.style = 'margin: 5px;';
-	divEnviar.append(selecionar_arquivo);
-	let selecionarCategoria = document.createElement("select");
-	selecionarCategoria.style = 'margin: 5px;border-radius: 7px;text-align: center;';
-	let myCat = ['saias', 'croppeds', 'vestidos', 'calcas', 'conjuntos'];
-	myCat.forEach(function(e) {
-		let tempRes = document.createElement("option");
-		tempRes.value = e;
-		tempRes.textContent = e.toUpperCase();
-		selecionarCategoria.append(tempRes)
-	});
-	divEnviar.append(selecionarCategoria);
-	let botaoEnviar = document.createElement("button");
-	botaoEnviar.textContent = "Enviar fotos";
-	botaoEnviar.style = 'margin: 5px;border-radius: 7px;';
-	botaoEnviar.addEventListener("click", function() {
-		if (document.querySelector("input[type=file]").files.length == 0) {
-			alert('Selecione um arquivo primeiro');
-		} else {
-			let con = confirm("Selecionou o tipo?");
-			con == true ? fazerUpload(0, document.querySelector("select").value) : null;
-		}
-	});
-	divEnviar.append(botaoEnviar);
-	let labelInfo = document.createElement("label");
-	labelInfo.style = "width: 100%;height: auto;display: flex;align-items: center;place-content: center;font-size: 15px;font-family: sans-serif;font-weight: 500;margin-bottom: 10px;justify-content: center;align-content: center;";
-	labelInfo.classList.add("info_");
-	let divDorefresh = document.createElement("div");
-	divDorefresh.style = 'width: 100%;height: 100%;display: flex;justify-content: center;flex-direction: column;align-items: center;';
-	let addGrupo = document.createElement("button");
-	addGrupo.style = "margin-bottom: 20px;border-radius: 7px;";
-	addGrupo.textContent = "Adicionar / Modificar / Apagar : Grupo";
-	addGrupo.addEventListener("click", function() {
-		console.log("teste..");
-	});
-	divDorefresh.append(addGrupo);
-	let butaoRefresh = document.createElement("button");
-	butaoRefresh.style = "margin-bottom: 20px;border-radius: 7px;";
-	butaoRefresh.textContent = "Atualizar imagens";
-	butaoRefresh.addEventListener("click", function() {
-		document.body.outerHTML = '';
-		obterContents();
-	});
-	divDorefresh.append(butaoRefresh);
-	let procurarItem = document.createElement("div");
-	procurarItem.style = 'width: 100%;height: auto;display: flex;justify-content: center;flex-direction: row;align-items: center;margin-bottom: 15px;';
-	let inputProcurar = document.createElement("input");
-	inputProcurar.type = "text";
-	inputProcurar.style = "border-radius: 5px;text-align: center;";
-	inputProcurar.classList.add("procurarimagem");
-	inputProcurar.setAttribute("placeholder", "Procurar imagem");
-	inputProcurar.addEventListener("change", function() {
-		filtrartipo();
-		let inputfiltrado = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-		if (this.value.length > 0) {
-			document.querySelector(".clearTexto").style.removeProperty("display");
-		} else {
-			document.querySelector(".clearTexto").style.setProperty("display", "none");
-		}
-		document.querySelectorAll(".nomedoproduto").forEach(function(e) {
-			if (e.parentElement.style.display != "none") {
-				let textofiltrado = e.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-				if (textofiltrado.includes(inputfiltrado)) {
-					e.parentElement.style.removeProperty("position");
-					e.parentElement.style.setProperty("display", "flex");
-				} else {
-					e.parentElement.style.setProperty("position", "fixed");
-					e.parentElement.style.setProperty("display", "none");
-				}
-			}
-		});
-	});
-	inputProcurar.addEventListener("keydown", function() {
-		filtrartipo();
-		let inputfiltrado = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-		if (this.value.length > 0) {
-			document.querySelector(".clearTexto").style.removeProperty("display");
-		} else {
-			document.querySelector(".clearTexto").style.setProperty("display", "none");
-		}
-		document.querySelectorAll(".nomedoproduto").forEach(function(e) {
-			if (e.parentElement.style.display != "none") {
-				let textofiltrado = e.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-				if (textofiltrado.includes(inputfiltrado)) {
-					e.parentElement.style.removeProperty("position");
-					e.parentElement.style.setProperty("display", "flex");
-				} else {
-					e.parentElement.style.setProperty("position", "fixed");
-					e.parentElement.style.setProperty("display", "none");
-				}
-			}
-		});
-	});
-	inputProcurar.addEventListener("keyup", function() {
-		filtrartipo();
-		let inputfiltrado = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-		if (this.value.length > 0) {
-			document.querySelector(".clearTexto").style.removeProperty("display");
-		} else {
-			document.querySelector(".clearTexto").style.setProperty("display", "none");
-		}
-		document.querySelectorAll(".nomedoproduto").forEach(function(e) {
-			if (e.parentElement.style.display != "none") {
-				let textofiltrado = e.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-				if (textofiltrado.includes(inputfiltrado)) {
-					e.parentElement.style.removeProperty("position");
-					e.parentElement.style.setProperty("display", "flex");
-				} else {
-					e.parentElement.style.setProperty("position", "fixed");
-					e.parentElement.style.setProperty("display", "none");
-				}
-			}
-		});
-	});
-	procurarItem.append(inputProcurar);
-	let clearTexto = document.createElement("div");
-	clearTexto.style.backgroundImage = 'url("data:image/png;base64,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")';
-	clearTexto.style.width = '14px';
-	clearTexto.style.height = '14px';
-	clearTexto.style.backgroundRepeat = 'no-repeat';
-	clearTexto.style.backgroundSize = 'contain';
-	clearTexto.style.backgroundPosition = 'center, center';
-	clearTexto.style.marginLeft = '-18px';
-	clearTexto.style.cursor = 'pointer';
-	clearTexto.style.display = 'none';
-	clearTexto.classList.add("clearTexto");
-	clearTexto.addEventListener("click", function() {
-		document.querySelector(".procurarimagem").value = '';
-		document.querySelectorAll(".nomedoproduto").forEach(function(e) {
-			e.parentElement.style.removeProperty("position");
-		});
-		filtrartipo();
-		this.style.setProperty("display", "none");
-	});
-	procurarItem.append(clearTexto);
-	mainDiv.append(divEnviar);
-	mainDiv.append(labelInfo);
-	mainDiv.append(divDorefresh);
-	mainDiv.append(procurarItem);
-	let DivPrincipalFiltrar = document.createElement("div");
-	DivPrincipalFiltrar.style = "margin: 10px;font-family: sans-serif;font-size: 20px;width: 100%;height: auto;display: flex;flex-direction: column;flex-wrap: wrap;align-content: center;justify-content: center;align-items: center;";
-	let LabelFiltrar = document.createElement("label");
-	LabelFiltrar.textContent = "Filtrar tipos";
-	DivPrincipalFiltrar.append(LabelFiltrar);
-	let DivDosCheckbox = document.createElement("div");
-	DivDosCheckbox.style = "display: flex;flex-direction: row;margin: 10px;align-items: center;font-family: monospace;font-size: 13px;flex-wrap: wrap;justify-content: center;align-content: center;width: 85%;";
-	
-	let checkboxtodosdiv = document.createElement("div");
-	checkboxtodosdiv.style = "display: flex;align-items: center;justify-content: center;";
-	checkboxtodosdiv.addEventListener("click", function() {
-		if (this.querySelector("input").checked) {
-			document.querySelectorAll("input[type=checkbox]").forEach(function(e) {
-				e.checked = true;
-			});
-			filtrartipo();
-		} else {
-			document.querySelectorAll("input[type=checkbox]").forEach(function(e) {
-				e.checked = false;
-			});
-			filtrartipo();
-		}
-	});
-	let checkboxtodoscheckbox = document.createElement("input");
-	checkboxtodoscheckbox.type = "checkbox";
-	checkboxtodoscheckbox.value = "todos";
-	checkboxtodoscheckbox.checked = true;
-	checkboxtodosdiv.append(checkboxtodoscheckbox);
-	let checkboxtodoslabel = document.createElement("label");
-	checkboxtodoslabel.style = "padding-right: 2px;padding-left: 2px;";
-	checkboxtodoslabel.textContent = "Todos";
-	checkboxtodosdiv.append(checkboxtodoslabel);
-	DivDosCheckbox.append(checkboxtodosdiv);
-	
-	let checkboxsaiassdiv = document.createElement("div");
-	checkboxsaiassdiv.style = "display: flex;align-items: center;justify-content: center;";
-	checkboxsaiassdiv.addEventListener("click", function() {
-		filtrartipo();
-	});
-	let checkboxsaiascheckbox = document.createElement("input");
-	checkboxsaiascheckbox.type = "checkbox";
-	checkboxsaiascheckbox.value = "saias";
-	checkboxsaiascheckbox.checked = true;
-	checkboxsaiassdiv.append(checkboxsaiascheckbox);
-	let checkboxsaiaslabel = document.createElement("label");
-	checkboxsaiaslabel.style = "padding-right: 2px;padding-left: 2px;";
-	checkboxsaiaslabel.textContent = "Saias";
-	checkboxsaiassdiv.append(checkboxsaiaslabel);
-	DivDosCheckbox.append(checkboxsaiassdiv);
-	
-	let checkboxcalcasdiv = document.createElement("div");
-	checkboxcalcasdiv.style = "display: flex;align-items: center;justify-content: center;";
-	checkboxcalcasdiv.addEventListener("click", function() {
-		filtrartipo();
-	});
-	let checkboxcalcascheckbox = document.createElement("input");
-	checkboxcalcascheckbox.type = "checkbox";
-	checkboxcalcascheckbox.value = "calcas";
-	checkboxcalcascheckbox.checked = true;
-	checkboxcalcasdiv.append(checkboxcalcascheckbox);
-	let checkboxcalcaslabel = document.createElement("label");
-	checkboxcalcaslabel.style = "padding-right: 2px;padding-left: 2px;";
-	checkboxcalcaslabel.textContent = "Calças";
-	checkboxcalcasdiv.append(checkboxcalcaslabel);
-	DivDosCheckbox.append(checkboxcalcasdiv);
-	
-	let checkboxvestidosdiv = document.createElement("div");
-	checkboxvestidosdiv.style = "display: flex;align-items: center;justify-content: center;";
-	checkboxvestidosdiv.addEventListener("click", function() {
-		filtrartipo();
-	});
-	let checkboxvestidoscheckbox = document.createElement("input");
-	checkboxvestidoscheckbox.type = "checkbox";
-	checkboxvestidoscheckbox.value = "vestidos";
-	checkboxvestidoscheckbox.checked = true;
-	checkboxvestidosdiv.append(checkboxvestidoscheckbox);
-	let checkboxvestidoslabel = document.createElement("label");
-	checkboxvestidoslabel.style = "padding-right: 2px;padding-left: 2px;";
-	checkboxvestidoslabel.textContent = "Vestidos";
-	checkboxvestidosdiv.append(checkboxvestidoslabel);
-	DivDosCheckbox.append(checkboxvestidosdiv);
-	
-	let checkboxconjuntossdiv = document.createElement("div");
-	checkboxconjuntossdiv.style = "display: flex;align-items: center;justify-content: center;";
-	checkboxconjuntossdiv.addEventListener("click", function() {
-		filtrartipo();
-	});
-	let checkboxconjuntoscheckbox = document.createElement("input");
-	checkboxconjuntoscheckbox.type = "checkbox";
-	checkboxconjuntoscheckbox.value = "conjuntos";
-	checkboxconjuntoscheckbox.checked = true;
-	checkboxconjuntossdiv.append(checkboxconjuntoscheckbox);
-	let checkboxconjuntoslabel = document.createElement("label");
-	checkboxconjuntoslabel.style = "padding-right: 2px;padding-left: 2px;";
-	checkboxconjuntoslabel.textContent = "Conjuntos";
-	checkboxconjuntossdiv.append(checkboxconjuntoslabel);
-	DivDosCheckbox.append(checkboxconjuntossdiv);
-	
-	let checkboxcroppedsssdiv = document.createElement("div");
-	checkboxcroppedsssdiv.style = "display: flex;align-items: center;justify-content: center;";
-	checkboxcroppedsssdiv.addEventListener("click", function() {
-		filtrartipo();
-	});
-	let checkboxcroppedscheckbox = document.createElement("input");
-	checkboxcroppedscheckbox.type = "checkbox";
-	checkboxcroppedscheckbox.value = "croppeds";
-	checkboxcroppedscheckbox.checked = true;
-	checkboxcroppedsssdiv.append(checkboxcroppedscheckbox);
-	let checkboxcroppedslabel = document.createElement("label");
-	checkboxcroppedslabel.style = "padding-right: 2px;padding-left: 2px;";
-	checkboxcroppedslabel.textContent = "Croppeds";
-	checkboxcroppedsssdiv.append(checkboxcroppedslabel);
-	DivDosCheckbox.append(checkboxcroppedsssdiv);
-	
-	let checkboxsemnomevalordiv = document.createElement("div");
-	checkboxsemnomevalordiv.style = "display: flex;align-items: center;justify-content: center;";
-	checkboxsemnomevalordiv.addEventListener("click", function() {
-		filtrartipo();
-	});
-	let checkboxsemnomevalorcheckbox = document.createElement("input");
-	checkboxsemnomevalorcheckbox.type = "checkbox";
-	checkboxsemnomevalorcheckbox.value = "nomevalor";
-	checkboxsemnomevalorcheckbox.checked = true;
-	checkboxsemnomevalordiv.append(checkboxsemnomevalorcheckbox);
-	let checkboxsemnomevalorlabel = document.createElement("label");
-	checkboxsemnomevalorlabel.style = "padding-right: 2px;padding-left: 2px;";
-	checkboxsemnomevalorlabel.textContent = "Sem nome / valor";
-	checkboxsemnomevalordiv.append(checkboxsemnomevalorlabel);
-	DivDosCheckbox.append(checkboxsemnomevalordiv);
-	
-	DivPrincipalFiltrar.append(DivDosCheckbox);
-	
-	mainDiv.append(DivPrincipalFiltrar);
-	document.body.appendChild(mainDiv);
-
-	function obterDados(caminho, sha) {
-		caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
-		var req = new XMLHttpRequest();
-		req.open('GET', caminho + '/info.txt', true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.send();
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (JSON.parse(req.response).message) {
-				alert("Falha ao obter dados\n" + JSON.parse(req.response).message);
-			} else {
-				let onde = caminho.substring(caminho.indexOf("missstore.github.io") + 20, caminho.length);
-				onde = onde.replace("main/", "") + "/";
-				let tipo = caminho.split("/")[8];
-				JSON.parse(req.response).info.forEach(function(e) {
-					sessionStorage.setItem(onde.split("/")[2], JSON.stringify({
-						"sha": sha,
-						"content": btou(JSON.stringify(JSON.parse(req.response)))
-					}));
-					if (Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src)) {
-						let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
-						arEn.parentElement.querySelector(".nomedoproduto").value = e.nome;
-						arEn.parentElement.querySelector(".valordoproduto").value = e.valor;
-						arEn.parentElement.querySelectorAll("button")[1].onclick = function() {
-							let _this = this;
-							if (_this.parentElement.querySelector("select").value != _this.parentElement.getAttribute("tipo")) {
-								let con = confirm("Tem certeza que deseja mudar o tipo?");
-								if (con == true) {
-									alert("Não faça nenhuma ação\nAguarde no máximo 5 minutos ou até aparecer uma mensagem\nSe nada acontecer atualize a página");
-									let tsha = _this.parentElement.querySelectorAll("label")[0].textContent;
-									let tpath = _this.parentElement.querySelectorAll("label")[2].textContent;
-									let src = _this.parentElement.querySelectorAll("label")[2].textContent;
-									let nomedoproduto = _this.parentElement.querySelector(".nomedoproduto").value;
-									let valordoproduto = _this.parentElement.querySelector(".valordoproduto").value;
-									let novotipo = _this.parentElement.querySelector("select").value;
-									let url = _this.parentElement.children[0].style.backgroundImage;
-									let srcsempath = _this.parentElement.querySelectorAll("label")[2].textContent.split("/")[3];
-									let adicionarnovotipo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(novotipo)).content))
-									if (adicionarnovotipo.info.find(f => f.src == _this.parentElement.querySelectorAll("label")[1].textContent)) {
-										let indexdo = adicionarnovotipo.info.findIndex(f => f.src == _this.parentElement.querySelectorAll("label")[1].textContent);
-										adicionarnovotipo.info[indexdo].nome = _this.parentElement.querySelector(".nomedoproduto").value;
-										adicionarnovotipo.info[indexdo].valor = _this.parentElement.querySelector(".valordoproduto").value;
-									} else {
-										adicionarnovotipo.info.push({
-											"src": src.split("/")[3],
-											"valor": valordoproduto,
-											"nome": nomedoproduto
-										});
-									}
-									let conteudoformatado = btou(JSON.stringify(adicionarnovotipo));
-									let shadonovotipo = JSON.parse(sessionStorage.getItem(novotipo)).sha;
-									var img = new Image();
-									var req = new XMLHttpRequest();
-									img.crossOrigin = 'Anonymous';
-									url = url.substring(5, url.length - 2);
-									img.src = url;
-									img.onload = function() {
-										var canvas = document.createElement('canvas'),
-											ctx = canvas.getContext('2d');
-										canvas.height = img.naturalHeight;
-										canvas.width = img.naturalWidth;
-										ctx.drawImage(img, 0, 0);
-										var uri = canvas.toDataURL('image/' + img.src.split(".")[img.src.split(".").length - 1]),
-											b64 = uri.replace(/^data:image.+;base64,/, '');
-										req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/" + srcsempath, true);
-										req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-										req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-										req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-										req.send('{"message":"' + srcsempath + ' enviado","content":"' + b64 + '"}');
-										req.onload = function() {
-											if (req.response.includes("too many requests")) {
-												alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-												window.location.assign("manager");
-											} else if (JSON.parse(req.response).message) {
-												if (JSON.parse(req.response).message.includes("sha")) {
-												req = new XMLHttpRequest();
-												req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
-												req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-												req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-												req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-												req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
-												req.onload = function() {
-													if (req.response.includes("too many requests")) {
-														alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-														window.location.assign("manager");
-													} else if (JSON.parse(req.response).message) {
-														alert("Falha ao tentar modificar / inserir\n" + JSON.parse(req.response).message);
-														obterContents();
-													} else {
-														sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
-															"sha": JSON.parse(req.response).content.sha,
-															"content": conteudoformatado
-														}));
-														deletarArquivo(tpath, tsha);
-														alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
-													}
-												};
-												}else{
-													alert("Falha ao enviar a foto " + srcsempath + "\n" + JSON.parse(req.response).message);
-												}
-											} else {
-												req = new XMLHttpRequest();
-												req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
-												req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-												req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-												req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-												req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
-												req.onload = function() {
-													if (req.response.includes("too many requests")) {
-														alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-														window.location.assign("manager");
-													} else if (JSON.parse(req.response).message) {
-														alert("Falha ao tentar modificar / inserir\n" + JSON.parse(req.response).message);
-														obterContents();
-													} else {
-														sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
-															"sha": JSON.parse(req.response).content.sha,
-															"content": conteudoformatado
-														}));
-														deletarArquivo(tpath, tsha);
-														alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
-													}
-												};
-											}
-										};
-									};
-									img.onerror = function() {
-										alert("Falha ao tentar modificar o tipo\nVerifique sua conexão e tente novamente");
-									};
-								}
-							} else {
-								let oSha = JSON.parse(sessionStorage.getItem(onde.split("/")[2])).sha,
-									conteudo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(onde.split("/")[2])).content)),
-									conteudosendomodificado = _this.parentElement.querySelectorAll("label")[1].textContent,
-									indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado),
-									nomeaenviar = onde.replace("assets/img/", "") + "info.txt";
-								if (conteudo.info[indexdoconteudo].nome == _this.parentElement.querySelector(".nomedoproduto").value && conteudo.info[indexdoconteudo].valor == _this.parentElement.querySelector(".valordoproduto").value) {
-									alert("Nada a alterar");
-								} else {
-									let con = confirm("Tem certeza que deseja inserir / modificar esta foto?");
-									con == true ? (conteudo.info[indexdoconteudo].nome = _this.parentElement.querySelector(".nomedoproduto").value, conteudo.info[indexdoconteudo].valor = _this.parentElement.querySelector(".valordoproduto").value, ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)))) : null;
-								}
-							}
-						};
-					}
-				});
-			}
-		};
-	}
-
-	function obterTodos(caminho) {
-		var req = new XMLHttpRequest();
-		req.open('GET', caminho, true);
-		req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.send();
-		req.onload = function() {
-			if (req.response.includes("too many requests")) {
-				alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-				window.location.assign("manager");
-			} else if (JSON.parse(req.response).message) {
-				alert("Falha ao obter todos\n" + JSON.parse(req.response).message);
-			} else {
-				let temp = [];
-				let tipo = caminho.split("/")[9];
-				JSON.parse(req.response).forEach(function(e, i) {
-					e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") || e.name.endsWith(".gif") || e.name.endsWith(".txt") ? temp.push(e) : null;
-					if (i == JSON.parse(req.response).length - 1) {
-						if (temp.length == 0) {
-							document.querySelector(".info_").textContent = "Não foram encontrado resultados";
-						} else {
-							temp.forEach(function(e, i) {
-								if (!e.name.endsWith(".txt")) {
-									let divArquivo = document.createElement("div");
-									divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
-									divArquivo.setAttribute("tipo", tipo);
-									let Imagem = document.createElement("div");
-									Imagem.style.backgroundImage = "url(" + e.download_url + ")";
-									Imagem.style.width = "250px";
-									Imagem.style.height = "250px";
-									Imagem.style.backgroundSize = "cover";
-									Imagem.style.backgroundRepeat = "no-repeat";
-									divArquivo.append(Imagem);
-									let SHA = document.createElement("label");
-									SHA.textContent = e.sha;
-									SHA.style = 'display:none;';
-									divArquivo.append(SHA);
-									let NOME = document.createElement("label");
-									NOME.textContent = e.name;
-									NOME.style = 'display:none;';
-									divArquivo.append(NOME);
-									let CaminhoEm = document.createElement("label");
-									CaminhoEm.textContent = e.path;
-									CaminhoEm.style = 'display:none;';
-									divArquivo.append(CaminhoEm);
-									let nomeDoproduto = document.createElement("input");
-									nomeDoproduto.classList.add("nomedoproduto");
-									nomeDoproduto.type = "text";
-									nomeDoproduto.style = "margin-top: 3px;text-align: center;margin-bottom: 3px;";
-									nomeDoproduto.setAttribute("placeholder", "Nome do produto");
-									divArquivo.append(nomeDoproduto);
-									let valorDoproduto = document.createElement("input");
-									valorDoproduto.classList.add("valordoproduto");
-									valorDoproduto.type = "text";
-									valorDoproduto.style = "margin-top: 3px;text-align: center;margin-bottom: 3px;";
-									valorDoproduto.setAttribute("placeholder", "Valor do produto");
-									divArquivo.append(valorDoproduto);
-									let EsseTipo = document.createElement("select");
-									EsseTipo.style = "margin-top: 3px;text-align: center;margin-bottom: 3px;text-transform: capitalize;";
-									let opts = ['saias', 'croppeds', 'vestidos', 'calcas', 'conjuntos'];
-									opts.forEach(function(e) {
-										let tempRes = document.createElement("option");
-										if (e == tipo) {
-											tempRes.value = e;
-											tempRes.textContent = e;
-											tempRes.selected = true;
-										} else {
-											tempRes.value = e;
-											tempRes.textContent = e;
-										}
-										EsseTipo.append(tempRes)
-									});
-									divArquivo.append(EsseTipo);
-									let AlterarModo = document.createElement("button");
-									AlterarModo.textContent = 'Alterar modo de ver';
-									AlterarModo.style = 'margin-top: 3px;margin-bottom: 3px;';
-									AlterarModo.addEventListener("click", function() {
-										if (this.parentElement.children[0].style.backgroundSize == "contain") {
-											this.parentElement.children[0].style.removeProperty("background-position");
-											this.parentElement.children[0].style.backgroundSize = "cover";
-										} else {
-											this.parentElement.children[0].style.backgroundPosition = "center,center";
-											this.parentElement.children[0].style.backgroundSize = "contain";
-										}
-									});
-									divArquivo.append(AlterarModo);
-									let botaoModificar = document.createElement("button");
-									botaoModificar.textContent = 'Inserir / Modificar';
-									botaoModificar.style = 'margin-top: 3px;margin-bottom: 3px;';
-									botaoModificar.onclick = function() {
-										let OE = this;
-										if (OE.parentElement.querySelector("select").value != OE.parentElement.getAttribute("tipo")) {
-											let con = confirm("Tem certeza que deseja mudar o tipo?");
-											if (con == true) {
-												alert("Não faça nenhuma ação\nAguarde no máximo 5 minutos ou até aparecer uma mensagem\nSe nada acontecer atualize a página");
-												let tsha = OE.parentElement.querySelectorAll("label")[0].textContent;
-												let tpath = OE.parentElement.querySelectorAll("label")[2].textContent;
-												let src = OE.parentElement.querySelectorAll("label")[2].textContent;
-												let nomedoproduto = OE.parentElement.querySelector(".nomedoproduto").value;
-												let valordoproduto = OE.parentElement.querySelector(".valordoproduto").value;
-												let novotipo = OE.parentElement.querySelector("select").value;
-												let url = OE.parentElement.children[0].style.backgroundImage;
-												let srcsempath = OE.parentElement.querySelectorAll("label")[2].textContent.split("/")[3];
-												let adicionarnovotipo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(novotipo)).content))
-												if (adicionarnovotipo.info.find(f => f.src == OE.parentElement.querySelectorAll("label")[1].textContent)) {
-													let indexdo = adicionarnovotipo.info.findIndex(f => f.src == OE.parentElement.querySelectorAll("label")[1].textContent);
-													adicionarnovotipo.info[indexdo].nome = OE.parentElement.querySelector(".nomedoproduto").value;
-													adicionarnovotipo.info[indexdo].valor = OE.parentElement.querySelector(".valordoproduto").value;
-												} else {
-													adicionarnovotipo.info.push({
-														"src": src.split("/")[3],
-														"valor": valordoproduto,
-														"nome": nomedoproduto
-													});
-												}
-												let conteudoformatado = btou(JSON.stringify(adicionarnovotipo));
-												let shadonovotipo = JSON.parse(sessionStorage.getItem(novotipo)).sha;
-												var img = new Image();
-												img.crossOrigin = 'Anonymous';
-												url = url.substring(5, url.length - 2);
-												img.src = url;
-												img.onload = function() {
-													var canvas = document.createElement('canvas'),
-														ctx = canvas.getContext('2d');
-													canvas.height = img.naturalHeight;
-													canvas.width = img.naturalWidth;
-													ctx.drawImage(img, 0, 0);
-													var uri = canvas.toDataURL('image/' + img.src.split(".")[img.src.split(".").length - 1]),
-														b64 = uri.replace(/^data:image.+;base64,/, '');
-													req = new XMLHttpRequest();
-													req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/" + srcsempath, true);
-													req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-													req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-													req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-													req.send('{"message":"' + srcsempath + ' enviado","content":"' + b64 + '"}');
-													req.onload = function() {
-														if (req.response.includes("too many requests")) {
-															alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-															window.location.assign("manager");
-														} else if (JSON.parse(req.response).message) {
-															if (JSON.parse(req.response).message.includes("sha")) {
-															req = new XMLHttpRequest();
-															req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
-															req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-															req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-															req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-															req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
-															req.onload = function() {
-																if (req.response.includes("too many requests")) {
-																	alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-																	window.location.assign("manager");
-																} else if (JSON.parse(req.response).message) {
-																	alert("Falha ao tentar modificar / inserir no info.txt\n" + JSON.parse(req.response).message);
-																	obterContents();
-																} else {
-																	sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
-																		"sha": JSON.parse(req.response).content.sha,
-																		"content": conteudoformatado
-																	}));
-																	deletarArquivo(tpath, tsha);
-																	alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
-																}
-															};
-															}else{
-																alert("Falha ao enviar a foto " + srcsempath + "\n" + JSON.parse(req.response).message);
-															}
-														} else {
-															req = new XMLHttpRequest();
-															req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
-															req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-															req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-															req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-															req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
-															req.onload = function() {
-																if (req.response.includes("too many requests")) {
-																	alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-																	window.location.assign("manager");
-																} else if (JSON.parse(req.response).message) {
-																	alert("Falha ao tentar modificar / inserir no info.txt\n" + JSON.parse(req.response).message);
-																	obterContents();
-																} else {
-																	sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
-																		"sha": JSON.parse(req.response).content.sha,
-																		"content": conteudoformatado
-																	}));
-																	deletarArquivo(tpath, tsha);
-																	alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
-																}
-															};
-														}
-													};
-												};
-												img.onerror = function() {
-													alert("Falha ao tentar modificar o tipo\nVerifique sua conexão e tente novamente");
-												};
-											}
-										} else {
-											let onde = OE.parentElement.querySelectorAll("label")[2].textContent;
-											onde.split("/").forEach(function(e, i) {
-												i == 2 ? onde = e : null;
-											});
-											if (OE.parentElement.querySelector(".valordoproduto").value.length == 0 && OE.parentElement.querySelector(".nomedoproduto").value.length == 0) {
-												alert("Forneça um nome ou valor");
-											} else {
-												let con = confirm("Tem certeza que desaja alterar / inserir ?");
-												if (con == true) {
-													req = new XMLHttpRequest();
-													req.open('GET', 'https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/' + onde + '/info.txt', true);
-													req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-													req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-													req.send();
-													let essa = OE,
-														oSha = JSON.parse(sessionStorage.getItem(onde.split("/")[0])).sha,
-														nomeaenviar = onde + '/info.txt';
-													req.onload = function() {
-														if (req.response.includes("too many requests")) {
-															alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
-															window.location.assign("manager");
-														} else if (JSON.parse(req.response).message) {
-															alert("Falha ao tentar modificar\n" + JSON.parse(req.response).message);
-															obterContents();
-														} else {
-															let conteudo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(onde)).content));
-															let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
-															conteudo.info.find(f => f.src == essa.parentElement.querySelectorAll("label")[1].textContent) ? alert("Informações da foto já inseridas, clique em atualizar imagens até aparecer as informções.\nNão tente inserir novamente enquanto não aparecer, senão podera ocorrer erros") : (conteudo.info.push({
-																"src": conteudosendomodificado,
-																"valor": essa.parentElement.querySelector(".valordoproduto").value,
-																"nome": essa.parentElement.querySelector(".nomedoproduto").value
-															}), ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo))));
-														}
-													};
-												}
-											}
-										}
-									};
-									divArquivo.append(botaoModificar);
-									let botaoDeletar = document.createElement("button");
-									botaoDeletar.textContent = 'Deletar';
-									botaoDeletar.style = 'margin-top: 3px;margin-bottom: 3px;';
-									botaoDeletar.addEventListener("click", function() {
-										let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
-										let sha = this.parentElement.querySelectorAll("label")[0].textContent;
-										let path = this.parentElement.querySelectorAll("label")[2].textContent;
-										let oQue = this.parentElement.querySelector(".nomedoproduto").value.length > 0 ? this.parentElement.querySelector(".nomedoproduto").value : this.parentElement.querySelectorAll("label")[1].textContent;
-										let doispontosencima = '"',
-											addIsso = String.fromCharCode(doispontosencima.charCodeAt(0));
-										let con = confirm("Tem certeza que deseja deletar essa imagem\n" + /*addIsso +*/ oQue /*+ addIsso*/ + "\n?");
-										con == true ? (deletarArquivo(path, sha), alert("Não faça nenhuma ação\nAguarde a mensagem de confirmação\n'Foto\netc...\ndeletada'")) : null;
-									});
-									divArquivo.append(botaoDeletar);
-									document.querySelector("body > div").append(divArquivo);
-								} else {
-									new obterDados(caminho, e.sha);
-								}
-							});
-						}
-					}
-				});
-			}
-		};
-	}
-	osLink.split("|").forEach(function(e) {
-		new obterTodos(e);
-	});
-}
-	</script>
+        function obterTodos(caminho) {
+          var req = new XMLHttpRequest();
+          req.open('GET', caminho, true);
+          req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          req.send();
+          req.onload = function() {
+            if (req.response.includes("too many requests")) {
+              alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+              window.location.assign("manager");
+            } else if (JSON.parse(req.response).message) {
+              alert("Falha ao obter todos\n" + JSON.parse(req.response).message);
+            } else {
+              let temp = [];
+              let tipo = caminho.split("/")[9];
+              JSON.parse(req.response).forEach(function(e, i) {
+                e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") || e.name.endsWith(".gif") || e.name.endsWith(".txt") ? temp.push(e) : null;
+                if (i == JSON.parse(req.response).length - 1) {
+                  if (temp.length == 0) {
+                    document.querySelector(".info_").textContent = "Não foram encontrado resultados";
+                  } else {
+                    temp.forEach(function(e, i) {
+                      if (!e.name.endsWith(".txt")) {
+                        let divArquivo = document.createElement("div");
+                        divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
+                        divArquivo.setAttribute("tipo", tipo);
+                        let Imagem = document.createElement("div");
+                        Imagem.style.backgroundImage = "url(" + e.download_url + ")";
+                        Imagem.style.width = "250px";
+                        Imagem.style.height = "250px";
+                        Imagem.style.backgroundSize = "cover";
+                        Imagem.style.backgroundRepeat = "no-repeat";
+                        divArquivo.append(Imagem);
+                        let SHA = document.createElement("label");
+                        SHA.textContent = e.sha;
+                        SHA.style = 'display:none;';
+                        divArquivo.append(SHA);
+                        let NOME = document.createElement("label");
+                        NOME.textContent = e.name;
+                        NOME.style = 'display:none;';
+                        divArquivo.append(NOME);
+                        let CaminhoEm = document.createElement("label");
+                        CaminhoEm.textContent = e.path;
+                        CaminhoEm.style = 'display:none;';
+                        divArquivo.append(CaminhoEm);
+                        let nomeDoproduto = document.createElement("input");
+                        nomeDoproduto.classList.add("nomedoproduto");
+                        nomeDoproduto.type = "text";
+                        nomeDoproduto.style = "margin-top: 3px;text-align: center;margin-bottom: 3px;";
+                        nomeDoproduto.setAttribute("placeholder", "Nome do produto");
+                        divArquivo.append(nomeDoproduto);
+                        let valorDoproduto = document.createElement("input");
+                        valorDoproduto.classList.add("valordoproduto");
+                        valorDoproduto.type = "text";
+                        valorDoproduto.style = "margin-top: 3px;text-align: center;margin-bottom: 3px;";
+                        valorDoproduto.setAttribute("placeholder", "Valor do produto");
+                        divArquivo.append(valorDoproduto);
+                        let EsseTipo = document.createElement("select");
+                        EsseTipo.style = "margin-top: 3px;text-align: center;margin-bottom: 3px;text-transform: capitalize;";
+                        let opts = ['saias', 'croppeds', 'vestidos', 'calcas', 'conjuntos'];
+                        opts.forEach(function(e) {
+                          let tempRes = document.createElement("option");
+                          if (e == tipo) {
+                            tempRes.value = e;
+                            tempRes.textContent = e;
+                            tempRes.selected = true;
+                          } else {
+                            tempRes.value = e;
+                            tempRes.textContent = e;
+                          }
+                          EsseTipo.append(tempRes)
+                        });
+                        divArquivo.append(EsseTipo);
+                        let AlterarModo = document.createElement("button");
+                        AlterarModo.textContent = 'Alterar modo de ver';
+                        AlterarModo.style = 'margin-top: 3px;margin-bottom: 3px;';
+                        AlterarModo.addEventListener("click", function() {
+                          if (this.parentElement.children[0].style.backgroundSize == "contain") {
+                            this.parentElement.children[0].style.removeProperty("background-position");
+                            this.parentElement.children[0].style.backgroundSize = "cover";
+                          } else {
+                            this.parentElement.children[0].style.backgroundPosition = "center,center";
+                            this.parentElement.children[0].style.backgroundSize = "contain";
+                          }
+                        });
+                        divArquivo.append(AlterarModo);
+                        let botaoModificar = document.createElement("button");
+                        botaoModificar.textContent = 'Inserir / Modificar';
+                        botaoModificar.style = 'margin-top: 3px;margin-bottom: 3px;';
+                        botaoModificar.onclick = function() {
+                          let OE = this;
+                          if (OE.parentElement.querySelector("select").value != OE.parentElement.getAttribute("tipo")) {
+                            let con = confirm("Tem certeza que deseja mudar o tipo?");
+                            if (con == true) {
+                              alert("Não faça nenhuma ação\nAguarde no máximo 5 minutos ou até aparecer uma mensagem\nSe nada acontecer atualize a página");
+                              let tsha = OE.parentElement.querySelectorAll("label")[0].textContent;
+                              let tpath = OE.parentElement.querySelectorAll("label")[2].textContent;
+                              let src = OE.parentElement.querySelectorAll("label")[2].textContent;
+                              let nomedoproduto = OE.parentElement.querySelector(".nomedoproduto").value;
+                              let valordoproduto = OE.parentElement.querySelector(".valordoproduto").value;
+                              let novotipo = OE.parentElement.querySelector("select").value;
+                              let url = OE.parentElement.children[0].style.backgroundImage;
+                              let srcsempath = OE.parentElement.querySelectorAll("label")[2].textContent.split("/")[3];
+                              let adicionarnovotipo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(novotipo)).content))
+                              if (adicionarnovotipo.info.find(f => f.src == OE.parentElement.querySelectorAll("label")[1].textContent)) {
+                                let indexdo = adicionarnovotipo.info.findIndex(f => f.src == OE.parentElement.querySelectorAll("label")[1].textContent);
+                                adicionarnovotipo.info[indexdo].nome = OE.parentElement.querySelector(".nomedoproduto").value;
+                                adicionarnovotipo.info[indexdo].valor = OE.parentElement.querySelector(".valordoproduto").value;
+                              } else {
+                                adicionarnovotipo.info.push({
+                                  "src": src.split("/")[3],
+                                  "valor": valordoproduto,
+                                  "nome": nomedoproduto
+                                });
+                              }
+                              let conteudoformatado = btou(JSON.stringify(adicionarnovotipo));
+                              let shadonovotipo = JSON.parse(sessionStorage.getItem(novotipo)).sha;
+                              var img = new Image();
+                              img.crossOrigin = 'Anonymous';
+                              url = url.substring(5, url.length - 2);
+                              img.src = url;
+                              img.onload = function() {
+                                var canvas = document.createElement('canvas'),
+                                  ctx = canvas.getContext('2d');
+                                canvas.height = img.naturalHeight;
+                                canvas.width = img.naturalWidth;
+                                ctx.drawImage(img, 0, 0);
+                                var uri = canvas.toDataURL('image/' + img.src.split(".")[img.src.split(".").length - 1]),
+                                  b64 = uri.replace(/^data:image.+;base64,/, '');
+                                req = new XMLHttpRequest();
+                                req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/" + srcsempath, true);
+                                req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+                                req.send('{"message":"' + srcsempath + ' enviado","content":"' + b64 + '"}');
+                                req.onload = function() {
+                                  if (req.response.includes("too many requests")) {
+                                    alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                                    window.location.assign("manager");
+                                  } else if (JSON.parse(req.response).message) {
+                                    if (JSON.parse(req.response).message.includes("sha")) {
+                                      req = new XMLHttpRequest();
+                                      req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
+                                      req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                                      req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                      req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+                                      req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
+                                      req.onload = function() {
+                                        if (req.response.includes("too many requests")) {
+                                          alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                                          window.location.assign("manager");
+                                        } else if (JSON.parse(req.response).message) {
+                                          alert("Falha ao tentar modificar / inserir no info.txt\n" + JSON.parse(req.response).message);
+                                          obterContents();
+                                        } else {
+                                          sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
+                                            "sha": JSON.parse(req.response).content.sha,
+                                            "content": conteudoformatado
+                                          }));
+                                          deletarArquivo(tpath, tsha);
+                                          alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
+                                        }
+                                      };
+                                    } else {
+                                      alert("Falha ao enviar a foto " + srcsempath + "\n" + JSON.parse(req.response).message);
+                                    }
+                                  } else {
+                                    req = new XMLHttpRequest();
+                                    req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
+                                    req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                                    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                    req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+                                    req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
+                                    req.onload = function() {
+                                      if (req.response.includes("too many requests")) {
+                                        alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                                        window.location.assign("manager");
+                                      } else if (JSON.parse(req.response).message) {
+                                        alert("Falha ao tentar modificar / inserir no info.txt\n" + JSON.parse(req.response).message);
+                                        obterContents();
+                                      } else {
+                                        sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
+                                          "sha": JSON.parse(req.response).content.sha,
+                                          "content": conteudoformatado
+                                        }));
+                                        deletarArquivo(tpath, tsha);
+                                        alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
+                                      }
+                                    };
+                                  }
+                                };
+                              };
+                              img.onerror = function() {
+                                alert("Falha ao tentar modificar o tipo\nVerifique sua conexão e tente novamente");
+                              };
+                            }
+                          } else {
+                            let onde = OE.parentElement.querySelectorAll("label")[2].textContent;
+                            onde.split("/").forEach(function(e, i) {
+                              i == 2 ? onde = e : null;
+                            });
+                            if (OE.parentElement.querySelector(".valordoproduto").value.length == 0 && OE.parentElement.querySelector(".nomedoproduto").value.length == 0) {
+                              alert("Forneça um nome ou valor");
+                            } else {
+                              let con = confirm("Tem certeza que desaja alterar / inserir ?");
+                              if (con == true) {
+                                req = new XMLHttpRequest();
+                                req.open('GET', 'https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/' + onde + '/info.txt', true);
+                                req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                req.send();
+                                let essa = OE,
+                                  oSha = JSON.parse(sessionStorage.getItem(onde.split("/")[0])).sha,
+                                  nomeaenviar = onde + '/info.txt';
+                                req.onload = function() {
+                                  if (req.response.includes("too many requests")) {
+                                    alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
+                                    window.location.assign("manager");
+                                  } else if (JSON.parse(req.response).message) {
+                                    alert("Falha ao tentar modificar\n" + JSON.parse(req.response).message);
+                                    obterContents();
+                                  } else {
+                                    let conteudo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(onde)).content));
+                                    let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
+                                    conteudo.info.find(f => f.src == essa.parentElement.querySelectorAll("label")[1].textContent) ? alert("Informações da foto já inseridas, clique em atualizar imagens até aparecer as informções.\nNão tente inserir novamente enquanto não aparecer, senão podera ocorrer erros") : (conteudo.info.push({
+                                      "src": conteudosendomodificado,
+                                      "valor": essa.parentElement.querySelector(".valordoproduto").value,
+                                      "nome": essa.parentElement.querySelector(".nomedoproduto").value
+                                    }), ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo))));
+                                  }
+                                };
+                              }
+                            }
+                          }
+                        };
+                        divArquivo.append(botaoModificar);
+                        let botaoDeletar = document.createElement("button");
+                        botaoDeletar.textContent = 'Deletar';
+                        botaoDeletar.style = 'margin-top: 3px;margin-bottom: 3px;';
+                        botaoDeletar.addEventListener("click", function() {
+                          let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
+                          let sha = this.parentElement.querySelectorAll("label")[0].textContent;
+                          let path = this.parentElement.querySelectorAll("label")[2].textContent;
+                          let oQue = this.parentElement.querySelector(".nomedoproduto").value.length > 0 ? this.parentElement.querySelector(".nomedoproduto").value : this.parentElement.querySelectorAll("label")[1].textContent;
+                          let doispontosencima = '"',
+                            addIsso = String.fromCharCode(doispontosencima.charCodeAt(0));
+                          let con = confirm("Tem certeza que deseja deletar essa imagem\n" + /*addIsso +*/ oQue /*+ addIsso*/ + "\n?");
+                          con == true ? (deletarArquivo(path, sha), alert("Não faça nenhuma ação\nAguarde a mensagem de confirmação\n'Foto\netc...\ndeletada'")) : null;
+                        });
+                        divArquivo.append(botaoDeletar);
+                        document.querySelector("body > div").append(divArquivo);
+                      } else {
+                        new obterDados(caminho, e.sha);
+                      }
+                    });
+                  }
+                }
+              });
+            }
+          };
+        }
+        osLink.split("|").forEach(function(e) {
+          new obterTodos(e);
+        });
+      }
+    </script>
   </head>
   <body style="
     display: flex;
