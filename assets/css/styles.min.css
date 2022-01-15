@@ -598,7 +598,7 @@ label.nomedoproduto {
     padding: 10px;
     border-top-style: groove;
     border-top-color: #17202a3d;
-    border-top-width: 1.4;
+    border-top-width: 1;
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -623,6 +623,7 @@ label.nomedoproduto {
     justify-content: center;
     border-top-style: ridge;
     border-top-color: #17202a3d;
+    border-top-width: 1;
 }
 
 .carrinhoconteudo .enviarevalortotal {
