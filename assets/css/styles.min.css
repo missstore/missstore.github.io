@@ -629,6 +629,7 @@ label.nomedoproduto {
 .carrinhoconteudo .enviarevalortotal {
     width: 0;
     height: 0;
+    display: none;
 }
 
 i.fas.fa-paper-plane {
