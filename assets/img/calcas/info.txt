@@ -1,14 +1,1 @@
-{
-  "info": [
-    {
-      "src": "rG9SRsN6UQmr26a.jpeg",
-      "valor": "79,90",
-      "nome": "Calça montaria com cinto"
-    },
-    {
-      "src": "DBvD3F3OkTcWqOf.jpeg",
-      "valor": "69,90",
-      "nome": "Calça montaria zipper"
-    }
-  ]
-}
+{"info":[{"src":"rG9SRsN6UQmr26a.jpeg","valor":"79,90","nome":"Calça montaria com cinto"}]}
