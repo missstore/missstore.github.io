@@ -246,8 +246,8 @@
         let temp = [];
 		if(document.querySelectorAll("input[type=checkbox]:checked").length<=6){
 			document.querySelector("input[type=checkbox][value=todos]").checked=false;
-		}else{
-			document.querySelector("input[type=checkbox][value=todos]").checked=false;
+		}else if(document.querySelectorAll("input[type=checkbox]:checked").length==7) {
+			document.querySelector("input[type=checkbox][value=todos]").checked=true;
 		}
         document.querySelectorAll("input[type=checkbox]:checked").forEach(function(e) {
           temp.push(e.value);
