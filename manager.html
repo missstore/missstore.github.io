@@ -717,10 +717,10 @@
                               let url = this.parentElement.children[0].style.backgroundImage;
                               let srcsempath = this.parentElement.querySelectorAll("label")[2].textContent.split("/")[3];
                               let adicionarnovotipo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(novotipo)).content))
-                              if (adicionarnovotipo.info.find(f => f.src == _this.parentElement.querySelectorAll("label")[1].textContent)) {
-                                let indexdo = adicionarnovotipo.info.findIndex(f => f.src == _this.parentElement.querySelectorAll("label")[1].textContent);
-                                adicionarnovotipo.info[indexdo].nome = _this.parentElement.querySelector(".nomedoproduto").value;
-                                adicionarnovotipo.info[indexdo].valor = _this.parentElement.querySelector(".valordoproduto").value;
+                              if (adicionarnovotipo.info.find(f => f.src == OE.parentElement.querySelectorAll("label")[1].textContent)) {
+                                let indexdo = adicionarnovotipo.info.findIndex(f => f.src == OE.parentElement.querySelectorAll("label")[1].textContent);
+                                adicionarnovotipo.info[indexdo].nome = OE.parentElement.querySelector(".nomedoproduto").value;
+                                adicionarnovotipo.info[indexdo].valor = OE.parentElement.querySelector(".valordoproduto").value;
                               } else {
                                 adicionarnovotipo.info.push({
                                   "src": src.split("/")[3],
