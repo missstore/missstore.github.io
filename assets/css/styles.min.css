@@ -171,12 +171,11 @@ p.textalternativo {
     justify-content: center;
     align-content: center;
     text-align: center;
-    border-style: ridge;
-    border-width: 2px;
     opacity: .5;
     margin-top: 10px;
-    padding: 10px;
-    border-width: 0px;
+    border-top-style: ridge;
+    width: 100%;
+    border-top-width: 2;
 }
 
 .formasdeenvio, .entreemcontato {
@@ -305,6 +304,7 @@ i.fab.fa-instagram {
     white-space: break-spaces;
     letter-spacing: 2px;
     color: #17202a;
+    cursor: default;
 }
 
 .fullimage > i {
