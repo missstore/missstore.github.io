@@ -180,7 +180,7 @@
         function alterarInfo(shaInfo, contentInfo) {
           req = new XMLHttpRequest();
           let contentAalterar = JSON.parse(atou(contentInfo));
-		  console.log(JSON.parse(atou(contentInfo),contentInfo);
+		  console.log(JSON.parse(atou(contentInfo),contentInfo));
           contentAalterar.info.splice(contentAalterar.info.findIndex(f => f.src == nome.replace("assets/img/", "").split("/")[1]), 1);
           let contentConverted = btou(JSON.stringify(contentAalterar));
 		  console.log(contentAalterar);
