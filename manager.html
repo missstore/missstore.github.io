@@ -327,7 +327,7 @@
         butaoRefresh.textContent = "Atualizar imagens";
         butaoRefresh.addEventListener("click", function() {
           document.body.outerHTML = '';
-          obterContents();
+          new obterContents();
         });
         divDorefresh.append(butaoRefresh);
         let procurarItem = document.createElement("div");
