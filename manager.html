@@ -550,7 +550,7 @@
                                       "content": conteudoformatado
                                     }));
                                     deletarArquivo(tpath, tsha);
-                                    alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
+                                    alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do tipo anterior\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
                                   }
                                 };
                               } else {
@@ -576,7 +576,7 @@
                                     "content": conteudoformatado
                                   }));
                                   deletarArquivo(tpath, tsha);
-                                  alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
+                                  alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do tipo anterior\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
                                 }
                               };
                             }
@@ -592,11 +592,18 @@
                         conteudosendomodificado = _this.parentElement.querySelectorAll("label")[1].textContent,
                         indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado),
                         nomeaenviar = onde.replace("assets/img/", "") + "info.txt";
-                      if (conteudo.info[indexdoconteudo].nome == _this.parentElement.querySelector(".nomedoproduto").value && conteudo.info[indexdoconteudo].valor == _this.parentElement.querySelector(".valordoproduto").value) {
+                      if (conteudo.info[indexdoconteudo].nome == _this.parentElement.querySelector(".nomedoproduto").value
+					  && conteudo.info[indexdoconteudo].valor == _this.parentElement.querySelector(".valordoproduto").value) {
                         alert("Nada a alterar");
                       } else {
                         let con = confirm("Tem certeza que deseja inserir / modificar esta foto?");
-                        con == true ? (conteudo.info[indexdoconteudo].nome = _this.parentElement.querySelector(".nomedoproduto").value, conteudo.info[indexdoconteudo].valor = _this.parentElement.querySelector(".valordoproduto").value, ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)))) : null;
+                        con == true ?
+						(
+							conteudo.info[indexdoconteudo].nome = _this.parentElement.querySelector(".nomedoproduto").value,
+							conteudo.info[indexdoconteudo].valor = _this.parentElement.querySelector(".valordoproduto").value,
+							ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)))
+						)
+						: null;
                       }
                     }
                   };
@@ -773,7 +780,7 @@
                                             "content": conteudoformatado
                                           }));
                                           deletarArquivo(tpath, tsha);
-                                          alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
+                                          alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do tipo anterior\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
                                         }
                                       };
                                     } else {
@@ -799,7 +806,7 @@
                                           "content": conteudoformatado
                                         }));
                                         deletarArquivo(tpath, tsha);
-                                        alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do antigo tipo\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
+                                        alert("Tipo e informações alterado com sucesso!\nPrecisa apagar a foto do tipo anterior\nAguarde a mensagem aparecer...\nInforme qualquer error/falha");
                                       }
                                     };
                                   }
@@ -837,7 +844,9 @@
                                   } else {
                                     let conteudo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(onde)).content));
                                     let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
-                                    conteudo.info.find(f => f.src == essa.parentElement.querySelectorAll("label")[1].textContent) ? alert("Informações da foto já inseridas, clique em atualizar imagens até aparecer as informções.\nNão tente inserir novamente enquanto não aparecer, senão podera ocorrer erros") : (conteudo.info.push({
+                                    conteudo.info.find(f => f.src == conteudosendomodificado) ? 
+									alert("Informações da foto já inseridas, clique em atualizar imagens até aparecer as informções.\nNão tente inserir novamente enquanto não aparecer, senão podera ocorrer erros")
+									: (conteudo.info.push({
                                       "src": conteudosendomodificado,
                                       "valor": essa.parentElement.querySelector(".valordoproduto").value,
                                       "nome": essa.parentElement.querySelector(".nomedoproduto").value
@@ -856,7 +865,9 @@
                           let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
                           let sha = this.parentElement.querySelectorAll("label")[0].textContent;
                           let path = this.parentElement.querySelectorAll("label")[2].textContent;
-                          let oQue = this.parentElement.querySelector(".nomedoproduto").value.length > 0 ? this.parentElement.querySelector(".nomedoproduto").value : this.parentElement.querySelectorAll("label")[1].textContent;
+                          let oQue = this.parentElement.querySelector(".nomedoproduto").value.length > 0 ?
+						  this.parentElement.querySelector(".nomedoproduto").value 
+						  : this.parentElement.querySelectorAll("label")[1].textContent;
                           let doispontosencima = '"',
                             addIsso = String.fromCharCode(doispontosencima.charCodeAt(0));
                           let con = confirm("Tem certeza que deseja deletar essa imagem\n" + /*addIsso +*/ oQue /*+ addIsso*/ + "\n?");
