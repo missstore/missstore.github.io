@@ -23,11 +23,11 @@
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <script>
-      /*
+    /*
 	https: //api.github.com/repos/missstore/missstore.github.io/contents
 	https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img
 	https://docs.github.com/pt/rest/reference/repos
-*/
+	*/
       function wwm(s, f) {
         return new Promise(resolve => {
           if (document.querySelector(s)) return resolve(f);
@@ -244,11 +244,17 @@
 
       function filtrartipo() {
         let temp = [];
-		if(document.querySelectorAll("input[type=checkbox]:checked").length<=6){
-			document.querySelector("input[type=checkbox][value=todos]").checked=false;
-		}else if(document.querySelectorAll("input[type=checkbox]:checked").length==7) {
-			document.querySelector("input[type=checkbox][value=todos]").checked=true;
-		}
+        let checarcheckbox = [];
+        document.querySelectorAll("input[type=checkbox]:checked").forEach(function(e) {
+          if (e.value != "todos") {
+            checarcheckbox.push(e.value);
+          }
+        });
+        if (checarcheckbox.length == 6) {
+          document.querySelector("input[type=checkbox][value=todos]").checked = true;
+        } else {
+          document.querySelector("input[type=checkbox][value=todos]").checked = false;
+        }
         document.querySelectorAll("input[type=checkbox]:checked").forEach(function(e) {
           temp.push(e.value);
         });
@@ -258,7 +264,7 @@
           } else {
             e.style.display = "flex";
           }
-          if (temp.includes("nomevalor")) {
+          if (temp.includes("semnomevalor")) {
             if (e.querySelector(".nomedoproduto").value == "" || e.querySelector(".valordoproduto").value == "") {
               e.style.display = "flex";
             }
@@ -331,67 +337,25 @@
         inputProcurar.style = "border-radius: 5px;text-align: center;";
         inputProcurar.classList.add("procurarimagem");
         inputProcurar.setAttribute("placeholder", "Procurar imagem");
-        inputProcurar.addEventListener("change", function() {
-          filtrartipo();
-          let inputfiltrado = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-          if (this.value.length > 0) {
-            document.querySelector(".clearTexto").style.removeProperty("display");
-          } else {
-            document.querySelector(".clearTexto").style.setProperty("display", "none");
-          }
-          document.querySelectorAll(".nomedoproduto").forEach(function(e) {
-            if (e.parentElement.style.display != "none") {
-              let textofiltrado = e.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-              if (textofiltrado.includes(inputfiltrado)) {
-                e.parentElement.style.removeProperty("position");
-                e.parentElement.style.setProperty("display", "flex");
-              } else {
-                e.parentElement.style.setProperty("position", "fixed");
-                e.parentElement.style.setProperty("display", "none");
-              }
+        ["change", "keydown", "keyup"].forEach(function(e) {
+          inputProcurar.addEventListener(e, function() {
+            filtrartipo();
+            let inputfiltrado = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+            if (this.value.length > 0) {
+              document.querySelector(".clearTexto").style.removeProperty("display");
+            } else {
+              document.querySelector(".clearTexto").style.setProperty("display", "none");
             }
-          });
-        });
-        inputProcurar.addEventListener("keydown", function() {
-          filtrartipo();
-          let inputfiltrado = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-          if (this.value.length > 0) {
-            document.querySelector(".clearTexto").style.removeProperty("display");
-          } else {
-            document.querySelector(".clearTexto").style.setProperty("display", "none");
-          }
-          document.querySelectorAll(".nomedoproduto").forEach(function(e) {
-            if (e.parentElement.style.display != "none") {
-              let textofiltrado = e.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-              if (textofiltrado.includes(inputfiltrado)) {
-                e.parentElement.style.removeProperty("position");
-                e.parentElement.style.setProperty("display", "flex");
-              } else {
-                e.parentElement.style.setProperty("position", "fixed");
-                e.parentElement.style.setProperty("display", "none");
+            document.querySelectorAll(".nomedoproduto").forEach(function(e) {
+              if (e.parentElement.style.display != "none") {
+                let textofiltrado = e.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                if (textofiltrado.includes(inputfiltrado)) {
+                  e.parentElement.style.setProperty("display", "flex");
+                } else {
+                  e.parentElement.style.setProperty("display", "none");
+                }
               }
-            }
-          });
-        });
-        inputProcurar.addEventListener("keyup", function() {
-          filtrartipo();
-          let inputfiltrado = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-          if (this.value.length > 0) {
-            document.querySelector(".clearTexto").style.removeProperty("display");
-          } else {
-            document.querySelector(".clearTexto").style.setProperty("display", "none");
-          }
-          document.querySelectorAll(".nomedoproduto").forEach(function(e) {
-            if (e.parentElement.style.display != "none") {
-              let textofiltrado = e.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-              if (textofiltrado.includes(inputfiltrado)) {
-                e.parentElement.style.removeProperty("position");
-                e.parentElement.style.setProperty("display", "flex");
-              } else {
-                e.parentElement.style.setProperty("position", "fixed");
-                e.parentElement.style.setProperty("display", "none");
-              }
-            }
+            });
           });
         });
         procurarItem.append(inputProcurar);
@@ -426,121 +390,65 @@
         DivPrincipalFiltrar.append(LabelFiltrar);
         let DivDosCheckbox = document.createElement("div");
         DivDosCheckbox.style = "display: flex;flex-direction: row;margin: 10px;align-items: center;font-family: monospace;font-size: 13px;flex-wrap: wrap;justify-content: center;align-content: center;width: 85%;";
-        let checkboxtodosdiv = document.createElement("div");
-        checkboxtodosdiv.style = "display: flex;align-items: center;justify-content: center;";
-        checkboxtodosdiv.addEventListener("click", function() {
-          if (this.querySelector("input").checked) {
-            document.querySelectorAll("input[type=checkbox]").forEach(function(e) {
-              e.checked = true;
+        ["Todos", "Croppeds", "Conjuntos", "Vestidos", "Saias", "Calças", "Sem nome / valor"].forEach(function(e) {
+          let div = document.createElement("div");
+          div.style = "display: flex;align-items: center;justify-content: center;";
+          if (e == "Todos") {
+            div.addEventListener("click", function(e) {
+              if (!e.target.value) {
+                if (this.querySelector("input").checked) {
+                  document.querySelectorAll("input[type=checkbox]").forEach(function(e) {
+                    e.checked = false;
+                  });
+                  this.querySelector("input").checked = false;
+                  filtrartipo();
+                } else {
+                  document.querySelectorAll("input[type=checkbox]").forEach(function(e) {
+                    e.checked = true;
+                  });
+                  this.querySelector("input").checked = true;
+                  filtrartipo();
+                }
+              } else {
+                if (e.target.checked) {
+                  document.querySelectorAll("input[type=checkbox]").forEach(function(e) {
+                    e.checked = true;
+                  });
+                  filtrartipo();
+                } else {
+                  document.querySelectorAll("input[type=checkbox]").forEach(function(e) {
+                    e.checked = false;
+                  });
+                  filtrartipo();
+                }
+              }
             });
-            filtrartipo();
           } else {
-            document.querySelectorAll("input[type=checkbox]").forEach(function(e) {
-              e.checked = false;
+            div.addEventListener("click", function(e) {
+              if (!e.target.value) {
+                if (this.children[0].checked) {
+                  this.children[0].checked = false;
+                  filtrartipo();
+                } else {
+                  this.children[0].checked = true;
+                  filtrartipo();
+                }
+              } else {
+                filtrartipo();
+              }
             });
-            filtrartipo();
           }
+          let checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.value = e.match(/\s+\//i) ? e.replace(/\s+\//i, "").replaceAll(" ", "").toLowerCase() : e.match(/(ç|Ç)/i) ? e.replace(/(ç|Ç)/i, "c").toLowerCase() : e.toLowerCase();
+          checkbox.checked = true;
+          div.append(checkbox);
+          let label = document.createElement("label");
+          label.style = "padding-right: 2px;padding-left: 2px;";
+          label.textContent = e;
+          div.append(label);
+          DivDosCheckbox.append(div);
         });
-        let checkboxtodoscheckbox = document.createElement("input");
-        checkboxtodoscheckbox.type = "checkbox";
-        checkboxtodoscheckbox.value = "todos";
-        checkboxtodoscheckbox.checked = true;
-        checkboxtodosdiv.append(checkboxtodoscheckbox);
-        let checkboxtodoslabel = document.createElement("label");
-        checkboxtodoslabel.style = "padding-right: 2px;padding-left: 2px;";
-        checkboxtodoslabel.textContent = "Todos";
-        checkboxtodosdiv.append(checkboxtodoslabel);
-        DivDosCheckbox.append(checkboxtodosdiv);
-        let checkboxsaiassdiv = document.createElement("div");
-        checkboxsaiassdiv.style = "display: flex;align-items: center;justify-content: center;";
-        checkboxsaiassdiv.addEventListener("click", function() {
-          filtrartipo();
-        });
-        let checkboxsaiascheckbox = document.createElement("input");
-        checkboxsaiascheckbox.type = "checkbox";
-        checkboxsaiascheckbox.value = "saias";
-        checkboxsaiascheckbox.checked = true;
-        checkboxsaiassdiv.append(checkboxsaiascheckbox);
-        let checkboxsaiaslabel = document.createElement("label");
-        checkboxsaiaslabel.style = "padding-right: 2px;padding-left: 2px;";
-        checkboxsaiaslabel.textContent = "Saias";
-        checkboxsaiassdiv.append(checkboxsaiaslabel);
-        DivDosCheckbox.append(checkboxsaiassdiv);
-        let checkboxcalcasdiv = document.createElement("div");
-        checkboxcalcasdiv.style = "display: flex;align-items: center;justify-content: center;";
-        checkboxcalcasdiv.addEventListener("click", function() {
-          filtrartipo();
-        });
-        let checkboxcalcascheckbox = document.createElement("input");
-        checkboxcalcascheckbox.type = "checkbox";
-        checkboxcalcascheckbox.value = "calcas";
-        checkboxcalcascheckbox.checked = true;
-        checkboxcalcasdiv.append(checkboxcalcascheckbox);
-        let checkboxcalcaslabel = document.createElement("label");
-        checkboxcalcaslabel.style = "padding-right: 2px;padding-left: 2px;";
-        checkboxcalcaslabel.textContent = "Calças";
-        checkboxcalcasdiv.append(checkboxcalcaslabel);
-        DivDosCheckbox.append(checkboxcalcasdiv);
-        let checkboxvestidosdiv = document.createElement("div");
-        checkboxvestidosdiv.style = "display: flex;align-items: center;justify-content: center;";
-        checkboxvestidosdiv.addEventListener("click", function() {
-          filtrartipo();
-        });
-        let checkboxvestidoscheckbox = document.createElement("input");
-        checkboxvestidoscheckbox.type = "checkbox";
-        checkboxvestidoscheckbox.value = "vestidos";
-        checkboxvestidoscheckbox.checked = true;
-        checkboxvestidosdiv.append(checkboxvestidoscheckbox);
-        let checkboxvestidoslabel = document.createElement("label");
-        checkboxvestidoslabel.style = "padding-right: 2px;padding-left: 2px;";
-        checkboxvestidoslabel.textContent = "Vestidos";
-        checkboxvestidosdiv.append(checkboxvestidoslabel);
-        DivDosCheckbox.append(checkboxvestidosdiv);
-        let checkboxconjuntossdiv = document.createElement("div");
-        checkboxconjuntossdiv.style = "display: flex;align-items: center;justify-content: center;";
-        checkboxconjuntossdiv.addEventListener("click", function() {
-          filtrartipo();
-        });
-        let checkboxconjuntoscheckbox = document.createElement("input");
-        checkboxconjuntoscheckbox.type = "checkbox";
-        checkboxconjuntoscheckbox.value = "conjuntos";
-        checkboxconjuntoscheckbox.checked = true;
-        checkboxconjuntossdiv.append(checkboxconjuntoscheckbox);
-        let checkboxconjuntoslabel = document.createElement("label");
-        checkboxconjuntoslabel.style = "padding-right: 2px;padding-left: 2px;";
-        checkboxconjuntoslabel.textContent = "Conjuntos";
-        checkboxconjuntossdiv.append(checkboxconjuntoslabel);
-        DivDosCheckbox.append(checkboxconjuntossdiv);
-        let checkboxcroppedsssdiv = document.createElement("div");
-        checkboxcroppedsssdiv.style = "display: flex;align-items: center;justify-content: center;";
-        checkboxcroppedsssdiv.addEventListener("click", function() {
-          filtrartipo();
-        });
-        let checkboxcroppedscheckbox = document.createElement("input");
-        checkboxcroppedscheckbox.type = "checkbox";
-        checkboxcroppedscheckbox.value = "croppeds";
-        checkboxcroppedscheckbox.checked = true;
-        checkboxcroppedsssdiv.append(checkboxcroppedscheckbox);
-        let checkboxcroppedslabel = document.createElement("label");
-        checkboxcroppedslabel.style = "padding-right: 2px;padding-left: 2px;";
-        checkboxcroppedslabel.textContent = "Croppeds";
-        checkboxcroppedsssdiv.append(checkboxcroppedslabel);
-        DivDosCheckbox.append(checkboxcroppedsssdiv);
-        let checkboxsemnomevalordiv = document.createElement("div");
-        checkboxsemnomevalordiv.style = "display: flex;align-items: center;justify-content: center;";
-        checkboxsemnomevalordiv.addEventListener("click", function() {
-          filtrartipo();
-        });
-        let checkboxsemnomevalorcheckbox = document.createElement("input");
-        checkboxsemnomevalorcheckbox.type = "checkbox";
-        checkboxsemnomevalorcheckbox.value = "nomevalor";
-        checkboxsemnomevalorcheckbox.checked = true;
-        checkboxsemnomevalordiv.append(checkboxsemnomevalorcheckbox);
-        let checkboxsemnomevalorlabel = document.createElement("label");
-        checkboxsemnomevalorlabel.style = "padding-right: 2px;padding-left: 2px;";
-        checkboxsemnomevalorlabel.textContent = "Sem nome / valor";
-        checkboxsemnomevalordiv.append(checkboxsemnomevalorlabel);
-        DivDosCheckbox.append(checkboxsemnomevalordiv);
         DivPrincipalFiltrar.append(DivDosCheckbox);
         mainDiv.append(DivPrincipalFiltrar);
         document.body.appendChild(mainDiv);
@@ -754,6 +662,13 @@
                         valorDoproduto.type = "text";
                         valorDoproduto.style = "margin-top: 3px;text-align: center;margin-bottom: 3px;";
                         valorDoproduto.setAttribute("placeholder", "Valor do produto");
+                        valorDoproduto.addEventListener("change", function() {
+                          if (this.value.match(/[0-9]+,[0-9]*/i)) {
+                            this.value = this.value.match(/[0-9]+,[0-9]*/i)[0];
+                          } else {
+                            this.value.match(/[0-9]+[0-9]*/i) ? this.value = this.value.match(/[0-9]+[0-9]*/i)[0] : null;
+                          }
+                        });
                         divArquivo.append(valorDoproduto);
                         let EsseTipo = document.createElement("select");
                         EsseTipo.style = "margin-top: 3px;text-align: center;margin-bottom: 3px;text-transform: capitalize;";
