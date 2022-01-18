@@ -23,7 +23,7 @@
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <script>
-    /*
+      /*
 	https: //api.github.com/repos/missstore/missstore.github.io/contents
 	https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img
 	https://docs.github.com/pt/rest/reference/repos
@@ -76,7 +76,22 @@
               obtertoken();
             } else {
               if (JSON.parse(req.response).login == "missstore") {
-                obterContents();
+                req = new XMLHttpRequest();
+                req.open('GET', "https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/grupos.json", true);
+                req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                req.send();
+                req.onload = function() {
+                  sessionStorage.setItem("grupos", JSON.stringify({
+                    "sha": JSON.parse(req.response).sha,
+                    "content": JSON.parse(req.response).content
+                  }))
+                  obterContents();
+                };
+                req.onerror = function() {
+                  console.log("Error ao obter grupos...");
+                  window.location.assign("manager");
+                };
               } else {
                 alert("Usuario não autorizado | Unauthorized User\n" + JSON.parse(req.response).login);
                 let con = confirm("Revogar acesso? | Revoke acess?");
@@ -137,20 +152,19 @@
                 alert("Falha ao enviar a foto " + arquivo.name + "\n" + JSON.parse(req.response).message);
               }
             } else {
-              document.querySelector(".info_").textContent = JSON.parse(req.response).content.name + " enviado com sucesso!";
               indexenviado == document.querySelector("input[type=file]").files.length - 1 ? (document.querySelector(".info_").textContent = "", alert("Todos os arquivos foram enviados.")) : fazerUpload(indexenviado + 1, document.querySelector("select").value);
             }
           };
         };
         LerArquivo.onerror = function() {
+          document.querySelector(".info_").textContent = "";
           alert("Falha ao tentar enviar a foto...\nVerifique sua conexão e tente novamente");
         };
-        /*LerArquivo.onprogress = function(e) {
+        LerArquivo.onprogress = function(e) {
           let percentComplete = e.loaded / e.total;
           percentComplete = parseInt(percentComplete * 100);
-          percentComplete == 100 ? document.querySelector(".info_").textContent = "Arquivo enviado" : document.querySelector(".info_").textContent = "Enviando arquivo " + percentComplete + "%";
+          percentComplete == 100 ? document.querySelector(".info_").textContent = "Foto enviada com sucesso!" : document.querySelector(".info_").textContent = "Enviando foto.. " + percentComplete + "%";
         };
-        */
         document.querySelector(".info_").textContent = "Enviando fotos...";
         LerArquivo.readAsDataURL(document.querySelector("input[type=file]").files.item(indexenviado));
       }
@@ -161,7 +175,7 @@
         req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
         req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-        req.send('{"message":"' + nome.split("/")[0] + ' info.txt alterado","sha":"' + sha + '","content":"' + content + '"}');
+        req.send('{"message":"' + nome.split("/")[0] + ' info.json alterado","sha":"' + sha + '","content":"' + content + '"}');
         req.onload = function() {
           if (req.response.includes("too many requests")) {
             alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
@@ -192,11 +206,11 @@
             deletarafoto();
           } else {
             req = new XMLHttpRequest();
-            req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.txt", true);
+            req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + tipo + "/info.json", true);
             req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
             req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-            req.send('{"message":"' + tipo + ' info.txt alterado","sha":"' + shaInfo + '","content":"' + contentConverted + '"}');
+            req.send('{"message":"' + tipo + ' info.json alterado","sha":"' + shaInfo + '","content":"' + contentConverted + '"}');
             req.onload = function() {
               if (req.response.includes("too many requests")) {
                 alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
@@ -317,9 +331,9 @@
         divDorefresh.style = 'width: 100%;height: 100%;display: flex;justify-content: center;flex-direction: column;align-items: center;';
         let addGrupo = document.createElement("button");
         addGrupo.style = "margin-bottom: 20px;border-radius: 7px;";
-        addGrupo.textContent = "Adicionar / Modificar / Apagar : Grupo";
+        addGrupo.textContent = "Grupos";
         addGrupo.addEventListener("click", function() {
-          console.log("teste..");
+          document.querySelector("body > div:nth-child(2)").style.height = "100%";
         });
         divDorefresh.append(addGrupo);
         let butaoRefresh = document.createElement("button");
@@ -452,11 +466,275 @@
         DivPrincipalFiltrar.append(DivDosCheckbox);
         mainDiv.append(DivPrincipalFiltrar);
         document.body.appendChild(mainDiv);
+        let divdosgrupomain = document.createElement("div");
+        divdosgrupomain.style = "width: 100%;height: 0%;background-color: #ffffffe0;display: flex;flex-direction: column;align-items: center;justify-content: flex-start;align-content: center;padding-top: 10px;position: fixed;top: 0;left: 0;backdrop-filter: blur(5px);transition: .5s;overflow: hidden;";
+        let fechargrupo = document.createElement("button");
+        fechargrupo.style = "margin-bottom: 8px;";
+        fechargrupo.textContent = "Fechar menu";
+        fechargrupo.addEventListener("click", function() {
+          this.parentElement.style.height = "0%";
+        });
+        divdosgrupomain.append(fechargrupo);
+        let labeldosgrupo = document.createElement("label");
+        labeldosgrupo.style = "font-size: 30px;";
+        labeldosgrupo.textContent = "Grupos";
+        divdosgrupomain.append(labeldosgrupo);
+        let divadicionados = document.createElement("div");
+        divadicionados.style = "margin: 15px;display: flex;flex-direction: column;align-items: center;overflow: auto;";
+        let divdoadicionar = document.createElement("div");
+        divdoadicionar.style = "margin-bottom: 15px;";
+        let divdoadicionarinput = document.createElement("input");
+        divdoadicionarinput.type = "text";
+        divdoadicionarinput.setAttribute("placeholder", "Nome do grupo");
+        divdoadicionarinput.style = "max-width: 150px;margin-right: 5px;";
+        divdoadicionar.append(divdoadicionarinput);
+        let divdoadicionarbutton = document.createElement("button");
+        divdoadicionarbutton.textContent = "Adicionar novo grupo";
+        divdoadicionarbutton.addEventListener("click", function() {
+          let ssctt = JSON.parse(atou(JSON.parse(sessionStorage.getItem("grupos")).content));
+          let sssha = JSON.parse(sessionStorage.getItem("grupos")).sha;
+          let onomeqq = this.parentElement.children[0].value;
+          if (onomeqq.length == 0) {
+            alert("Por favor, digite um nome");
+          } else {
+            if (ssctt.grupos.find(f => f.grupo == onomeqq)) {
+              alert("Um grupo com o mesmo nome já existe\nForneça outro nome ou\nMude o nome do grupo existente");
+            } else {
+              let con = confirm("Tem certeza que deseja adicionar esse grupo " + onomeqq + " ?");
+              if (con == true) {
+                ssctt.grupos.push({
+                  "grupo": onomeqq
+                });
+                let conteudoformatado = btou(JSON.stringify(ssctt));
+                req = new XMLHttpRequest();
+                req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/grupos.json', true);
+                req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+                req.send('{"message":"Grupo ' + onomeqq + ' adicionado","sha":"' + sssha + '","content":"' + conteudoformatado + '"}');
+                req.onload = function() {
+                  if (JSON.parse(req.response)) {
+                    if (JSON.parse(req.response).message) {
+                      alert("Falha ao tentar adicionar grupo\n" + JSON.parse(req.response).message);
+                    } else {
+                      sessionStorage.setItem("grupos", JSON.stringify({
+                        "sha": JSON.parse(req.response).content.sha,
+                        "content": conteudoformatado
+                      }));
+                      alert("Grupo adicionado com sucesso!");
+                      document.querySelectorAll("body > div:nth-child(2) > div > div").forEach(function(e, i) {
+                        if (i != 0) {
+                          e.remove();
+                        }
+                      });
+                      JSON.parse(atou(JSON.parse(sessionStorage.getItem("grupos")).content)).grupos.forEach(function(e) {
+                        let divcontent = document.createElement("div");
+                        divcontent.style = "width: fit-content;display: flex;flex-direction: column;align-items: center;justify-content: center;margin-bottom: 15px;";
+                        let onome = document.createElement("input");
+                        onome.setAttribute("placeholder", e.grupo);
+                        onome.value = e.grupo;
+                        onome.style = "margin-bottom: 5px;text-align: center;";
+                        divcontent.append(onome);
+                        let btnalterar = document.createElement("button");
+                        btnalterar.textContent = "Alterar nome do grupo";
+                        btnalterar.style = "margin-bottom: 5px;";
+                        btnalterar.addEventListener("click", function() {
+                          let ssctt = JSON.parse(atou(JSON.parse(sessionStorage.getItem("grupos")).content));
+                          let sssha = JSON.parse(sessionStorage.getItem("grupos")).sha;
+                          let originalvalue = this.parentElement.children[0].getAttribute("placeholder");
+                          let indx = ssctt.grupos.findIndex(f => f.grupo == originalvalue);
+                          if (this.parentElement.children[0].value == originalvalue) {
+                            alert("Altere o texto primeiro e depois clique no botão");
+                          } else {
+                            if (this.parentElement.children[0].value.length == 0) {
+                              alert("Por favor, digite um texto...");
+                            } else {
+                              let con = confirm("Tem certeza que deseja alterar o nome desse grupo?");
+                              if (con == true) {
+                                ssctt.grupos[indx].grupo = this.parentElement.children[0].value;
+                                let conteudoformatado = btou(JSON.stringify(ssctt));
+                                req = new XMLHttpRequest();
+                                req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/grupos.json', true);
+                                req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+                                req.send('{"message":"Grupo ' + ssctt.grupos[indx].grupo + ' alterado","sha":"' + sssha + '","content":"' + conteudoformatado + '"}');
+                                req.onload = function() {
+                                  if (JSON.parse(req.response)) {
+                                    if (JSON.parse(req.response).message) {
+                                      alert("Falha ao tentar alterar o nome do grupo\n" + JSON.parse(req.response).message);
+                                    } else {
+                                      sessionStorage.setItem("grupos", JSON.stringify({
+                                        "sha": JSON.parse(req.response).content.sha,
+                                        "content": conteudoformatado
+                                      }));
+                                      alert("Nome do grupo alterado com sucesso!");
+                                    }
+                                  } else {
+                                    alert("Ocorreu algum erro... " + req.response);
+                                  }
+                                };
+                              }
+                            }
+                          }
+                        });
+                        divcontent.append(btnalterar);
+                        let btnremover = document.createElement("button");
+                        btnremover.textContent = "Remover grupo";
+                        btnremover.style = "margin-bottom: 5px;";
+                        btnremover.addEventListener("click", function() {
+                          let con = confirm("Tem certeza que deseja remover este grupo\n" + this.parentElement.children[0].value + "\n?");
+                          if (con == true) {
+                            let ssctt = JSON.parse(atou(JSON.parse(sessionStorage.getItem("grupos")).content));
+                            let sssha = JSON.parse(sessionStorage.getItem("grupos")).sha;
+                            let indx = ssctt.grupos.findIndex(f => f.grupo == this.parentElement.children[0].value);
+                            ssctt.grupos.splice(indx, 1);
+                            let conteudoformatado = btou(JSON.stringify(ssctt));
+                            req = new XMLHttpRequest();
+                            req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/grupos.json', true);
+                            req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+                            req.send('{"message":"Grupo ' + this.parentElement.children[0].value + ' removido","sha":"' + sssha + '","content":"' + conteudoformatado + '"}');
+                            let toremove = this.parentElement;
+                            req.onload = function() {
+                              if (JSON.parse(req.response)) {
+                                if (JSON.parse(req.response).message) {
+                                  alert("Falha ao tentar apagar grupo\n" + JSON.parse(req.response).message);
+                                } else {
+                                  sessionStorage.setItem("grupos", JSON.stringify({
+                                    "sha": JSON.parse(req.response).content.sha,
+                                    "content": conteudoformatado
+                                  }));
+                                  alert("Grupo " + toremove.children[0].value + " removido!");
+                                  toremove.remove();
+                                }
+                              } else {
+                                alert("Ocorreu algum erro... " + req.response);
+                              }
+                            };
+                          };
+                        });
+                        divcontent.append(btnremover);
+                        wwm("body > div:nth-child(2) > div").then(function() {
+                          document.querySelector("body > div:nth-child(2) > div").append(divcontent);
+                        });
+                      });
+                    }
+                  } else {
+                    alert("Ocorreu algum erro... " + req.response);
+                  }
+                };
+              }
+            }
+          }
+        });
+        divdoadicionar.append(divdoadicionarbutton);
+        divadicionados.append(divdoadicionar);
+        let labelgruposexistentes = document.createElement("label");
+        labelgruposexistentes.style = "font-size: 25px;margin-bottom: 15px;";
+        labelgruposexistentes.textContent = "Grupos existentes";
+        divadicionados.append(labelgruposexistentes);
+        divdosgrupomain.append(divadicionados);
+        document.body.appendChild(divdosgrupomain);
+        JSON.parse(atou(JSON.parse(sessionStorage.getItem("grupos")).content)).grupos.forEach(function(e) {
+          let divcontent = document.createElement("div");
+          divcontent.style = "width: fit-content;display: flex;flex-direction: column;align-items: center;justify-content: center;margin-bottom: 15px;";
+          let onome = document.createElement("input");
+          onome.setAttribute("placeholder", e.grupo);
+          onome.value = e.grupo;
+          onome.style = "margin-bottom: 5px;text-align: center;";
+          divcontent.append(onome);
+          let btnalterar = document.createElement("button");
+          btnalterar.textContent = "Alterar nome do grupo";
+          btnalterar.style = "margin-bottom: 5px;";
+          btnalterar.addEventListener("click", function() {
+            let ssctt = JSON.parse(atou(JSON.parse(sessionStorage.getItem("grupos")).content));
+            let sssha = JSON.parse(sessionStorage.getItem("grupos")).sha;
+            let originalvalue = this.parentElement.children[0].getAttribute("placeholder");
+            let indx = ssctt.grupos.findIndex(f => f.grupo == originalvalue);
+            if (this.parentElement.children[0].value == originalvalue) {
+              alert("Altere o texto primeiro e depois clique no botão");
+            } else {
+              if (this.parentElement.children[0].value.length == 0) {
+                alert("Por favor, digite um texto...");
+              } else {
+                let con = confirm("Tem certeza que deseja alterar o nome desse grupo?");
+                if (con == true) {
+                  ssctt.grupos[indx].grupo = this.parentElement.children[0].value;
+                  let conteudoformatado = btou(JSON.stringify(ssctt));
+                  req = new XMLHttpRequest();
+                  req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/grupos.json', true);
+                  req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+                  req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                  req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+                  req.send('{"message":"Grupo ' + ssctt.grupos[indx].grupo + ' alterado","sha":"' + sssha + '","content":"' + conteudoformatado + '"}');
+                  req.onload = function() {
+                    if (JSON.parse(req.response)) {
+                      if (JSON.parse(req.response).message) {
+                        alert("Falha ao tentar alterar o nome do grupo\n" + JSON.parse(req.response).message);
+                      } else {
+                        sessionStorage.setItem("grupos", JSON.stringify({
+                          "sha": JSON.parse(req.response).content.sha,
+                          "content": conteudoformatado
+                        }));
+                        alert("Nome do grupo alterado com sucesso!");
+                      }
+                    } else {
+                      alert("Ocorreu algum erro... " + req.response);
+                    }
+                  };
+                }
+              }
+            }
+          });
+          divcontent.append(btnalterar);
+          let btnremover = document.createElement("button");
+          btnremover.textContent = "Remover grupo";
+          btnremover.style = "margin-bottom: 5px;";
+          btnremover.addEventListener("click", function() {
+            let con = confirm("Tem certeza que deseja remover este grupo\n" + this.parentElement.children[0].value + "\n?");
+            if (con == true) {
+              let ssctt = JSON.parse(atou(JSON.parse(sessionStorage.getItem("grupos")).content));
+              let sssha = JSON.parse(sessionStorage.getItem("grupos")).sha;
+              let indx = ssctt.grupos.findIndex(f => f.grupo == this.parentElement.children[0].value);
+              ssctt.grupos.splice(indx, 1);
+              let conteudoformatado = btou(JSON.stringify(ssctt));
+              req = new XMLHttpRequest();
+              req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/grupos.json', true);
+              req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+              req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+              req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
+              req.send('{"message":"Grupo ' + this.parentElement.children[0].value + ' removido","sha":"' + sssha + '","content":"' + conteudoformatado + '"}');
+              let toremove = this.parentElement;
+              req.onload = function() {
+                if (JSON.parse(req.response)) {
+                  if (JSON.parse(req.response).message) {
+                    alert("Falha ao tentar apagar grupo\n" + JSON.parse(req.response).message);
+                  } else {
+                    sessionStorage.setItem("grupos", JSON.stringify({
+                      "sha": JSON.parse(req.response).content.sha,
+                      "content": conteudoformatado
+                    }));
+                    alert("Grupo " + toremove.children[0].value + " removido!");
+                    toremove.remove();
+                  }
+                } else {
+                  alert("Ocorreu algum erro... " + req.response);
+                }
+              };
+            };
+          });
+          divcontent.append(btnremover);
+          wwm("body > div:nth-child(2) > div").then(function() {
+            document.querySelector("body > div:nth-child(2) > div").append(divcontent);
+          });
+        });
 
         function obterDados(caminho, sha) {
           caminho = caminho.replace("https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/", "https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/");
           var req = new XMLHttpRequest();
-          req.open('GET', caminho + '/info.txt', true);
+          req.open('GET', caminho + '/info.json', true);
           req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           req.send();
@@ -479,7 +757,21 @@
                   let arEn = Array.from(document.querySelectorAll("label")).find(f => f.textContent == onde + e.src);
                   arEn.parentElement.querySelector(".nomedoproduto").value = e.nome;
                   arEn.parentElement.querySelector(".valordoproduto").value = e.valor;
-                  arEn.parentElement.querySelectorAll("button")[1].onclick = function() {
+                  let lgt = arEn.parentElement.querySelector("[placeholder=Grupos]").options.length;
+                  if (e.grupo) {
+                    for (let i = 0; i < lgt; i++) {
+                      if (arEn.parentElement.querySelector("[placeholder=Grupos]").options.item(i).value == e.grupo) {
+                        arEn.parentElement.querySelector("[placeholder=Grupos]").options.item(i).selected = true;
+                        break;
+                      }
+                      if (i == lgt - 1) {
+                        arEn.parentElement.querySelector("[placeholder=Grupos]").options.selectedIndex = -1;
+                      }
+                    }
+                  } else {
+                    arEn.parentElement.querySelector("[placeholder=Grupos]").options.selectedIndex = -1;
+                  }
+                  arEn.parentElement.querySelectorAll("button")[4].onclick = function() {
                     let _this = this;
                     if (_this.parentElement.querySelector("select").value != _this.parentElement.getAttribute("tipo")) {
                       let con = confirm("Tem certeza que deseja mudar o tipo?");
@@ -532,11 +824,11 @@
                             } else if (JSON.parse(req.response).message) {
                               if (JSON.parse(req.response).message.includes("sha")) {
                                 req = new XMLHttpRequest();
-                                req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
+                                req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.json", true);
                                 req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
                                 req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                                 req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-                                req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
+                                req.send('{"message":"' + novotipo + ' info.json alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
                                 req.onload = function() {
                                   if (req.response.includes("too many requests")) {
                                     alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
@@ -558,11 +850,11 @@
                               }
                             } else {
                               req = new XMLHttpRequest();
-                              req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
+                              req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.json", true);
                               req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
                               req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                               req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-                              req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
+                              req.send('{"message":"' + novotipo + ' info.json alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
                               req.onload = function() {
                                 if (req.response.includes("too many requests")) {
                                   alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
@@ -591,19 +883,12 @@
                         conteudo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(onde.split("/")[2])).content)),
                         conteudosendomodificado = _this.parentElement.querySelectorAll("label")[1].textContent,
                         indexdoconteudo = conteudo.info.findIndex(f => f.src == conteudosendomodificado),
-                        nomeaenviar = onde.replace("assets/img/", "") + "info.txt";
-                      if (conteudo.info[indexdoconteudo].nome == _this.parentElement.querySelector(".nomedoproduto").value
-					  && conteudo.info[indexdoconteudo].valor == _this.parentElement.querySelector(".valordoproduto").value) {
+                        nomeaenviar = onde.replace("assets/img/", "") + "info.json";
+                      if (conteudo.info[indexdoconteudo].nome == _this.parentElement.querySelector(".nomedoproduto").value && conteudo.info[indexdoconteudo].valor == _this.parentElement.querySelector(".valordoproduto").value) {
                         alert("Nada a alterar");
                       } else {
                         let con = confirm("Tem certeza que deseja inserir / modificar esta foto?");
-                        con == true ?
-						(
-							conteudo.info[indexdoconteudo].nome = _this.parentElement.querySelector(".nomedoproduto").value,
-							conteudo.info[indexdoconteudo].valor = _this.parentElement.querySelector(".valordoproduto").value,
-							ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)))
-						)
-						: null;
+                        con == true ? (conteudo.info[indexdoconteudo].nome = _this.parentElement.querySelector(".nomedoproduto").value, conteudo.info[indexdoconteudo].valor = _this.parentElement.querySelector(".valordoproduto").value, ModificarArquivo(oSha, nomeaenviar, btou(JSON.stringify(conteudo)))) : null;
                       }
                     }
                   };
@@ -629,13 +914,13 @@
               let temp = [];
               let tipo = caminho.split("/")[9];
               JSON.parse(req.response).forEach(function(e, i) {
-                e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") || e.name.endsWith(".gif") || e.name.endsWith(".txt") ? temp.push(e) : null;
+                e.name.endsWith(".png") || e.name.endsWith(".jpeg") || e.name.endsWith(".jpg") || e.name.endsWith(".svg") || e.name.endsWith(".gif") || e.name.endsWith(".json") ? temp.push(e) : null;
                 if (i == JSON.parse(req.response).length - 1) {
                   if (temp.length == 0) {
                     document.querySelector(".info_").textContent = "Não foram encontrado resultados";
                   } else {
                     temp.forEach(function(e, i) {
-                      if (!e.name.endsWith(".txt")) {
+                      if (!e.name.endsWith(".json")) {
                         let divArquivo = document.createElement("div");
                         divArquivo.style = 'display: flex;flex-direction: column;margin-bottom: 20px;padding-left: 10px;padding-right: 10px;';
                         divArquivo.setAttribute("tipo", tipo);
@@ -693,6 +978,91 @@
                           EsseTipo.append(tempRes)
                         });
                         divArquivo.append(EsseTipo);
+                        let divalinhargrupo = document.createElement("div");
+                        divalinhargrupo.style = "width: auto; display: flex; flex-direction: column; overflow: hidden; margin-top: 2px; transition: all 1s ease 0s; border-style: groove; border-color: burlywood; border-radius: 3px; padding: 3px 2px 1px; place-content: center flex-start; height: 23px;";
+                        let buttonexpand = document.createElement("button");
+                        buttonexpand.textContent = "Grupos";
+                        buttonexpand.style = "text-align: center;";
+                        buttonexpand.addEventListener("click", function() {
+                          if (this.parentElement.style.height == "23px") {
+                            this.parentElement.style.height = "100px";
+                          } else {
+                            this.parentElement.style.height = "23px";
+                          }
+                        });
+                        divalinhargrupo.append(buttonexpand);
+                        let selectdogrupo = document.createElement("select");
+                        selectdogrupo.style = "margin-top: 3px; text-align: center; margin-bottom: 3px; text-transform: capitalize;";
+                        selectdogrupo.setAttribute("placeholder", "Grupos");
+                        if (JSON.parse(atou(JSON.parse(sessionStorage.getItem("grupos")).content)).grupos.length > 0) {
+                          let temp_ = [];
+                          JSON.parse(atou(JSON.parse(sessionStorage.getItem("grupos")).content)).grupos.forEach(function(e) {
+                            temp_.push(e.grupo);
+                          });
+                          if (temp_.length > 0) {
+                            temp_.forEach(function(e) {
+                              let tempRes = document.createElement("option");
+                              tempRes.value = e;
+                              tempRes.textContent = e;
+                              selectdogrupo.append(tempRes)
+                            });
+                          }
+                        }
+                        divalinhargrupo.append(selectdogrupo);
+                        let buttonalteraradicionar = document.createElement("button");
+                        buttonalteraradicionar.style = "margin-top: 3px;margin-bottom: 3px;";
+                        buttonalteraradicionar.textContent = "Adicionar / Alterar grupo";
+                        buttonalteraradicionar.addEventListener("click", function() {
+                          if (this.parentElement.children[1].value == "") {
+                            alert("Selecione um grupo primeiro\nSe quiser alterar, adicionar ou excluir um grupo\nUser o botão Grupos lá encima");
+                          } else {
+                            let onde = this.parentElement.parentElement.querySelectorAll("label")[2].textContent.split("/")[2];
+                            let srcdaimg = this.parentElement.parentElement.querySelectorAll("label")[1].textContent;
+                            let valordogrupo = this.parentElement.children[1].value;
+                            let shadotipo = JSON.parse(sessionStorage.getItem(onde)).sha,
+                              nomeaenviar = onde + '/info.json';
+                            let conteudo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(onde)).content));
+                            let indexdomesmo = conteudo.info.findIndex(f => f.src == srcdaimg);
+                            if (conteudo.info[indexdomesmo].grupo == valordogrupo) {
+                              alert("Essa foto já está nesse grupo " + valordogrupo);
+                            } else {
+                              let con = confirm("Tem certeza que deseja alterar/adicionar grupo?");
+                              if (con == true) {
+                                conteudo.info[indexdomesmo].grupo = valordogrupo;
+                                ModificarArquivo(shadotipo, nomeaenviar, btou(JSON.stringify(conteudo)));
+                              }
+                            }
+                          }
+                        });
+                        divalinhargrupo.append(buttonalteraradicionar);
+                        let buttonremover = document.createElement("button");
+                        buttonremover.style = "margin-top: 3px;";
+                        buttonremover.textContent = "Remover do grupo";
+                        buttonremover.addEventListener("click", function() {
+                          let onde = this.parentElement.parentElement.querySelectorAll("label")[2].textContent.split("/")[2];
+                          let srcdaimg = this.parentElement.parentElement.querySelectorAll("label")[1].textContent;
+                          let valordogrupo = this.parentElement.children[1].value;
+                          let shadotipo = JSON.parse(sessionStorage.getItem(onde)).sha,
+                            nomeaenviar = onde + '/info.json';
+                          let conteudo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(onde)).content));
+                          let indexdomesmo = conteudo.info.findIndex(f => f.src == srcdaimg);
+                          if (conteudo.info[indexdomesmo]) {
+                            if (conteudo.info[indexdomesmo].grupo == '') {
+                              alert("Grupo já removido ou nenhum grupo para remover.");
+                            } else {
+                              let con = confirm("Tem certeza que deseja remover essa foto desse grupo " + valordogrupo + "?");
+                              if (con == true) {
+                                conteudo.info[indexdomesmo].grupo = '';
+                                this.parentElement.children[1].selectedIndex = -1;
+                                ModificarArquivo(shadotipo, nomeaenviar, btou(JSON.stringify(conteudo)));
+                              }
+                            }
+                          } else {
+                            alert("Nome e valores ainda não constam no sistema\nfique atualizando até aparecer");
+                          }
+                        });
+                        divalinhargrupo.append(buttonremover);
+                        divArquivo.append(divalinhargrupo);
                         let AlterarModo = document.createElement("button");
                         AlterarModo.textContent = 'Alterar modo de ver';
                         AlterarModo.style = 'margin-top: 3px;margin-bottom: 3px;';
@@ -762,17 +1132,17 @@
                                   } else if (JSON.parse(req.response).message) {
                                     if (JSON.parse(req.response).message.includes("sha")) {
                                       req = new XMLHttpRequest();
-                                      req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
+                                      req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.json", true);
                                       req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
                                       req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                                       req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-                                      req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
+                                      req.send('{"message":"' + novotipo + ' info.json alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
                                       req.onload = function() {
                                         if (req.response.includes("too many requests")) {
                                           alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
                                           window.location.assign("manager");
                                         } else if (JSON.parse(req.response).message) {
-                                          alert("Falha ao tentar modificar / inserir no info.txt\n" + JSON.parse(req.response).message);
+                                          alert("Falha ao tentar modificar / inserir no info.json\n" + JSON.parse(req.response).message);
                                           obterContents();
                                         } else {
                                           sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
@@ -788,17 +1158,17 @@
                                     }
                                   } else {
                                     req = new XMLHttpRequest();
-                                    req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.txt", true);
+                                    req.open('PUT', 'https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img/' + novotipo + "/info.json", true);
                                     req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
                                     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                                     req.setRequestHeader("Authorization", "token " + localStorage.getItem("_token"));
-                                    req.send('{"message":"' + novotipo + ' info.txt alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
+                                    req.send('{"message":"' + novotipo + ' info.json alterado","sha":"' + shadonovotipo + '","content":"' + conteudoformatado + '"}');
                                     req.onload = function() {
                                       if (req.response.includes("too many requests")) {
                                         alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
                                         window.location.assign("manager");
                                       } else if (JSON.parse(req.response).message) {
-                                        alert("Falha ao tentar modificar / inserir no info.txt\n" + JSON.parse(req.response).message);
+                                        alert("Falha ao tentar modificar / inserir no info.json\n" + JSON.parse(req.response).message);
                                         obterContents();
                                       } else {
                                         sessionStorage.setItem(JSON.parse(req.response).content.path.replace("assets/img/", "").split("/")[0], JSON.stringify({
@@ -827,13 +1197,13 @@
                               let con = confirm("Tem certeza que desaja alterar / inserir ?");
                               if (con == true) {
                                 req = new XMLHttpRequest();
-                                req.open('GET', 'https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/' + onde + '/info.txt', true);
+                                req.open('GET', 'https://raw.githubusercontent.com/missstore/missstore.github.io/main/assets/img/' + onde + '/info.json', true);
                                 req.setRequestHeader('Accept', 'application/vnd.github.v3+json');
                                 req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                                 req.send();
                                 let essa = OE,
                                   oSha = JSON.parse(sessionStorage.getItem(onde.split("/")[0])).sha,
-                                  nomeaenviar = onde + '/info.txt';
+                                  nomeaenviar = onde + '/info.json';
                                 req.onload = function() {
                                   if (req.response.includes("too many requests")) {
                                     alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
@@ -844,9 +1214,7 @@
                                   } else {
                                     let conteudo = JSON.parse(atou(JSON.parse(sessionStorage.getItem(onde)).content));
                                     let conteudosendomodificado = essa.parentElement.querySelectorAll("label")[1].textContent;
-                                    conteudo.info.find(f => f.src == conteudosendomodificado) ? 
-									alert("Informações da foto já inseridas, clique em atualizar imagens até aparecer as informções.\nNão tente inserir novamente enquanto não aparecer, senão podera ocorrer erros")
-									: (conteudo.info.push({
+                                    conteudo.info.find(f => f.src == conteudosendomodificado) ? alert("Informações da foto já inseridas, clique em atualizar imagens até aparecer as informções.\nNão tente inserir novamente enquanto não aparecer, senão podera ocorrer erros") : (conteudo.info.push({
                                       "src": conteudosendomodificado,
                                       "valor": essa.parentElement.querySelector(".valordoproduto").value,
                                       "nome": essa.parentElement.querySelector(".nomedoproduto").value
@@ -865,9 +1233,7 @@
                           let nomedoarquivo = this.parentElement.querySelectorAll("label")[1].textContent;
                           let sha = this.parentElement.querySelectorAll("label")[0].textContent;
                           let path = this.parentElement.querySelectorAll("label")[2].textContent;
-                          let oQue = this.parentElement.querySelector(".nomedoproduto").value.length > 0 ?
-						  this.parentElement.querySelector(".nomedoproduto").value 
-						  : this.parentElement.querySelectorAll("label")[1].textContent;
+                          let oQue = this.parentElement.querySelector(".nomedoproduto").value.length > 0 ? this.parentElement.querySelector(".nomedoproduto").value : this.parentElement.querySelectorAll("label")[1].textContent;
                           let doispontosencima = '"',
                             addIsso = String.fromCharCode(doispontosencima.charCodeAt(0));
                           let con = confirm("Tem certeza que deseja deletar essa imagem\n" + /*addIsso +*/ oQue /*+ addIsso*/ + "\n?");
