@@ -959,6 +959,7 @@ img.btn-forward {
     top: -126px;
     left: 45px;
     width: 25;
+    opacity: .8;
 }
 
 .dos-btn-f-b {
@@ -973,6 +974,7 @@ img.btn-previous {
     right: 70px;
     transform: rotateZ(180deg);
     width: 25;
+    opacity: .8;
 }
 
 .bodysucesso {
