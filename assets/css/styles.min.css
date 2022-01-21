@@ -954,6 +954,25 @@ input.quantidadeacomprar {
     animation: spin 2s linear infinite;
 }
 
+img.btn-forward {
+    position: relative;
+    top: -125px;
+    left: 42px;
+}
+
+.dos-btn-f-b {
+    height: 0;
+    width: 0;
+    cursor: pointer;
+}
+
+img.btn-previous {
+    position: relative;
+    top: -157px;
+    right: 75px;
+    transform: rotateZ(180deg);
+}
+
 .bodysucesso {
     position: fixed;
     top: 50%;
