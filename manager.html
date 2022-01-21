@@ -122,15 +122,20 @@
                 verificarUsuario();
               } else {
 				function verificarV(){
-					let meuopen = window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true", '_blank', 'location=yes');
-					meuopen.crossOrigin = 'Anonymous';
+					let meuopen = window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true", '_blank', 0);
 					let timer = setInterval(function(){
 						if (meuopen.location.href.match(/code=.+[a-zA-Z]*[0-9]/i)) {
-								let codigo = meuopen.location.href.match(/code=.+[a-zA-Z]*[0-9]/i)[0].split("=")[1];
-								meuopen.close();
+							let codigo = meuopen.location.href.match(/code=.+[a-zA-Z]*[0-9]/i)[0].split("=")[1];
+							meuopen.close();
+							clearInterval(timer);
+							getUserInfo(codigo);
+						}else{
+							if(meuopen.closed){
 								clearInterval(timer);
-								getUserInfo(codigo);
-							}	
+							}else{
+								meuopen.focus();
+							}
+						}
 					},500);
 				}
                 let con = confirm("Autorize o app para obter um codigo e continuar")
