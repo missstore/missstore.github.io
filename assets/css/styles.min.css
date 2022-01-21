@@ -957,6 +957,8 @@ input.quantidadeacomprar {
 img.btn-forward {
     width: 25;
     opacity: .7;
+    filter: hue-rotate(
+120deg);
 }
 
 .dos-btn-f-b {
@@ -974,6 +976,7 @@ img.btn-previous {
     transform: rotateZ(180deg);
     width: 25;
     opacity: .7;
+    filter: hue-rotate(120deg);
 }
 
 .bodysucesso {
