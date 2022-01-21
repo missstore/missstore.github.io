@@ -955,10 +955,11 @@ input.quantidadeacomprar {
 }
 
 img.btn-forward {
-    width: 25;
+    width: 20px;
     opacity: .7;
     filter: hue-rotate(
 120deg);
+    height: 24px;
 }
 
 .dos-btn-f-b {
@@ -974,9 +975,10 @@ img.btn-forward {
 
 img.btn-previous {
     transform: rotateZ(180deg);
-    width: 25;
+    width: 20px;
     opacity: .7;
     filter: hue-rotate(120deg);
+    height: 24px;
 }
 
 .bodysucesso {
