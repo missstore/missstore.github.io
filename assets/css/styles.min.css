@@ -78,6 +78,7 @@ label.nome {
     width: 150px;
     font-family: 'Inconsolata', monospace;
     height: 25px;
+    margin-left: 1px;
 }
 
 .produtovalor {
