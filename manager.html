@@ -60,7 +60,6 @@
       function getUserInfo(code) {
         var req = new XMLHttpRequest();
         code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"))||code;
-		console.log(code);
 
         function verificarUsuario() {
           req = new XMLHttpRequest();
