@@ -957,7 +957,8 @@ input.quantidadeacomprar {
 img.btn-forward {
     position: relative;
     top: -125px;
-    left: 42px;
+    left: 45px;
+    width: 25;
 }
 
 .dos-btn-f-b {
@@ -968,9 +969,10 @@ img.btn-forward {
 
 img.btn-previous {
     position: relative;
-    top: -157px;
-    right: 75px;
+    top: -150px;
+    right: 70px;
     transform: rotateZ(180deg);
+    width: 25;
 }
 
 .bodysucesso {
