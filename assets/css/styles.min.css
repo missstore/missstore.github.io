@@ -955,23 +955,22 @@ input.quantidadeacomprar {
 }
 
 img.btn-forward {
-    position: relative;
-    top: -125px;
-    left: 45px;
     width: 25;
     opacity: .7;
 }
 
 .dos-btn-f-b {
     height: 0;
-    width: 0;
+    width: 95%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    top: -115px;
 }
 
 img.btn-previous {
-    position: relative;
-    top: -150px;
-    right: 70px;
     transform: rotateZ(180deg);
     width: 25;
     opacity: .7;
