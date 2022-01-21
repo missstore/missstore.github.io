@@ -23,7 +23,7 @@
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <link rel="icon" type="image/jpeg" sizes="32x32" href="https://missstore.github.io/assets/img/missstore-icon.jpg">
     <script>
-    /*
+      /*
 	https: //api.github.com/repos/missstore/missstore.github.io/contents
 	https://api.github.com/repos/missstore/missstore.github.io/contents/assets/img
 	https://docs.github.com/pt/rest/reference/repos
@@ -59,7 +59,7 @@
 
       function getUserInfo(code) {
         var req = new XMLHttpRequest();
-        code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&"))||code;
+        code = window.location.search.substring(window.location.search.indexOf("code=") + 5, window.location.search.lastIndexOf("&")) || code;
 
         function verificarUsuario() {
           req = new XMLHttpRequest();
@@ -121,28 +121,25 @@
                 localStorage.setItem("_token", _token);
                 verificarUsuario();
               } else {
-				function verificarV(){
-					let meuopen = window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true", '_blank', 0);
-					let timer = setInterval(function(){
-						if (meuopen.location.href.match(/code=.+[a-zA-Z]*[0-9]/i)) {
-							let codigo = meuopen.location.href.match(/code=.+[a-zA-Z]*[0-9]/i)[0].split("=")[1];
-							meuopen.close();
-							clearInterval(timer);
-							getUserInfo(codigo);
-						}else{
-							if(meuopen.closed){
-								clearInterval(timer);
-							}else{
-								meuopen.focus();
-							}
-						}
-					},500);
-				}
+                function verificarV() {
+                  let meuopen = window.open("https://github.com/login/oauth/authorize?client_id=1fdf9fee6996786f2053&allow_signup=false&scope=user%20repo%20repo_deployment%20public_repo%20admin:repo_hook%20read:repo_hook%20read:user&state=true", '_blank', 0);
+                  let timer = setInterval(function() {
+                    if (meuopen.location.href.match(/code=.+[a-zA-Z]*[0-9]/i)) {
+                      let codigo = meuopen.location.href.match(/code=.+[a-zA-Z]*[0-9]/i)[0].split("=")[1];
+                      meuopen.close();
+                      clearInterval(timer);
+                      getUserInfo(codigo);
+                    } else {
+                      if (meuopen.closed) {
+                        clearInterval(timer);
+                      } else {
+                        meuopen.focus();
+                      }
+                    }
+                  }, 500);
+                }
                 let con = confirm("Autorize o app para obter um codigo e continuar")
-                con == true ?
-				verificarV()
-				:
-				null;
+                con == true ? verificarV() : null;
               }
             }
           };
