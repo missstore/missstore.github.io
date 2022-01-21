@@ -89,7 +89,7 @@
                   obterContents();
                 };
                 req.onerror = function() {
-                  console.log("Error ao obter grupos...");
+                  alert("Error ao obter grupos... tente novamente");
                   window.location.assign("manager");
                 };
               } else {
@@ -113,7 +113,7 @@
               alert("Muitas solicitações, aguarde entre 30 e 60 minutos e tente novamente");
               window.location.assign("manager");
             } else if (req.response.includes("/corsdemo")) {
-              let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\n• ↓↓↓ Aguarde a mensagem ↓↓↓ •\n"You currently have temporary access to the demo server."\nLogo após feche a janela')
+              let con = confirm('Ira abrir uma janela\nnela clique em "Request temporary access to the demo server"\n↓↓↓↓ Aguarde a mensagem ↓↓↓↓\n"You currently have temporary access to the demo server."\nLogo após feche a janela')
               con == true ? window.open("https://cors-anywhere.herokuapp.com/") : window.open("https://cors-anywhere.herokuapp.com/");
             } else {
               let _token = JSON.parse(req.response) ? JSON.parse(req.response).access_token : null;
