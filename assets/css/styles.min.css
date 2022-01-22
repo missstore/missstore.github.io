@@ -344,9 +344,10 @@ i.fab.fa-instagram {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
+    justify-content: flex-start;
     align-content: center;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .fotofullviewing > img {
@@ -355,12 +356,10 @@ i.fab.fa-instagram {
     border-style: double;
     border-color: hotpink;
     box-shadow: 0 0 20px 5px hotpink;
-    margin-left: 5px;
-    margin-right: 5px;
 }
 
 .fotofullviewing > i {
-	position: absolute;
+	position: fixed;
 	top: 8px;
 	right: 8px;
 	font-size: 27px;
