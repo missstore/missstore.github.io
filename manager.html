@@ -300,6 +300,11 @@
               e.style.display = "flex";
             }
           }
+          if (temp.includes("emgrupo")) {
+            if (e.querySelector("select[placeholder=Grupos]").value) {
+              e.style.display = "flex";
+            }
+          }
         });
       }
 
@@ -421,7 +426,7 @@
         DivPrincipalFiltrar.append(LabelFiltrar);
         let DivDosCheckbox = document.createElement("div");
         DivDosCheckbox.style = "display: flex;flex-direction: row;margin: 10px;align-items: center;font-family: monospace;font-size: 13px;flex-wrap: wrap;justify-content: center;align-content: center;width: 85%;";
-        ["Todos", "Croppeds", "Conjuntos", "Vestidos", "Saias", "Calças", "Sem nome / valor"].forEach(function(e) {
+        ["Todos", "Croppeds", "Conjuntos", "Vestidos", "Saias", "Calças", "Sem nome / valor", "Em grupo"].forEach(function(e) {
           let div = document.createElement("div");
           div.style = "display: flex;align-items: center;justify-content: center;";
           if (e == "Todos") {
@@ -471,7 +476,7 @@
           }
           let checkbox = document.createElement("input");
           checkbox.type = "checkbox";
-          checkbox.value = e.match(/\s+\//i) ? e.replace(/\s+\//i, "").replaceAll(" ", "").toLowerCase() : e.match(/(ç|Ç)/i) ? e.replace(/(ç|Ç)/i, "c").toLowerCase() : e.toLowerCase();
+          checkbox.value = e.match(/\s+\//i) ? e.replace(/\s+\//i, "").replaceAll(" ", "").toLowerCase() : e.match(/(ç|Ç)/i) ? e.replace(/(ç|Ç)/i, "c").toLowerCase() : e.replaceAll(" ", "").toLowerCase();
           checkbox.checked = true;
           div.append(checkbox);
           let label = document.createElement("label");
