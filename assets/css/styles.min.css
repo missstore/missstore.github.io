@@ -344,10 +344,11 @@ i.fab.fa-instagram {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
     align-content: center;
     overflow-x: auto;
     overflow-y: hidden;
+    justify-content: space-between;
+    backdrop-filter: blur(5px);
 }
 
 .fotofullviewing.aberto.single {
