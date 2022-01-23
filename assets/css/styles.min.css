@@ -344,21 +344,10 @@ i.fab.fa-instagram {
     backdrop-filter: blur(5px);
 }
 
-.fotofullviewing.aberto.single {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000000000000;
-    transition: .5s;
-    transform: none;
-    left: 0;
-    background-color: #1111198f;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
+.fotofullviewing.single .asimagensfull {
+justify-content: center;
+overflow-x: hidden;
+overflow-y: hidden;
 }
 
 .asimagensfull {
@@ -375,8 +364,8 @@ i.fab.fa-instagram {
 }
 
 .fotofullviewing .asimagensfull > img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 98%;
+    max-height: 98%;
     border-style: double;
     border-color: hotpink;
     box-shadow: 0 0 20px 5px hotpink;
