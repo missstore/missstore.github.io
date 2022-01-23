@@ -980,7 +980,6 @@ input.quantidadeacomprar {
 }
 
 img.btn-forward {
-    width: 20px;
     opacity: .7;
     filter: hue-rotate(
 120deg);
@@ -1029,7 +1028,6 @@ img.btn-forward {
 
 img.btn-previous {
     transform: rotateZ(180deg);
-    width: 20px;
     opacity: .7;
     filter: hue-rotate(120deg);
     height: 24px;
