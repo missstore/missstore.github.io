@@ -197,7 +197,7 @@ p.textalternativo {
 .formasenvioimgs {
     display: flex;
     justify-content: center;
-    margin-top: -12px;
+    margin-top: -7px;
     align-items: center;
     align-content: center;
     flex-direction: row;
