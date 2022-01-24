@@ -1032,10 +1032,6 @@ img.btn-forward {
     display: none;
 }
 
-iframe.teste {
-    display: none;
-}
-
 img.btn-previous {
     transform: rotateZ(180deg);
     opacity: .7;
