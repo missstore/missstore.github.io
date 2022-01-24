@@ -1028,6 +1028,10 @@ img.btn-forward {
     background-color: hotpink;
 }
 
+.dos-btn-f-b.mobile > img {
+    display: none;
+}
+
 img.btn-previous {
     transform: rotateZ(180deg);
     opacity: .7;
